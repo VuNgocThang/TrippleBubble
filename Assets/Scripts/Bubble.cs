@@ -40,7 +40,7 @@ public class Bubble : MonoBehaviour
         IsMoving = true;
         transform.SetParent(parent);
         tweenerMove = transform.DOLocalMove(Vector3.zero, time == -1 ? 0.3f : time);
-        //transform.DOScale(new Vector3(1, 1, 1), 0.3f);
+        transform.DOScale(new Vector3(1.3f, 1.3f, 1.3f), 0.3f);
         SetOpacity(1f);
         tweenerMove.OnStart(() =>
         {
@@ -89,7 +89,7 @@ public class Bubble : MonoBehaviour
                 material.color = currentColor;
             }
         }
-       
+
     }
 
 }
