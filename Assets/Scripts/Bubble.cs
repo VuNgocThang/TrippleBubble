@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DG.Tweening;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class Bubble : MonoBehaviour
@@ -10,9 +11,10 @@ public class Bubble : MonoBehaviour
     public bool hasChildren;
     public bool isChild;
     public float radius;
-    public List<GameObject> objs = new List<GameObject>();
     public Transform children;
-
+    public Transform connectPoint;
+    public Material mat;
+    public Texture2DArray bubblTexture2d;
     MeshRenderer meshRenderer;
     MeshRenderer MeshRenderer
     {
@@ -31,10 +33,17 @@ public class Bubble : MonoBehaviour
     public void Init(int id)
     {
         ID = id;
-        objs[id].SetActive(true);
+        SetColor(id + 1);
     }
-
-
+    public void SetColor(int index)
+    {
+        Material tempMat = new Material(Shader.Find("Shader Graphs/BubbleTextureArray"));
+        tempMat.SetTexture("_Texture2D_Array", bubblTexture2d);
+        tempMat.SetFloat("Value", 0f);
+        tempMat.SetFloat("_Index", index);
+        MeshRenderer.sharedMaterial = tempMat;
+        mat = MeshRenderer.sharedMaterial;
+    }
     public void Move(Transform parent, float time = -1, Action checkEat = null)
     {
         IsMoving = true;
@@ -79,16 +88,10 @@ public class Bubble : MonoBehaviour
     }
     public void SetOpacity(float o)
     {
-        for (int i = 0; i < objs.Count; i++)
-        {
-            if (objs[i].activeSelf)
-            {
-                Material material = objs[i].GetComponent<MeshRenderer>().material;
-                Color currentColor = material.color;
-                currentColor.a = o;
-                material.color = currentColor;
-            }
-        }
+        Material mat = GetComponent<MeshRenderer>().material;   
+        Color currentColor = mat.color;
+        currentColor.a = o;
+        mat.color = currentColor;
 
     }
 

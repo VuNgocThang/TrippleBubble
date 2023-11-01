@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class ButtonSelector : MonoBehaviour
 {
     public int id;
+    public int idBought;
     public int cost;
     public int value;
     public TextMeshProUGUI txtCost;
@@ -14,9 +15,10 @@ public class ButtonSelector : MonoBehaviour
     public Image icon;
     public Button btnBuy;
     public bool interac;
+    public GameObject check;
     private void Start()
     {
-        btnBuy.onClick.AddListener(Buy);
+        //btnBuy.onClick.AddListener(Buy);
     }
     public void Init(int id, int cost, int value, Sprite icon)
     {
@@ -27,15 +29,15 @@ public class ButtonSelector : MonoBehaviour
         txtCost.text = cost.ToString();
         txtValue.text = value.ToString();
 
-        if (cost > StartCollector.ins.totalCoin )
-        {
-            btnBuy.interactable = false;
-            interac = btnBuy.interactable;
-        }
+        //if (cost > StartCollector.ins.totalStar)
+        //{
+        //    btnBuy.interactable = false;
+        //    interac = btnBuy.interactable;
+        //}
     }
-    public void Buy()
-    {
-        // xử lý logic trừ tiền vàng, tăng icon v.v
-        Debug.Log(id + " - " + cost + " - " + value);
-    }
+    //public void Buy()
+    //{
+    //    // xử lý logic trừ tiền vàng, tăng icon v.v
+    //    Debug.Log(id + " - " + cost + " - " + value);
+    //}
 }

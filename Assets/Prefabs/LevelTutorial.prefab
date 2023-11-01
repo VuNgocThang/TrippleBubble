@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4986094502558818738}
   - component: {fileID: -6442829731129153851}
+  - component: {fileID: 2756511205186257063}
   m_Layer: 0
   m_Name: LevelTutorial
   m_TagString: Untagged
@@ -63,6 +64,18 @@ MonoBehaviour:
   - {fileID: 5467817096366504693}
   - {fileID: 3453609238413686808}
   maxEach: 3
+--- !u!114 &2756511205186257063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4986094502558818741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46402460101402645aeb9377190b1416, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &364318263615248397
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -637,10 +650,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4986094502558818738}
     m_Modifications:
-    - target: {fileID: 1515030786939267028, guid: db5db640529dfc1479225cda35e9574a, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1515030787278154768, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -688,10 +697,6 @@ PrefabInstance:
     - target: {fileID: 2183587030377625258, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_Name
       value: BallonBubble
-      objectReference: {fileID: 0}
-    - target: {fileID: 2183587030850338158, guid: db5db640529dfc1479225cda35e9574a, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db5db640529dfc1479225cda35e9574a, type: 3}

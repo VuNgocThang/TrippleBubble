@@ -26,7 +26,7 @@ public class LineController : MonoBehaviour
             }
             else
             {
-                LineRenderer.SetPosition(i, endPoints[i / 2].transform.position);
+                LineRenderer.SetPosition(i, endPoints[i / 2].connectPoint.position);
             }
         }
     }

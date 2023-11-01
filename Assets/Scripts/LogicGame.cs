@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 
 public class LogicGame : MonoBehaviour
@@ -31,6 +32,9 @@ public class LogicGame : MonoBehaviour
     bool canEat;
     public int currentIndex;
     public int nextIndex;
+    int winStreak;
+    public TextMeshProUGUI txtCombo;
+
     private void Awake()
     {
         if (instance == null) instance = this;
@@ -39,6 +43,18 @@ public class LogicGame : MonoBehaviour
     void Start()
     {
         Application.targetFrameRate = 60;
+        if (!PlayerPrefs.HasKey("WinStreak"))
+        {
+            winStreak = 0;
+            PlayerPrefs.SetInt("WinStreak", winStreak);
+            PlayerPrefs.Save();
+        }
+        else
+        {
+            winStreak = PlayerPrefs.GetInt("WinStreak");
+        }
+        Debug.Log(winStreak + " WinStreak");
+
         Init();
         canShuffle = true;
     }
@@ -260,9 +276,16 @@ public class LogicGame : MonoBehaviour
         if (!checkLose && listGOStored.Count > 6 && !isHint && !canEat)
         {
             Debug.Log("you lose");
+
             checkLose = true;
         }
 
+    }
+    public void Lose()
+    {
+        winStreak = 0;
+        PlayerPrefs.SetInt("WinStreak", winStreak);
+        PlayerPrefs.Save();
     }
     public void CheckWin()
     {
@@ -270,7 +293,11 @@ public class LogicGame : MonoBehaviour
         {
             Debug.Log("you win");
             checkWin = true;
+            winStreak++;
+            PlayerPrefs.SetInt("WinStreak", winStreak);
+            PlayerPrefs.Save();
             logicUI.OnWinUI();
+
         }
     }
 
@@ -322,15 +349,54 @@ public class LogicGame : MonoBehaviour
     bool isHint;
     bool hinting = false;
 
+
     public void Hint()
     {
         isHint = true;
-        if (checkLose || canEat || listGOStored.Count > 6 || hinting) return;
+        if (checkLose || canEat || listGOStored.Count > 6) return;
+        //if (checkLose) return;
+        //if (canEat) return;
+        //if (listGOStored.Count > 6) return;
+        if (hinting) return;
 
-        int count = listGOStored.Count;
-
-        if (count > 0)
+        if (listGOStored.Count > 0)
         {
+            if (listGOStored.Count > 1)
+            {
+                if (listGOStored[0].ID == listGOStored[1].ID)
+                {
+                    for (int i = 0; i < listBB.Count; i++)
+                    {
+                        if (listGOStored[0].ID == listBB[i].ID)
+                        {
+                            Move(listBB[i]);
+                            hinting = true;
+                            isHint = false;
+                            return;
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < listBB.Count; i++)
+                    {
+                        for (int j = i + 1; j < listBB.Count; j++)
+                        {
+                            if (listGOStored[0].ID == listBB[i].ID && listGOStored[0].ID == listBB[j].ID)
+                            {
+                                Move(listBB[i]);
+                                Move(listBB[j - 1]);
+                                hinting = true;
+                                isHint = false;
+
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+
+
             for (int i = 0; i < listBB.Count; i++)
             {
                 for (int j = i + 1; j < listBB.Count; j++)
@@ -341,6 +407,7 @@ public class LogicGame : MonoBehaviour
                         Move(listBB[j - 1]);
                         hinting = true;
                         isHint = false;
+
                         return;
                     }
                 }
@@ -361,11 +428,13 @@ public class LogicGame : MonoBehaviour
                             Move(listBB[k - 2]);
                             hinting = true;
                             isHint = false;
+
                             return;
                         }
                     }
                 }
             }
+
         }
     }
 

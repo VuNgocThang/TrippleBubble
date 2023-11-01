@@ -27,11 +27,12 @@ public class Timer : MonoBehaviour
             timeLeft -= Time.deltaTime;
         }
 
-        if (timeLeft <= 0 && !LogicGame.instance.checkWin)
+        if (timeLeft <= 0 && !LogicGame.instance.checkLose)
         {
             timeOut = true;
             Debug.Log("you lose");
             LogicGame.instance.checkLose = true;
+            LogicGame.instance.Lose();
         }
     }
 
