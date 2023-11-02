@@ -8,6 +8,7 @@ public class Bubble : MonoBehaviour
 {
     public int ID;
     public Vector3 originalPos;
+    public Vector3 originalScale;
     public bool hasChildren;
     public bool isChild;
     public float radius;
@@ -15,6 +16,8 @@ public class Bubble : MonoBehaviour
     public Transform connectPoint;
     public Material mat;
     public Texture2DArray bubblTexture2d;
+    public List<GameObject> objs = new List<GameObject>();
+    public Transform targetObject;
     MeshRenderer meshRenderer;
     MeshRenderer MeshRenderer
     {
@@ -34,23 +37,57 @@ public class Bubble : MonoBehaviour
     {
         ID = id;
         SetColor(id + 1);
+        targetObject = LogicGame.instance.target;
     }
     public void SetColor(int index)
     {
-        Material tempMat = new Material(Shader.Find("Shader Graphs/BubbleTextureArray"));
-        tempMat.SetTexture("_Texture2D_Array", bubblTexture2d);
-        tempMat.SetFloat("Value", 0f);
-        tempMat.SetFloat("_Index", index);
-        MeshRenderer.sharedMaterial = tempMat;
-        mat = MeshRenderer.sharedMaterial;
+        int i = SetIndexObjs(index);
+        objs[i].SetActive(true);
+        objs[i].GetComponent<MeshRenderer>().material.SetFloat("_Index", index);
+        //MeshRenderer.material.SetFloat("_Index", index);
     }
+
+    public void LookAt()
+    {
+        //if (targetObject != null)
+        //{
+        //    Vector3 direction = targetObject.position - connectPoint.position;
+        //    Quaternion rotation = Quaternion.LookRotation(direction);
+        //    transform.rotation = rotation;
+        //}
+    }
+
+    public int SetIndexObjs(int index)
+    {
+        int result;
+
+        switch (index / 9)
+        {
+            case 0:
+                result = 0;
+                break;
+            case 1:
+                result = 1;
+                break;
+            case 2:
+                result = 2;
+                break;
+            default:
+                result = 0;
+                break;
+        }
+
+
+        return result;
+    }
+
     public void Move(Transform parent, float time = -1, Action checkEat = null)
     {
         IsMoving = true;
         transform.SetParent(parent);
         tweenerMove = transform.DOLocalMove(Vector3.zero, time == -1 ? 0.3f : time);
         transform.DOScale(new Vector3(1.3f, 1.3f, 1.3f), 0.3f);
-        SetOpacity(1f);
+        //SetOpacity(1f);
         tweenerMove.OnStart(() =>
         {
             LogicGame.instance.count += 1;
@@ -78,21 +115,22 @@ public class Bubble : MonoBehaviour
                 child.isChild = true;
             }
 
-            SetOpacity(0.6f);
+            //SetOpacity(0.6f);
         }
-        else
-        {
-            SetOpacity(1f);
-        }
+        //else
+        //{
+        //    SetOpacity(1f);
+        //}
 
     }
-    public void SetOpacity(float o)
-    {
-        Material mat = GetComponent<MeshRenderer>().material;   
-        Color currentColor = mat.color;
-        currentColor.a = o;
-        mat.color = currentColor;
+    //public void SetOpacity(float o)
+    //{
+    //    Material mat = GetComponent<MeshRenderer>().material;
+    //    //Color currentColor = mat.color;
+    //    mat.SetColor("MainColor", new Color(1f, 1f, 1f, o));
+    //    //currentColor.a = o;
+    //    //mat.color = currentColor;
 
-    }
+    //}
 
 }

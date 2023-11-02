@@ -1,24 +1,18 @@
 ﻿using UnityEngine;
 using DG.Tweening;
 using System.Collections;
+using PathCreation;
 
 public class LogicGift : MonoBehaviour
 {
-    private Vector3 defaultPosition;
+    public PathCreator creator;
+    public float speed = 0.2f;
+    float distacne;
 
-    void Start()
+    private void Update()
     {
-        defaultPosition = transform.position;
-        StartCoroutine(ContinuousShake());
-    }
-
-    IEnumerator ContinuousShake()
-    {
-        while (true)
-        {
-            transform.DOShakePosition(4f, new Vector3(0.1f, 0f, 0f), 1, 10, false, true);
-
-            yield return new WaitForSeconds(4f);
-        }
+        distacne += speed * Time.deltaTime;
+        transform.position = creator.path.GetPointAtDistance(distacne);
+        //transform.rotation = creator.path.GetRotationAtDistance(distacne);
     }
 }

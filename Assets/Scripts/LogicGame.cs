@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using DG.Tweening;
+using PathCreation;
 using TMPro;
 using UnityEngine;
 
@@ -23,6 +24,7 @@ public class LogicGame : MonoBehaviour
     public Transform gift;
     public Transform parent;
     public LevelSetMap level;
+    public PathCreator pathCreater;
     public int count;
     public bool an = false;
     public bool isDrag;
@@ -34,12 +36,11 @@ public class LogicGame : MonoBehaviour
     public int nextIndex;
     int winStreak;
     public TextMeshProUGUI txtCombo;
-
+    public Transform target;
     private void Awake()
     {
         if (instance == null) instance = this;
     }
-
     void Start()
     {
         Application.targetFrameRate = 60;
@@ -58,7 +59,6 @@ public class LogicGame : MonoBehaviour
         Init();
         canShuffle = true;
     }
-
     void Init()
     {
         level = Instantiate(prefabLevel, transform);
@@ -102,7 +102,9 @@ public class LogicGame : MonoBehaviour
         {
             listBB[i].Init(listRandom[i]);
             listBB[i].CheckHasChild();
+            listBB[i].LookAt();
             listBB[i].originalPos = listBB[i].transform.position;
+            listBB[i].originalScale = listBB[i].transform.localScale;
         }
 
         foreach (Bubble bubble in listBB)
@@ -120,7 +122,6 @@ public class LogicGame : MonoBehaviour
         OnClick();
 
     }
-
     float timeCount;
     void OnClick()
     {
@@ -139,6 +140,7 @@ public class LogicGame : MonoBehaviour
                 bool isHit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out raycastHit, 1000f, layerMask);
                 if (isHit)
                 {
+                    Debug.Log("hist");
                     Bubble bubble = raycastHit.collider.GetComponent<Bubble>();
                     Move(bubble);
                 }
@@ -146,7 +148,6 @@ public class LogicGame : MonoBehaviour
         }
 
     }
-
     void Move(Bubble bubble)
     {
         if (listGOStored.Count > 6 && !isHint) return;
@@ -198,6 +199,7 @@ public class LogicGame : MonoBehaviour
         {
             if (!listGOStored[i].IsDone)
             {
+                Debug.Log("Move");
                 listGOStored[i].Move(listPoint[i], -1, CheckEat);
             }
         }
@@ -348,8 +350,6 @@ public class LogicGame : MonoBehaviour
 
     bool isHint;
     bool hinting = false;
-
-
     public void Hint()
     {
         isHint = true;
@@ -437,7 +437,6 @@ public class LogicGame : MonoBehaviour
 
         }
     }
-
     public void Undo()
     {
         if (listBubbleUndo.Count <= 0) return;
@@ -448,6 +447,7 @@ public class LogicGame : MonoBehaviour
         Bubble bubble = listBubbleUndo[index];
         bubble.transform.DOMove(bubble.originalPos, 0.3f);
         bubble.transform.SetParent(level.transform);
+        bubble.transform.DOScale(bubble.originalScale, 0.3f);
 
         listBB.Add(bubble);
         listBBShuffle.Add(bubble);
