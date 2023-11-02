@@ -100,8 +100,8 @@ public class LogicGame : MonoBehaviour
 
         for (int i = 0; i < listRandom.Count; i++)
         {
-            listBB[i].Init(listRandom[i]);
             listBB[i].CheckHasChild();
+            listBB[i].Init(listRandom[i]);
             listBB[i].LookAt();
             listBB[i].originalPos = listBB[i].transform.position;
             listBB[i].originalScale = listBB[i].transform.localScale;
@@ -140,7 +140,6 @@ public class LogicGame : MonoBehaviour
                 bool isHit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out raycastHit, 1000f, layerMask);
                 if (isHit)
                 {
-                    Debug.Log("hist");
                     Bubble bubble = raycastHit.collider.GetComponent<Bubble>();
                     Move(bubble);
                 }
@@ -199,7 +198,6 @@ public class LogicGame : MonoBehaviour
         {
             if (!listGOStored[i].IsDone)
             {
-                Debug.Log("Move");
                 listGOStored[i].Move(listPoint[i], -1, CheckEat);
             }
         }
@@ -243,7 +241,6 @@ public class LogicGame : MonoBehaviour
         {
             tweener.OnComplete(() =>
             {
-                Debug.Log("On Complete");
                 CheckDone();
             });
         }
@@ -255,7 +252,6 @@ public class LogicGame : MonoBehaviour
     }
     void CheckDone()
     {
-        Debug.Log("CheckDone");
         //for (int i = listGOStored.Count - 1; i >= 0; --i)
         //{
         //    if (listGOStored[i].IsDone) listGOStored.Remove(listGOStored[i]);

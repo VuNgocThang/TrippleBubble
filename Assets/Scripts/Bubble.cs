@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using DG.Tweening;
 using Unity.Mathematics;
 using UnityEngine;
@@ -17,6 +18,7 @@ public class Bubble : MonoBehaviour
     public Material mat;
     public Texture2DArray bubblTexture2d;
     public List<GameObject> objs = new List<GameObject>();
+    public List<Material> mats = new List<Material>();
     public Transform targetObject;
     MeshRenderer meshRenderer;
     MeshRenderer MeshRenderer
@@ -36,32 +38,28 @@ public class Bubble : MonoBehaviour
     public void Init(int id)
     {
         ID = id;
-        SetColor(id + 1);
+        SetColor(id);
         targetObject = LogicGame.instance.target;
     }
     public void SetColor(int index)
     {
         int i = SetIndexObjs(index);
         objs[i].SetActive(true);
-        objs[i].GetComponent<MeshRenderer>().material.SetFloat("_Index", index);
-        //MeshRenderer.material.SetFloat("_Index", index);
+        if (hasChildren)
+        {
+            SelectMaterial(1);
+        }
+        else
+        {
+            SelectMaterial(0);
+        }
+        objs[i].GetComponent<MeshRenderer>().material.SetFloat("_Index", index + 1);
     }
-
-    public void LookAt()
-    {
-        //if (targetObject != null)
-        //{
-        //    Vector3 direction = targetObject.position - connectPoint.position;
-        //    Quaternion rotation = Quaternion.LookRotation(direction);
-        //    transform.rotation = rotation;
-        //}
-    }
-
-    public int SetIndexObjs(int index)
+    public int SetIndexObjs(int i)
     {
         int result;
 
-        switch (index / 9)
+        switch (i / 9)
         {
             case 0:
                 result = 0;
@@ -76,18 +74,34 @@ public class Bubble : MonoBehaviour
                 result = 0;
                 break;
         }
-
-
         return result;
     }
 
+    public void LookAt()
+    {
+        //if (targetObject != null)
+        //{
+        //    Vector3 direction = targetObject.position - connectPoint.position;
+        //    Quaternion rotation = Quaternion.LookRotation(direction);
+        //    transform.rotation = rotation;
+        //}
+    }
     public void Move(Transform parent, float time = -1, Action checkEat = null)
     {
         IsMoving = true;
         transform.SetParent(parent);
         tweenerMove = transform.DOLocalMove(Vector3.zero, time == -1 ? 0.3f : time);
         transform.DOScale(new Vector3(1.3f, 1.3f, 1.3f), 0.3f);
-        //SetOpacity(1f);
+
+        SelectMaterial(0);
+        for (int i = 0; i < objs.Count; i++)
+        {
+            if (objs[i].activeSelf)
+            {
+                objs[i].GetComponent<MeshRenderer>().material.SetFloat("_Index", ID + 1);
+            }
+        }
+
         tweenerMove.OnStart(() =>
         {
             LogicGame.instance.count += 1;
@@ -99,7 +113,6 @@ public class Bubble : MonoBehaviour
             checkEat?.Invoke();
         });
     }
-
     public void CheckHasChild()
     {
         if (children.childCount > 0)
@@ -114,23 +127,19 @@ public class Bubble : MonoBehaviour
                 Bubble child = children.GetChild(i).GetComponent<Bubble>();
                 child.isChild = true;
             }
-
-            //SetOpacity(0.6f);
         }
-        //else
-        //{
-        //    SetOpacity(1f);
-        //}
+
 
     }
-    //public void SetOpacity(float o)
-    //{
-    //    Material mat = GetComponent<MeshRenderer>().material;
-    //    //Color currentColor = mat.color;
-    //    mat.SetColor("MainColor", new Color(1f, 1f, 1f, o));
-    //    //currentColor.a = o;
-    //    //mat.color = currentColor;
-
-    //}
+    public void SelectMaterial(int index)
+    {
+        for (int i = 0; i < objs.Count; i++)
+        {
+            if (objs[i].activeSelf)
+            {
+                objs[i].GetComponent<MeshRenderer>().sharedMaterial = mats[index];
+            }
+        }
+    }
 
 }

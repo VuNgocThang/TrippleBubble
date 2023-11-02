@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4986094502558818738}
   - component: {fileID: -6442829731129153851}
+  - component: {fileID: -3878892578658773225}
   m_Layer: 0
   m_Name: LevelTutorial
   m_TagString: Untagged
@@ -25,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4986094502558818741}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.5, z: 0}
+  m_LocalPosition: {x: 0, y: 5.5, z: -0.65}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8243145196584480729}
@@ -63,6 +64,20 @@ MonoBehaviour:
   - {fileID: 5467817096366504693}
   - {fileID: 3453609238413686808}
   maxEach: 3
+--- !u!114 &-3878892578658773225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4986094502558818741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c064180f8f53e6141a04eda93cc90242, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  creator: {fileID: 0}
+  speed: 0.1
 --- !u!1001 &364318263615248397
 PrefabInstance:
   m_ObjectHideFlags: 0
