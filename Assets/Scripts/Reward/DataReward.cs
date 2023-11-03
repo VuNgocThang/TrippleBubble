@@ -8,4 +8,5 @@ public class DataReward
     public int id;
     public Sprite icon;
     public int value;
+    public Sprite imgBtn;
 }

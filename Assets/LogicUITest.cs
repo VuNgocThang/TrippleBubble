@@ -5,16 +5,40 @@ using UnityEngine.UI;
 
 public class LogicUITest : MonoBehaviour
 {
-    public Button btnTest;
-    public GameObject test;
+    [SerializeField] Button btnSetting;
+    [SerializeField] Button btnCloseSetting;
+    [SerializeField] GameObject panelSetting;
+
+    [SerializeField] Button btnStarCollector;
+    [SerializeField] Button btnCloseStarCollector;
+    [SerializeField] GameObject panelStarCollector;
 
     private void Start()
     {
-        btnTest.onClick.AddListener(OpenTest);
+        btnSetting.onClick.AddListener(OpenPanelSetting);
+        btnCloseSetting.onClick.AddListener(ClosePanel);
+
+        btnStarCollector.onClick.AddListener(OpenPanelStarCollector);
+        btnCloseStarCollector.onClick.AddListener(ClosePanelStarCollector);
     }
 
-    void OpenTest()
+    void OpenPanelSetting()
     {
-        test.SetActive(true);
+        panelSetting.SetActive(true);
     }
+    void ClosePanel()
+    {
+        panelSetting.SetActive(false);
+    }
+
+    void OpenPanelStarCollector()
+    {
+        panelStarCollector.SetActive(true);
+    }
+    void ClosePanelStarCollector()
+    {
+        panelStarCollector.SetActive(false);
+    }
+
+
 }

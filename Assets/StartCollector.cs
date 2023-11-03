@@ -11,13 +11,20 @@ public class StartCollector : MonoBehaviour
     public ButtonSelector prefab;
     public ListUnlockReward unlockReward = new ListUnlockReward();
     public int currentIndex;
-    public int totalStar = 1200;
+    public Transform parent;
 
     private void Awake()
     {
         ins = this;
     }
     private void Start()
+    {
+        Init();
+        UnlockNewBtnSelector();
+        LoadDataItems();
+    }
+
+    private void Init()
     {
         if (!PlayerPrefs.HasKey("CurrentIndex"))
         {
@@ -31,24 +38,33 @@ public class StartCollector : MonoBehaviour
         }
         Debug.Log(currentIndex + " currentIndex");
 
-        for (int i = 0; i < listDataBtn.Count; i++)
+        for (int i = 0; i < listDataRw.Count; i++)
         {
-            listDataBtn[i].id = i;
-            listDataRw[i].id = i;
-
-            ButtonSelector btn = Instantiate(prefab, transform);
-            btn.Init(i, listDataBtn[i].cost, listDataRw[i].value, listDataRw[i].icon);
+            Debug.Log(listDataRw[i].imgBtn);
+            ButtonSelector btn = Instantiate(prefab, parent);
+            btn.Init(listDataRw[i].id, listDataBtn[i].cost, listDataRw[i].value, listDataRw[i].icon, listDataRw[i].imgBtn);
 
             DataUnlockReward data = new DataUnlockReward();
             unlockReward.listUnlockReward.Add(data);
             if (btn.id > currentIndex)
             {
                 btn.btnBuy.interactable = false;
+                btn.lockObject.SetActive(true);
             }
             listBtnSelector.Add(btn);
         }
-        UnlockNewBtnSelector();
-        LoadDataItems();
+    }
+
+    int GetButtonByIndex(int index)
+    {
+        foreach (var btn in listDataRw)
+        {
+            if (btn.id== index)
+            {
+                return listDataRw.IndexOf(btn);
+            }
+        }
+        return -1;
     }
 
     void UnlockNewBtnSelector()
@@ -59,15 +75,18 @@ public class StartCollector : MonoBehaviour
 
             listBtnSelector[a].btnBuy.onClick.AddListener(() =>
             {
-                Debug.Log(listBtnSelector[a].id);
                 listBtnSelector[a].btnBuy.interactable = false;
-                listBtnSelector[a].check.SetActive(true);
+
                 currentIndex++;
                 listBtnSelector[a].idBought = 1;
                 SaveDataItemsJson(a);
                 PlayerPrefs.SetInt("CurrentIndex", currentIndex);
                 PlayerPrefs.Save();
                 UpdateUnlockBtn();
+
+                if (currentIndex >= listBtnSelector.Count) return;
+                
+                listBtnSelector[GetButtonByIndex(currentIndex)].lockObject.SetActive(false);
             });
         }
     }
@@ -85,7 +104,6 @@ public class StartCollector : MonoBehaviour
     public void SaveDataItemsJson(int i)
     {
         unlockReward.listUnlockReward[i].id = listBtnSelector[i].idBought;
-        //dataItemsJson.idUsing = idUsing;
         string json = JsonUtility.ToJson(unlockReward, true);
         PlayerPrefs.SetString("Data_Huy", json);
     }
@@ -93,10 +111,12 @@ public class StartCollector : MonoBehaviour
     {
         for (int i = 0; i < listBtnSelector.Count; i++)
         {
-            listBtnSelector[i].idBought = unlockReward.listUnlockReward[i].id;
-            if (listBtnSelector[i].idBought == 1)
+            int a = i;
+            listBtnSelector[a].idBought = unlockReward.listUnlockReward[a].id;
+            if (listBtnSelector[a].idBought == 1)
             {
-                listBtnSelector[i].check.gameObject.SetActive(true);
+                listBtnSelector[a].btnBuy.interactable = false;
+                listBtnSelector[a].lockObject.SetActive(false);
             }
         }
     }

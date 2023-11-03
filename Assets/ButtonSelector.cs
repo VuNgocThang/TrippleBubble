@@ -15,29 +15,22 @@ public class ButtonSelector : MonoBehaviour
     public Image icon;
     public Button btnBuy;
     public bool interac;
-    public GameObject check;
-    private void Start()
+    public GameObject lockObject;
+    public Image imgButton;
+
+    private void Awake()
     {
-        //btnBuy.onClick.AddListener(Buy);
+        imgButton = GetComponent<Image>();
     }
-    public void Init(int id, int cost, int value, Sprite icon)
+    public void Init(int id, int cost, int value, Sprite icon, Sprite imgBtn)
     {
         this.id = id;
         this.cost = cost;
         this.value = value;
         this.icon.sprite = icon;
+        this.imgButton.sprite = imgBtn;
         txtCost.text = cost.ToString();
-        txtValue.text = value.ToString();
-
-        //if (cost > StartCollector.ins.totalStar)
-        //{
-        //    btnBuy.interactable = false;
-        //    interac = btnBuy.interactable;
-        //}
+        txtValue.text = $"x{value}";
     }
-    //public void Buy()
-    //{
-    //    // xử lý logic trừ tiền vàng, tăng icon v.v
-    //    Debug.Log(id + " - " + cost + " - " + value);
-    //}
+    
 }
