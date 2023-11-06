@@ -18,7 +18,7 @@ public class Timer : MonoBehaviour
         stopTimer = false;
         timeOut = false;
         isFreeze = false;
-        timeLeft = 1000;
+        timeLeft = 200;
     }
     private void Update()
     {
@@ -33,10 +33,12 @@ public class Timer : MonoBehaviour
             Debug.Log("you lose");
             LogicGame.instance.checkLose = true;
             LogicGame.instance.Lose();
+            LogicGame.instance.logicUI.OpenLoseUI();
+            LogicGame.instance.logicUI.loseUI.OpenPanelTimeUp();
+
         }
     }
-
-    private void OnGUI()
+    public void OnGUI()
     {
         if (!timeOut)
         {

@@ -20,7 +20,6 @@ public class LogicGame : MonoBehaviour
     [SerializeField] List<Bubble> listBubbleUndo = new List<Bubble>();
     [SerializeField] Timer timer;
     [SerializeField] LayerMask layerMask;
-    public TutorialManager tutorialManager;
     public Transform gift;
     public Transform parent;
     public LevelSetMap level;
@@ -36,8 +35,8 @@ public class LogicGame : MonoBehaviour
     public int nextIndex;
     int winStreak;
     public TextMeshProUGUI txtCombo;
-    public Transform target;
-    public Transform targetThis;
+    public Transform targetHT;
+
     private void Awake()
     {
         if (instance == null) instance = this;
@@ -152,24 +151,9 @@ public class LogicGame : MonoBehaviour
     {
         if (listGOStored.Count > 6 && !isHint) return;
 
-        if (bubble.hasChildren)
-        {
-            for (int i = bubble.children.childCount - 1; i >= 0; i--)
-            {
-                Transform child = bubble.children.GetChild(i);
-                child.SetParent(level.transform);
-                child.transform.DOScale(new Vector3(1f, 1f, 1f), 0.3f);
+        SolveChildOfBB(bubble);
 
-                Bubble childBB = child.GetComponent<Bubble>();
-                childBB.isChild = false;
-                childBB.canMoveHT = true;
-                listBBShuffle.Add(childBB);
-            }
-
-            bubble.hasChildren = false;
-        }
-
-        bubble.canMoveHT = false;
+        bubble.StateAfterMove();
 
         listBB.Remove(bubble);
         listBBShuffle.Remove(bubble);
@@ -206,6 +190,26 @@ public class LogicGame : MonoBehaviour
         }
 
     }
+
+    private void SolveChildOfBB(Bubble bubble)
+    {
+        if (bubble.hasChildren)
+        {
+            for (int i = bubble.children.childCount - 1; i >= 0; i--)
+            {
+                Transform child = bubble.children.GetChild(i);
+                child.SetParent(level.transform);
+                child.transform.DOScale(new Vector3(1f, 1f, 1f), 0.3f);
+
+                Bubble childBB = child.GetComponent<Bubble>();
+                childBB.ResetState(childBB);
+                listBBShuffle.Add(childBB);
+            }
+
+            bubble.hasChildren = false;
+        }
+    }
+
     void CheckEat()
     {
         Tweener tweener = null;
@@ -255,11 +259,6 @@ public class LogicGame : MonoBehaviour
     }
     void CheckDone()
     {
-        //for (int i = listGOStored.Count - 1; i >= 0; --i)
-        //{
-        //    if (listGOStored[i].IsDone) listGOStored.Remove(listGOStored[i]);
-        //}
-
         canEat = false;
         for (int i = 0; i < listGOStored.Count; ++i)
         {
@@ -277,8 +276,10 @@ public class LogicGame : MonoBehaviour
         if (!checkLose && listGOStored.Count > 6 && !isHint && !canEat)
         {
             Debug.Log("you lose");
-
             checkLose = true;
+            timer.stopTimer = true;
+            logicUI.OpenLoseUI();
+            logicUI.loseUI.OpenPanelOutOfMove();
         }
 
     }
@@ -353,9 +354,6 @@ public class LogicGame : MonoBehaviour
     {
         isHint = true;
         if (checkLose || canEat || listGOStored.Count > 6) return;
-        //if (checkLose) return;
-        //if (canEat) return;
-        //if (listGOStored.Count > 6) return;
         if (hinting) return;
 
         if (listGOStored.Count > 0)
@@ -442,32 +440,8 @@ public class LogicGame : MonoBehaviour
         if (checkLose) return;
         if (canEat) return;
 
-        int index = listBubbleUndo.Count - 1;
-        Bubble bubble = listBubbleUndo[index];
-        bubble.transform.DOMove(bubble.originalPos, 0.3f);
-        bubble.transform.SetParent(level.transform);
-        bubble.transform.DOScale(bubble.originalScale, 0.3f);
-
-        listBB.Add(bubble);
-        listBBShuffle.Add(bubble);
-
-        listGOStored.Remove(bubble);
-        listBubbleUndo.RemoveAt(index);
-        for (int j = 0; j < listGOStored.Count; ++j)
-        {
-            listGOStored[j].Move(listPoint[j], -1, CheckDone);
-        }
+        UndoAction();
         return;
-    }
-    public void Freeze()
-    {
-        timer.isFreeze = true;
-        StartCoroutine(StopFreeze());
-    }
-    IEnumerator StopFreeze()
-    {
-        yield return new WaitForSeconds(5f);
-        timer.isFreeze = false;
     }
     public void UndoTripple()
     {
@@ -480,20 +454,36 @@ public class LogicGame : MonoBehaviour
         {
             if (count >= 3) return;
             count++;
-            int index = listBubbleUndo.Count - 1;
-            Bubble bubble = listBubbleUndo[index];
-            bubble.transform.DOMove(bubble.originalPos, 0.3f);
-            bubble.transform.SetParent(level.transform);
-
-            listBB.Add(bubble);
-            listBBShuffle.Add(bubble);
-            listGOStored.Remove(bubble);
-            listBubbleUndo.RemoveAt(index);
-            for (int j = 0; j < listGOStored.Count; ++j)
-            {
-                listGOStored[j].Move(listPoint[j], -1, CheckDone);
-            }
+            UndoAction();
 
         }
+    }
+    private void UndoAction()
+    {
+        int index = listBubbleUndo.Count - 1;
+        Bubble bubble = listBubbleUndo[index];
+        bubble.ResetStateIfUndo();
+        bubble.transform.DOMove(bubble.originalPos, 0.3f);
+        bubble.transform.SetParent(level.transform);
+        //bubble.transform.DOScale(bubble.originalScale, 0.3f);
+        bubble.transform.DOScale(new Vector3(1f, 1f, 1f), 0.3f);
+        listBB.Add(bubble);
+        listBBShuffle.Add(bubble);
+        listGOStored.Remove(bubble);
+        listBubbleUndo.RemoveAt(index);
+        for (int j = 0; j < listGOStored.Count; ++j)
+        {
+            listGOStored[j].Move(listPoint[j], -1, CheckDone);
+        }
+    }
+    public void Freeze()
+    {
+        timer.isFreeze = true;
+        StartCoroutine(StopFreeze());
+    }
+    IEnumerator StopFreeze()
+    {
+        yield return new WaitForSeconds(5f);
+        timer.isFreeze = false;
     }
 }

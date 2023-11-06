@@ -24,8 +24,7 @@ public class LogicGameUI : MonoBehaviour
 
     [Header("WinUI")]
     public GameObject winUI;
-
-
+    public LoseManager loseUI;
     private void Start()
     {
         btnPause.onClick.AddListener(OpenPanelPause);
@@ -69,5 +68,8 @@ public class LogicGameUI : MonoBehaviour
         panelRemoveAds.SetActive(false);
     }
 
-
+    public void OpenLoseUI()
+    {
+        loseUI.gameObject.SetActive(true);
+    }
 }

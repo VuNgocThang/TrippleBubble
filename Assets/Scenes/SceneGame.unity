@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.727
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.41587842, g: 0.40485913, b: 0.40691397, a: 0.727}
+  m_IndirectSpecularColor: {r: 0.41687822, g: 0.4053517, b: 0.4077953, a: 0.727}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3349,6 +3349,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 228d87c3a4de0294f927b989032c538f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loseUI: {fileID: 536224828}
+  timer: {fileID: 1425198155}
+  panelTimeUp: {fileID: 290377408}
+  btnContinueTimeUp: {fileID: 1023815493}
+  btnGiveUpTimeUp: {fileID: 205013429}
+  panelOutOfMove: {fileID: 1436064101}
+  btnContinueOutOfMove: {fileID: 1457127587}
+  btnGiveUpOutOfMove: {fileID: 1306744762}
+  panelPersident: {fileID: 439516103}
+  btnRetry: {fileID: 99353573}
+  btnHome: {fileID: 782789714}
 --- !u!1 &551637420
 GameObject:
   m_ObjectHideFlags: 0
@@ -8227,7 +8238,6 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 8
-  tutorialManager: {fileID: 0}
   gift: {fileID: 0}
   parent: {fileID: 1622456312}
   level: {fileID: 0}
@@ -8241,8 +8251,7 @@ MonoBehaviour:
   currentIndex: 0
   nextIndex: 0
   txtCombo: {fileID: 0}
-  target: {fileID: 1590849860}
-  targetThis: {fileID: 1680275427}
+  targetHT: {fileID: 1680275427}
 --- !u!1 &1253038786
 GameObject:
   m_ObjectHideFlags: 0
@@ -10487,6 +10496,7 @@ MonoBehaviour:
   btnClosePanelRemoveAds: {fileID: 347650087}
   panelRemoveAds: {fileID: 1258028959}
   winUI: {fileID: 369983522}
+  loseUI: {fileID: 536224832}
 --- !u!1 &1621424557
 GameObject:
   m_ObjectHideFlags: 0
@@ -10835,7 +10845,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1680275427}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: targetHT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11189,7 +11199,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1733021222}
-  m_LocalRotation: {x: 0.23580489, y: 0.30895725, z: -0.095830016, w: -0.9163832}
+  m_LocalRotation: {x: 0.23580489, y: 0.30895728, z: -0.09583002, w: -0.9163832}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

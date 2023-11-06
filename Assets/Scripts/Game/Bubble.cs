@@ -19,34 +19,29 @@ public class Bubble : MonoBehaviour
     public Texture2DArray bubblTexture2d;
     public List<GameObject> objs = new List<GameObject>();
     public List<Material> mats = new List<Material>();
-    public Transform targetObject;
     public bool canMoveHT;
     public MeshCollider meshCollider;
-    private void Awake()
-    {
-        meshCollider = GetComponent<MeshCollider>();
-    }
-
-    //MeshRenderer meshRenderer;
-    //MeshRenderer MeshRenderer
-    //{
-    //    get
-    //    {
-    //        if (meshRenderer == null) meshRenderer = GetComponent<MeshRenderer>();
-    //        return meshRenderer;
-    //    }
-    //}
-
+    public Rigidbody rb;
     public bool IsMoving;
     public bool IsDone;
     public Tweener tweenerMove;
     public bool CanMoving => !IsMoving && !IsDone;
 
+    private void Awake()
+    {
+        meshCollider = GetComponent<MeshCollider>();
+    }
+    
+    
+    private void FixedUpdate()
+    {
+        MoveHT();
+    }
+
     public void Init(int id)
     {
         ID = id;
         SetColor(id);
-        targetObject = LogicGame.instance.target;
     }
     public void SetColor(int index)
     {
@@ -110,6 +105,23 @@ public class Bubble : MonoBehaviour
             checkEat?.Invoke();
         });
     }
+    public void MoveHT()
+    {
+        if (canMoveHT)
+        {
+            rb.velocity += (LogicGame.instance.targetHT.position - transform.position) * 0.01f;
+        }
+    }
+    public void SelectMaterial(int index)
+    {
+        for (int i = 0; i < objs.Count; i++)
+        {
+            if (objs[i].activeSelf)
+            {
+                objs[i].GetComponent<MeshRenderer>().sharedMaterial = mats[index];
+            }
+        }
+    }
     public void CheckHasChild()
     {
         if (children.childCount > 0)
@@ -122,22 +134,36 @@ public class Bubble : MonoBehaviour
             for (int i = 0; i < children.childCount; i++)
             {
                 Bubble child = children.GetChild(i).GetComponent<Bubble>();
-                child.isChild = true;
-                child.meshCollider.enabled = false;
+                SetStateIfIsChild(child);
             }
         }
-
-
     }
-    public void SelectMaterial(int index)
+
+    public void SetStateIfIsChild(Bubble bb)
     {
-        for (int i = 0; i < objs.Count; i++)
-        {
-            if (objs[i].activeSelf)
-            {
-                objs[i].GetComponent<MeshRenderer>().sharedMaterial = mats[index];
-            }
-        }
+        bb.isChild = true;
+        bb.canMoveHT = false;
+        bb.meshCollider.enabled = false;
+        bb.rb.constraints = RigidbodyConstraints.FreezeAll;
+    }
+    public void ResetState(Bubble bb)
+    {
+        bb.isChild = false;
+        bb.canMoveHT = true;
+        bb.meshCollider.enabled = true;
+        bb.rb.constraints &= ~RigidbodyConstraints.FreezePosition; // bỏ freeze pos
+        bb.rb.constraints &= ~RigidbodyConstraints.FreezeRotationY;
     }
 
+    public void StateAfterMove()
+    {
+        meshCollider.enabled = false;
+        canMoveHT = false;
+    }
+
+    public void ResetStateIfUndo()
+    {
+        meshCollider.enabled = true;
+        canMoveHT = true;
+    }
 }
