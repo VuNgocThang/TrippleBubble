@@ -37,6 +37,7 @@ public class LogicGame : MonoBehaviour
     int winStreak;
     public TextMeshProUGUI txtCombo;
     public Transform target;
+    public Transform targetThis;
     private void Awake()
     {
         if (instance == null) instance = this;
@@ -102,7 +103,6 @@ public class LogicGame : MonoBehaviour
         {
             listBB[i].CheckHasChild();
             listBB[i].Init(listRandom[i]);
-            listBB[i].LookAt();
             listBB[i].originalPos = listBB[i].transform.position;
             listBB[i].originalScale = listBB[i].transform.localScale;
         }
@@ -135,6 +135,7 @@ public class LogicGame : MonoBehaviour
             {
                 if (Time.time - timeCount > 0.2f && isDrag) return;
                 if (checkLose) return;
+                if (timer.stopTimer) return;
 
                 RaycastHit raycastHit;
                 bool isHit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out raycastHit, 1000f, layerMask);
@@ -161,12 +162,14 @@ public class LogicGame : MonoBehaviour
 
                 Bubble childBB = child.GetComponent<Bubble>();
                 childBB.isChild = false;
-
+                childBB.canMoveHT = true;
                 listBBShuffle.Add(childBB);
             }
 
             bubble.hasChildren = false;
         }
+
+        bubble.canMoveHT = false;
 
         listBB.Remove(bubble);
         listBBShuffle.Remove(bubble);
@@ -260,10 +263,10 @@ public class LogicGame : MonoBehaviour
         canEat = false;
         for (int i = 0; i < listGOStored.Count; ++i)
         {
-            //if (!listGOStored[i].IsDone)
-            //{
-            listGOStored[i].Move(listPoint[i], 0.2f, CheckEat);
-            //}
+            if (listGOStored[i].CanMoving)
+            {
+                listGOStored[i].Move(listPoint[i], 0.2f, CheckEat);
+            }
         }
         hinting = false;
         CheckWin();

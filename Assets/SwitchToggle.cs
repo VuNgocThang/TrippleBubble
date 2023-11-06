@@ -34,16 +34,25 @@ public class SwitchToggle : MonoBehaviour
 
     void OnSwitch(bool on)
     {
+        Image bgImg = bgImage.GetComponent<Image>();
         if (canToggle)
         {
             canToggle = false;
 
-            uiHandleRectTransform.DOAnchorPos(on ? handlePosition * -1 : handlePosition, 0.4f)
+            uiHandleRectTransform.DOAnchorPos(on ? handlePosition * -1 : handlePosition, 0.2f)
                 .SetEase(Ease.InOutBack)
-                .OnComplete(() => canToggle = true);
+                .OnComplete(() =>
+                {
+                    bgImg.sprite = on ? bgOn : bgOff;
+                    canToggle = true;
+                });
         }
-        Image bgImg = bgImage.GetComponent<Image>();
-        bgImg.sprite = on ? bgOn : bgOff;
+
+        //uiHandleRectTransform.DOAnchorPos(on ? handlePosition * -1 : handlePosition, 0.4f)
+        //       .SetEase(Ease.InOutBack);
+
+
+
     }
 
     private void OnDestroy()

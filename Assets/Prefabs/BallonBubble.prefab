@@ -11,8 +11,10 @@ GameObject:
   - component: {fileID: 1515030787278154768}
   - component: {fileID: 2497707702855246773}
   - component: {fileID: 382054615193048959}
-  - component: {fileID: 6428927290568833029}
   - component: {fileID: 3010417341318161648}
+  - component: {fileID: 6428927290568833029}
+  - component: {fileID: 6042299365496451216}
+  - component: {fileID: 5113314668408972797}
   m_Layer: 3
   m_Name: BallonBubble
   m_TagString: Untagged
@@ -46,7 +48,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2183587030377625258}
-  m_Mesh: {fileID: 8718793965196440676, guid: a31a302e7cbbb824094b86e5e934705f, type: 3}
+  m_Mesh: {fileID: -2840984316813056734, guid: 826f1a0f908321142b4528f28458d201, type: 3}
 --- !u!23 &382054615193048959
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -88,6 +90,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &3010417341318161648
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2183587030377625258}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 8718793965196440676, guid: a31a302e7cbbb824094b86e5e934705f, type: 3}
 --- !u!114 &6428927290568833029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,22 +134,40 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 1324d02cd0f581644b68db6339e25e35, type: 2}
   - {fileID: 2100000, guid: de5f371303e1b8f4b9dc85f600692a7e, type: 2}
   targetObject: {fileID: 0}
+  canMoveHT: 1
+  meshCollider: {fileID: 3010417341318161648}
   IsMoving: 0
   IsDone: 0
---- !u!64 &3010417341318161648
-MeshCollider:
+--- !u!54 &6042299365496451216
+Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2183587030377625258}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 10
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
+--- !u!114 &5113314668408972797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2183587030377625258}
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 8718793965196440676, guid: a31a302e7cbbb824094b86e5e934705f, type: 3}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f238b0d186f65f40ba14fb3bc7bf726, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 6042299365496451216}
+  bubble: {fileID: 6428927290568833029}
 --- !u!1 &4411559402996035341
 GameObject:
   m_ObjectHideFlags: 0
@@ -188,7 +222,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4838130027996303422}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.2619, z: 0}
+  m_LocalPosition: {x: 0, y: -0.397, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1515030787278154768}
@@ -249,6 +283,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 1324d02cd0f581644b68db6339e25e35, type: 2}
+    - target: {fileID: -5754084199372789682, guid: a31a302e7cbbb824094b86e5e934705f, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -2840984316813056734, guid: 826f1a0f908321142b4528f28458d201, type: 3}
     - target: {fileID: 919132149155446097, guid: a31a302e7cbbb824094b86e5e934705f, type: 3}
       propertyPath: m_Name
       value: balloon_base
@@ -259,7 +297,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: a31a302e7cbbb824094b86e5e934705f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a31a302e7cbbb824094b86e5e934705f, type: 3}
@@ -328,6 +366,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 1324d02cd0f581644b68db6339e25e35, type: 2}
+    - target: {fileID: -5754084199372789682, guid: 7a101c036bca0d14fabf508692f8cb07, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -2840984316813056734, guid: 826f1a0f908321142b4528f28458d201, type: 3}
     - target: {fileID: 919132149155446097, guid: 7a101c036bca0d14fabf508692f8cb07, type: 3}
       propertyPath: m_Name
       value: balloon_line
@@ -407,6 +449,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 1324d02cd0f581644b68db6339e25e35, type: 2}
+    - target: {fileID: -5754084199372789682, guid: 0e7551372d71a6d4d9043c636fc724e0, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -2840984316813056734, guid: 826f1a0f908321142b4528f28458d201, type: 3}
     - target: {fileID: 919132149155446097, guid: 0e7551372d71a6d4d9043c636fc724e0, type: 3}
       propertyPath: m_Name
       value: balloon_dot

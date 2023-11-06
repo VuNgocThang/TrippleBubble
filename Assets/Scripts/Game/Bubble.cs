@@ -20,15 +20,22 @@ public class Bubble : MonoBehaviour
     public List<GameObject> objs = new List<GameObject>();
     public List<Material> mats = new List<Material>();
     public Transform targetObject;
-    MeshRenderer meshRenderer;
-    MeshRenderer MeshRenderer
+    public bool canMoveHT;
+    public MeshCollider meshCollider;
+    private void Awake()
     {
-        get
-        {
-            if (meshRenderer == null) meshRenderer = GetComponent<MeshRenderer>();
-            return meshRenderer;
-        }
+        meshCollider = GetComponent<MeshCollider>();
     }
+
+    //MeshRenderer meshRenderer;
+    //MeshRenderer MeshRenderer
+    //{
+    //    get
+    //    {
+    //        if (meshRenderer == null) meshRenderer = GetComponent<MeshRenderer>();
+    //        return meshRenderer;
+    //    }
+    //}
 
     public bool IsMoving;
     public bool IsDone;
@@ -76,16 +83,6 @@ public class Bubble : MonoBehaviour
         }
         return result;
     }
-
-    public void LookAt()
-    {
-        //if (targetObject != null)
-        //{
-        //    Vector3 direction = targetObject.position - connectPoint.position;
-        //    Quaternion rotation = Quaternion.LookRotation(direction);
-        //    transform.rotation = rotation;
-        //}
-    }
     public void Move(Transform parent, float time = -1, Action checkEat = null)
     {
         IsMoving = true;
@@ -126,6 +123,7 @@ public class Bubble : MonoBehaviour
             {
                 Bubble child = children.GetChild(i).GetComponent<Bubble>();
                 child.isChild = true;
+                child.meshCollider.enabled = false;
             }
         }
 

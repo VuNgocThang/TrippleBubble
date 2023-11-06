@@ -464,6 +464,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: BallonBubble (22)
       objectReference: {fileID: 0}
+    - target: {fileID: 3010417341318161648, guid: db5db640529dfc1479225cda35e9574a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6428927290568833029, guid: db5db640529dfc1479225cda35e9574a, type: 3}
+      propertyPath: canMoveHT
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db5db640529dfc1479225cda35e9574a, type: 3}
 --- !u!114 &5575989497236349253 stripped
@@ -543,6 +551,14 @@ PrefabInstance:
     - target: {fileID: 2183587030377625258, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_Name
       value: BallonBubble (23)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3010417341318161648, guid: db5db640529dfc1479225cda35e9574a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6428927290568833029, guid: db5db640529dfc1479225cda35e9574a, type: 3}
+      propertyPath: canMoveHT
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db5db640529dfc1479225cda35e9574a, type: 3}
@@ -1353,6 +1369,14 @@ PrefabInstance:
     - target: {fileID: 2183587030377625258, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_Name
       value: BallonBubble (21)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3010417341318161648, guid: db5db640529dfc1479225cda35e9574a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6428927290568833029, guid: db5db640529dfc1479225cda35e9574a, type: 3}
+      propertyPath: canMoveHT
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db5db640529dfc1479225cda35e9574a, type: 3}

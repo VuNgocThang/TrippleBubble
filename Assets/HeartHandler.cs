@@ -15,17 +15,16 @@ public class HeartHandler : MonoBehaviour
     private void Start()
     {
         countdownTimer = 10;
-        //if (!PlayerPrefs.HasKey("NumHeart"))
-        //{
-        //    heart = 4;
-        //    PlayerPrefs.SetInt("NumHeart", heart);
-        //    PlayerPrefs.Save();
-        //}
-        //else
-        //{
-        //    heart = PlayerPrefs.GetInt("NumHeart");
-        //}
-        heart = 4;
+        if (!PlayerPrefs.HasKey("NumHeart"))
+        {
+            heart = 0;
+            PlayerPrefs.SetInt("NumHeart", heart);
+            PlayerPrefs.Save();
+        }
+        else
+        {
+            heart = PlayerPrefs.GetInt("NumHeart");
+        }
         txtNumHeart.text = heart.ToString();
     }
     private void Update()
@@ -52,6 +51,7 @@ public class HeartHandler : MonoBehaviour
         }
         else
         {
+            countdownTimer = 0;
             //countdownTimer = 0;
             //heart += 1;
             //PlayerPrefs.SetInt("NumHeart", heart);
