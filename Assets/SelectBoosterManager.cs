@@ -1,3 +1,5 @@
+using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,8 +26,16 @@ public class SelectBoosterManager : MonoBehaviour
                 btnBoosters[i].SubCount();
             }
         }
+        AnimationPopup.instance.AnimScaleZero(this.gameObject, this.transform.GetChild(0));
+        StartCoroutine(WaitForLoadSceneGame());
+    }
 
+    IEnumerator WaitForLoadSceneGame()
+    {
+        Debug.Log("load");
+        yield return new WaitForSeconds(0.4f);
         SceneManager.LoadScene("SceneGame");
+        DOTween.KillAll();
     }
 
     public void UnSelectedBtn()

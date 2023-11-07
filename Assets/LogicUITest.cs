@@ -50,10 +50,12 @@ public class LogicUITest : MonoBehaviour
     void OpenPanelSetting()
     {
         panelSetting.SetActive(true);
+        AnimationPopup.instance.AnimScaleZoom(panelSetting.transform.GetChild(0));
+        
     }
     void ClosePanelSetting()
     {
-        panelSetting.SetActive(false);
+        AnimationPopup.instance.AnimScaleZero(panelSetting, panelSetting.transform.GetChild(0));
     }
 
     void OpenPanelStarCollector()
@@ -68,20 +70,20 @@ public class LogicUITest : MonoBehaviour
     void SelectBooster()
     {
         selectBooster.gameObject.SetActive(true);
+        AnimationPopup.instance.AnimScaleZoom(selectBooster.transform.GetChild(0));
     }
     void ClosePanelBooster()
     {
         selectBooster.UnSelectedBtn();
-        selectBooster.gameObject.SetActive(false);
+        AnimationPopup.instance.AnimScaleZero(selectBooster.gameObject, selectBooster.transform.GetChild(0));
+
     }
     void OpenPanelShop()
     {
         panelHome.SetActive(false);
-        //btnHome.GetComponent<Image>().sprite = spriteSelects[1];
         imgHomeSelected.sprite = spriteSelects[1];
 
         panelShop.SetActive(true);
-        //btnShop.GetComponent<Image>().sprite = spriteSelects[0];
         imgShopSelected.sprite = spriteSelects[0];
     }
 
@@ -89,10 +91,8 @@ public class LogicUITest : MonoBehaviour
     {
         panelShop.SetActive(false);
         imgShopSelected.sprite = spriteSelects[1];
-        //btnShop.GetComponent<Image>().sprite = spriteSelects[1];
 
         panelHome.SetActive(true);
         imgHomeSelected.sprite = spriteSelects[0];
-        //btnHome.GetComponent<Image>().sprite = spriteSelects[0];
     }
 }

@@ -52,11 +52,6 @@ public class HeartHandler : MonoBehaviour
         else
         {
             countdownTimer = 0;
-            //countdownTimer = 0;
-            //heart += 1;
-            //PlayerPrefs.SetInt("NumHeart", heart);
-            //PlayerPrefs.Save();
-            //txtNumHeart.text = heart.ToString();
         }
     }
 }

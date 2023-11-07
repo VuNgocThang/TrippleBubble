@@ -18,25 +18,30 @@ public class Timer : MonoBehaviour
         stopTimer = false;
         timeOut = false;
         isFreeze = false;
-        timeLeft = 1000;
+        timeLeft = 200;
     }
     private void Update()
     {
         if (!stopTimer && !isFreeze)
         {
             timeLeft -= Time.deltaTime;
+            if (timeLeft <= 0 && !LogicGame.instance.checkLose)
+            {
+                timeLeft = 0;
+                stopTimer = true;
+                timeOut = true;
+                Debug.Log("you lose");
+                LogicGame.instance.checkLose = true;
+                LogicGame.instance.Lose();
+                LogicGame.instance.logicUI.OpenLoseUI();
+                LogicGame.instance.logicUI.loseUI.OpenPanelTimeUp();
+
+            }
         }
 
-        if (timeLeft <= 0 && !LogicGame.instance.checkLose)
-        {
-            timeOut = true;
-            Debug.Log("you lose");
-            LogicGame.instance.checkLose = true;
-            LogicGame.instance.Lose();
-        }
+        
     }
-
-    private void OnGUI()
+    public void OnGUI()
     {
         if (!timeOut)
         {
