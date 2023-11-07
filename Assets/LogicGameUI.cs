@@ -10,6 +10,7 @@ public class LogicGameUI : MonoBehaviour
     [SerializeField] Timer timer;
 
     [Header("Pause")]
+    [SerializeField] Button btnHome;
     [SerializeField] Button btnPause;
     [SerializeField] Button btnResume;
     [SerializeField] Button btnClosePanelPause;
@@ -27,6 +28,7 @@ public class LogicGameUI : MonoBehaviour
     public LoseManager loseUI;
     private void Start()
     {
+        btnHome.onClick.AddListener(BackHome);
         btnPause.onClick.AddListener(OpenPanelPause);
         btnResume.onClick.AddListener(ClosePanelPause);
         btnClosePanelPause.onClick.AddListener(ClosePanelPause);
@@ -39,7 +41,11 @@ public class LogicGameUI : MonoBehaviour
     {
         winUI.SetActive(true);
     }
-
+    void BackHome()
+    {
+        DOTween.KillAll();
+        SceneManager.LoadScene("SceneHome"); 
+    }
     void OpenPanelPause()
     {
         timer.stopTimer = true;

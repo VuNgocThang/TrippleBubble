@@ -26,15 +26,12 @@ public class AnimationPopup : MonoBehaviour
             .SetEase(curveZoomOut)
             .OnComplete(() =>
             {
-                panel.gameObject.SetActive(false);
+                if (panel != null)
+                {
+                    panel.gameObject.SetActive(false);
+                }
             });
     }
-
-    public void AnimMoveIn(GameObject obj)
-    {
-        DoTween_Button(obj, 200, 200, 0.5f);
-    }
-
 
     public void DoTween_Button(GameObject Obj, int posX, int posY, float timer)
     {

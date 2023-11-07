@@ -33,7 +33,7 @@ public class SelectBoosterManager : MonoBehaviour
     IEnumerator WaitForLoadSceneGame()
     {
         Debug.Log("load");
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.45f);
         SceneManager.LoadScene("SceneGame");
         DOTween.KillAll();
     }

@@ -7,8 +7,8 @@ public class Timer : MonoBehaviour
 {
     public TextMeshProUGUI timerText;
     public float timeLeft;
-    public float minutes;
-    public float seconds;
+    float minutes;
+    float seconds;
     public bool timeOut;
     public bool stopTimer;
     public bool isFreeze;
@@ -38,8 +38,6 @@ public class Timer : MonoBehaviour
 
             }
         }
-
-        
     }
     public void OnGUI()
     {

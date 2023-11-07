@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using DG.Tweening;
@@ -34,6 +34,7 @@ public class LogicGame : MonoBehaviour
     int winStreak;
     public TextMeshProUGUI txtCombo;
     public Transform targetHT;
+    public bool canClick;
 
     private void Awake()
     {
@@ -42,6 +43,7 @@ public class LogicGame : MonoBehaviour
     void Start()
     {
         Application.targetFrameRate = 60;
+        canClick = true;
         if (!PlayerPrefs.HasKey("WinStreak"))
         {
             winStreak = 0;
@@ -133,6 +135,7 @@ public class LogicGame : MonoBehaviour
                 if (Time.time - timeCount > 0.2f && isDrag) return;
                 if (checkLose) return;
                 if (timer.stopTimer) return;
+                if (!canClick) return;
 
                 RaycastHit raycastHit;
                 bool isHit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out raycastHit, 1000f, layerMask);
@@ -188,7 +191,6 @@ public class LogicGame : MonoBehaviour
         }
 
     }
-
     private void SolveChildOfBB(Bubble bubble)
     {
         if (bubble.hasChildren)
@@ -207,7 +209,6 @@ public class LogicGame : MonoBehaviour
             bubble.hasChildren = false;
         }
     }
-
     void CheckEat()
     {
         Tweener tweener = null;
@@ -300,8 +301,7 @@ public class LogicGame : MonoBehaviour
 
         }
     }
-
-    List<Vector3> listNewPosShuffle = new List<Vector3>();
+    public List<Vector3> listNewPosShuffle = new List<Vector3>();
     public void Shuffle()
     {
         listNewPosShuffle.Clear();
@@ -330,17 +330,18 @@ public class LogicGame : MonoBehaviour
             if (canShuffle)
             {
                 Physics.autoSimulation = false;
-
                 listBBShuffle[currentIndex].transform.DOMove(listNewPosShuffle[currentIndex], 1f)
                     .OnStart(() =>
                     {
                         canShuffle = false;
+                        canClick = false;
                     })
 
                     .OnComplete(() =>
                     {
                         canShuffle = true;
-
+                        Physics.autoSimulation = true;
+                        canClick = true;
                     });
             }
         }
@@ -438,32 +439,11 @@ public class LogicGame : MonoBehaviour
         if (checkLose) return;
         if (canEat) return;
 
-        UndoAction();
-        return;
-    }
-    public void UndoTripple()
-    {
-        if (listBubbleUndo.Count <= 0) return;
-        if (checkLose) return;
-        if (canEat) return;
-
-        int count = 0;
-        for (int i = listBubbleUndo.Count - 1; i >= 0; --i)
-        {
-            if (count >= 3) return;
-            count++;
-            UndoAction();
-
-        }
-    }
-    private void UndoAction()
-    {
         int index = listBubbleUndo.Count - 1;
         Bubble bubble = listBubbleUndo[index];
         bubble.ResetStateIfUndo();
         bubble.transform.DOMove(bubble.originalPos, 0.3f);
         bubble.transform.SetParent(level.transform);
-        //bubble.transform.DOScale(bubble.originalScale, 0.3f);
         bubble.transform.DOScale(new Vector3(1f, 1f, 1f), 0.3f);
         listBB.Add(bubble);
         listBBShuffle.Add(bubble);
@@ -473,6 +453,68 @@ public class LogicGame : MonoBehaviour
         {
             listGOStored[j].Move(listPoint[j], -1, CheckDone);
         }
+        return;
+    }
+    public void UndoTripple()
+    {
+        if (listBubbleUndo.Count <= 0) return;
+        if (checkLose) return;
+        if (canEat) return;
+
+        StartCoroutine(UndoTrippleCoroutine());
+    }
+    private IEnumerator UndoTrippleCoroutine()
+    {
+        int count = 0;
+        for (int i = listBubbleUndo.Count - 1; i >= 0; --i)
+        {
+            if (count >= 3) break;
+            count++;
+
+            int index = listBubbleUndo.Count - 1;
+            Bubble bubble = listBubbleUndo[index];
+            bubble.ResetStateIfUndo();
+            bubble.transform.DOMove(bubble.originalPos, 0.3f);
+            bubble.transform.SetParent(level.transform);
+            bubble.transform.DOScale(new Vector3(1f, 1f, 1f), 0.3f);
+            listBB.Add(bubble);
+            listBBShuffle.Add(bubble);
+            listGOStored.Remove(bubble);
+            listBubbleUndo.RemoveAt(index);
+            yield return new WaitForSeconds(0.2f);
+
+            for (int j = 0; j < listGOStored.Count; ++j)
+            {
+                listGOStored[j].Move(listPoint[j], -1, CheckDone);
+            }
+        }
+    }
+    public void UndoAll()
+    {
+        if (listBubbleUndo.Count <= 0) return;
+        if (checkLose) return;
+        if (canEat) return;
+
+        StartCoroutine(UndoAllCoroutine());
+    }
+    private IEnumerator UndoAllCoroutine()
+    {
+        for (int i = listBubbleUndo.Count - 1; i >= 0; --i)
+        {
+            int index = listBubbleUndo.Count - 1;
+            Bubble bubble = listBubbleUndo[index];
+            bubble.ResetStateIfUndo();
+            bubble.transform.DOMove(bubble.originalPos, 0.3f);
+            bubble.transform.SetParent(level.transform);
+            bubble.transform.DOScale(new Vector3(1f, 1f, 1f), 0.3f);
+            listBB.Add(bubble);
+            listBBShuffle.Add(bubble);
+            listGOStored.Remove(bubble);
+            listBubbleUndo.RemoveAt(index);
+            yield return new WaitForSeconds(0.2f);
+        }
+        Shuffle();
+        canClick = true;
     }
     public void Freeze()
     {

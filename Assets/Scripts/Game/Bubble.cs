@@ -31,8 +31,6 @@ public class Bubble : MonoBehaviour
     {
         meshCollider = GetComponent<MeshCollider>();
     }
-    
-    
     private void FixedUpdate()
     {
         MoveHT();
@@ -109,7 +107,7 @@ public class Bubble : MonoBehaviour
     {
         if (canMoveHT)
         {
-            rb.velocity += (LogicGame.instance.targetHT.position - transform.position) * 0.01f;
+            rb.velocity += (LogicGame.instance.targetHT.position - transform.position) * Time.fixedDeltaTime;
         }
     }
     public void SelectMaterial(int index)

@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 3010417341318161648}
   - component: {fileID: 6428927290568833029}
   - component: {fileID: 6042299365496451216}
-  - component: {fileID: 5113314668408972797}
   m_Layer: 3
   m_Name: BallonBubble
   m_TagString: Untagged
@@ -133,7 +132,6 @@ MonoBehaviour:
   mats:
   - {fileID: 2100000, guid: 1324d02cd0f581644b68db6339e25e35, type: 2}
   - {fileID: 2100000, guid: de5f371303e1b8f4b9dc85f600692a7e, type: 2}
-  targetObject: {fileID: 0}
   canMoveHT: 1
   meshCollider: {fileID: 3010417341318161648}
   rb: {fileID: 6042299365496451216}
@@ -155,18 +153,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
---- !u!114 &5113314668408972797
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2183587030377625258}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f238b0d186f65f40ba14fb3bc7bf726, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4411559402996035341
 GameObject:
   m_ObjectHideFlags: 0

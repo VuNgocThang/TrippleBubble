@@ -41,12 +41,12 @@ public class LoseManager : MonoBehaviour
     public void OpenPanelTimeUp()
     {
         panelTimeUp.SetActive(true);
+        AnimationPopup.instance.AnimScaleZoom(panelTimeUp.transform);
     }
     public void ContinueTimeUp()
     {
         Debug.Log("continue");
-        panelTimeUp.SetActive(false);
-        loseUI.SetActive(false);
+        AnimationPopup.instance.AnimScaleZero(loseUI, panelTimeUp.transform);
         LogicGame.instance.checkLose = false;
         timer.timeOut = false;
         timer.stopTimer = false;
@@ -58,28 +58,41 @@ public class LoseManager : MonoBehaviour
     public void OpenPanelOutOfMove()
     {
         panelOutOfMove.SetActive(true);
+        AnimationPopup.instance.AnimScaleZoom(panelOutOfMove.transform);
     }
     public void ContinueOutOfMove()
     {
-        panelOutOfMove.SetActive(false);
-        loseUI.SetActive(false);
+        AnimationPopup.instance.AnimScaleZero(loseUI, panelOutOfMove.transform);
+        LogicGame.instance.canClick = false;
         LogicGame.instance.checkLose = false;
-        LogicGame.instance.UndoTripple();
+        timer.timeOut = false;
+        timer.stopTimer = false;
+        LogicGame.instance.UndoAll();
     }
-
 
     //Logic Persident
     public void OpenPanelPersident()
     {
+        AnimationPopup.instance.AnimScaleZero(null, panelOutOfMove.transform);
         panelPersident.SetActive(true);
+        AnimationPopup.instance.AnimScaleZoom(panelPersident.transform);
     }
     public void Retry()
     {
-        DOTween.KillAll();
-        SceneManager.LoadScene("SceneGame");
+        AnimationPopup.instance.AnimScaleZero(null, panelPersident.transform);
+        StartCoroutine(WaitForLoadSceneGame("SceneGame"));
     }
     public void BackHome()
     {
-        SceneManager.LoadScene("SceneHome");
+        AnimationPopup.instance.AnimScaleZero(null, panelPersident.transform);
+        StartCoroutine(WaitForLoadSceneGame("SceneHome"));
+
+    }
+
+    IEnumerator WaitForLoadSceneGame(string str)
+    {
+        yield return new WaitForSeconds(0.45f);
+        SceneManager.LoadScene(str);
+        DOTween.KillAll();
     }
 }
