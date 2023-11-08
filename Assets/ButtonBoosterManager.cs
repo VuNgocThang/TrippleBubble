@@ -11,6 +11,10 @@ public class ButtonBoosterManager : MonoBehaviour
     private void Start()
     {
         Init();
+        OnClick(buttons[0], buttons[0].selected, buttons[0].isSelected);
+        OnClick(buttons[1], buttons[1].selected, buttons[1].isSelected);
+        OnClick(buttons[2], buttons[2].selected, buttons[2].isSelected);
+
     }
 
     void Init()
@@ -18,8 +22,8 @@ public class ButtonBoosterManager : MonoBehaviour
         for (int i = 0; i < buttons.Count; i++)
         {
             buttons[i].InitButton();
+            buttons[i].SaveStateBooster(buttons[i].nameBooster, 0);
             UpdateNumBooster(buttons[i].count, buttons[i].btnPlus.gameObject, buttons[i].numBtn, buttons[i].txtNumBtn, buttons[i].btn);
-            OnClick(buttons[i], buttons[i].selected, buttons[i].isSelected);
         }
     }
 
@@ -52,6 +56,9 @@ public class ButtonBoosterManager : MonoBehaviour
 
             selectedObj.SetActive(true);
             buttonBooster.isSelected = true;
+            Debug.Log(buttonBooster.nameBooster);
+
+            buttonBooster.SaveStateBooster($"{buttonBooster.nameBooster}", 1);
         });
     }
 
@@ -80,7 +87,8 @@ public class ButtonBoosterManager : MonoBehaviour
             PlayerPrefs.Save();
             Init();
         }
-
     }
+
+   
 
 }

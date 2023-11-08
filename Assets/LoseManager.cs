@@ -79,11 +79,13 @@ public class LoseManager : MonoBehaviour
     }
     public void Retry()
     {
+        LogicGame.instance.SubHeart();
         AnimationPopup.instance.AnimScaleZero(null, panelPersident.transform);
         StartCoroutine(WaitForLoadSceneGame("SceneGame"));
     }
     public void BackHome()
     {
+        LogicGame.instance.SubHeart();
         AnimationPopup.instance.AnimScaleZero(null, panelPersident.transform);
         StartCoroutine(WaitForLoadSceneGame("SceneHome"));
 

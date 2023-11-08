@@ -32,7 +32,6 @@ public class SelectBoosterManager : MonoBehaviour
 
     IEnumerator WaitForLoadSceneGame()
     {
-        Debug.Log("load");
         yield return new WaitForSeconds(0.45f);
         SceneManager.LoadScene("SceneGame");
         DOTween.KillAll();
@@ -43,6 +42,7 @@ public class SelectBoosterManager : MonoBehaviour
         for (int i = 0; i < btnBoosters.Count; i++)
         {
             btnBoosters[i].selected.SetActive(false);
+            btnBoosters[i].SaveStateBooster(btnBoosters[i].nameBooster, 0);
         }
     }
 

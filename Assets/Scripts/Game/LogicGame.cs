@@ -1,6 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using DG.Tweening;
 using PathCreation;
 using TMPro;
@@ -42,6 +42,10 @@ public class LogicGame : MonoBehaviour
     }
     void Start()
     {
+        Debug.Log(PlayerPrefs.GetInt("BoosterHint"));
+        Debug.Log(PlayerPrefs.GetInt("BoosterTimer"));
+        Debug.Log(PlayerPrefs.GetInt("BoosterLightning"));
+      
         Application.targetFrameRate = 60;
         canClick = true;
         if (!PlayerPrefs.HasKey("WinStreak"))
@@ -71,7 +75,7 @@ public class LogicGame : MonoBehaviour
         int[] arr = new int[count];
         while (countAll > 0)
         {
-            int index = Random.Range(0, count);
+            int index = UnityEngine.Random.Range(0, count);
             if (arr[index] < max)
             {
                 arr[index] += 3;
@@ -87,7 +91,7 @@ public class LogicGame : MonoBehaviour
         int r;
         while (listRandom.Count > 0)
         {
-            r = Random.Range(0, listRandom.Count);
+            r = UnityEngine.Random.Range(0, listRandom.Count);
             list.Add(listRandom[r]);
             listRandom.RemoveAt(r);
         }
@@ -310,7 +314,7 @@ public class LogicGame : MonoBehaviour
         int r;
         while (listBBShuffle.Count > 0)
         {
-            r = Random.Range(0, listBBShuffle.Count);
+            r = UnityEngine.Random.Range(0, listBBShuffle.Count);
             list.Add(listBBShuffle[r]);
             listBBShuffle.RemoveAt(r);
         }
@@ -319,7 +323,7 @@ public class LogicGame : MonoBehaviour
 
         while (list.Count > 0)
         {
-            int i = Random.Range(0, list.Count);
+            int i = UnityEngine.Random.Range(0, list.Count);
             listNewPosShuffle.Add(list[i].transform.position);
             list.RemoveAt(i);
         }
@@ -525,5 +529,19 @@ public class LogicGame : MonoBehaviour
     {
         yield return new WaitForSeconds(5f);
         timer.isFreeze = false;
+    }
+    public void SubHeart()
+    {
+        int heart = PlayerPrefs.GetInt("NumHeart");
+
+        if (heart >= 5)
+        {
+            PlayerPrefs.SetString("LastHeartLossTime", DateTime.Now.ToString());
+            PlayerPrefs.Save();
+        }
+
+        heart--;
+        PlayerPrefs.SetInt("NumHeart", heart);
+        PlayerPrefs.Save();
     }
 }
