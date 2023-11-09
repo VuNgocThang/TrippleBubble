@@ -49,3 +49,6 @@ TagManager:
   - name: Gift
     uniqueID: 762435143
     locked: 0
+  - name: Bubble
+    uniqueID: 4125330313
+    locked: 0

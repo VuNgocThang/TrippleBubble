@@ -25,12 +25,16 @@ public class Bubble : MonoBehaviour
     public bool IsMoving;
     public bool IsDone;
     public Tweener tweenerMove;
+    public GameObject particleBoom;
+    public GameObject particleEat;
+    public GameObject particlePP;
     public bool CanMoving => !IsMoving && !IsDone;
 
     private void Awake()
     {
         meshCollider = GetComponent<MeshCollider>();
     }
+   
     private void FixedUpdate()
     {
         MoveHT();

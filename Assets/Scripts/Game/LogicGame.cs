@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using DG.Tweening;
 using PathCreation;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LogicGame : MonoBehaviour
 {
@@ -42,10 +44,6 @@ public class LogicGame : MonoBehaviour
     }
     void Start()
     {
-        Debug.Log(PlayerPrefs.GetInt("BoosterHint"));
-        Debug.Log(PlayerPrefs.GetInt("BoosterTimer"));
-        Debug.Log(PlayerPrefs.GetInt("BoosterLightning"));
-      
         Application.targetFrameRate = 60;
         canClick = true;
         if (!PlayerPrefs.HasKey("WinStreak"))
@@ -58,10 +56,12 @@ public class LogicGame : MonoBehaviour
         {
             winStreak = PlayerPrefs.GetInt("WinStreak");
         }
-        Debug.Log(winStreak + " WinStreak");
 
         Init();
         canShuffle = true;
+        timer.timeLeft = 200f;
+        UseBooster();
+
     }
     void Init()
     {
@@ -119,6 +119,127 @@ public class LogicGame : MonoBehaviour
         }
 
     }
+
+    void UseBooster()
+    {
+        if (PlayerPrefs.GetInt("BoosterHint") == 1)
+        {
+            Debug.Log("USE HINT");
+            UseBoosterHint();
+        }
+
+        if (PlayerPrefs.GetInt("BoosterTimer") == 1)
+        {
+            Debug.Log("USE TIMER");
+            UseBoosterTimer();
+        }
+
+        if (PlayerPrefs.GetInt("BoosterLightning") == 1)
+        {
+            Debug.Log("USE LIGHTNING");
+            UseBoosterLightning();
+        }
+    }
+
+    int indexHint = -1;
+    void UseBoosterHint()
+    {
+        indexHint = UnityEngine.Random.Range(0, listBBShuffle.Count);
+        for (int i = 0; i < listBBShuffle.Count; i++)
+        {
+            for (int j = i + 1; j < listBBShuffle.Count; j++)
+            {
+                if (listBBShuffle[i].ID == listBBShuffle[indexHint].ID && listBBShuffle[j].ID == listBBShuffle[indexHint].ID
+                    && i != indexHint && j != indexHint)
+                {
+                    var g1 = listBBShuffle[i];
+                    var g2 = listBBShuffle[j];
+                    var g3 = listBBShuffle[indexHint];
+
+
+                    g1.transform.DOScale(new Vector3(1.5f, 1.5f, 1.5f), 1f);
+                    g2.transform.DOScale(new Vector3(1.5f, 1.5f, 1.5f), 1.25f);
+                    g3.transform.DOScale(new Vector3(1.5f, 1.5f, 1.5f), 1.5f);
+                    return;
+                }
+            }
+        }
+    }
+    void UseBoosterTimer()
+    {
+        timer.timeLeft += 30f;
+    }
+    void UseBoosterLightning()
+    {
+        int index = UnityEngine.Random.Range(0, listBBShuffle.Count);
+        if (indexHint != -1)
+        {
+            if (listBBShuffle[index].ID == listBBShuffle[indexHint].ID)
+            {
+                index = UnityEngine.Random.Range(0, listBBShuffle.Count);
+            }
+        }
+
+        for (int i = 0; i < listBBShuffle.Count; i++)
+        {
+            for (int j = i + 1; j < listBBShuffle.Count; j++)
+            {
+                if (listBBShuffle[i].ID == listBBShuffle[index].ID && listBBShuffle[j].ID == listBBShuffle[index].ID
+                    && i != index && j != index)
+                {
+                    var g1 = listBBShuffle[i];
+                    var g2 = listBBShuffle[j];
+                    var g3 = listBBShuffle[index];
+
+
+                    g1.transform.DOScale(new Vector3(1f, 1f, 1f), 1f)
+                        .OnStart(() =>
+                        {
+                            g1.particleBoom.SetActive(true);
+                            g1.particlePP.SetActive(true);
+                        })
+                        .OnComplete(() =>
+                        {
+                            SolveChildOfBB(g1);
+                            g1.gameObject.SetActive(false);
+                            listBBShuffle.Remove(g1);
+                            listBB.Remove(g1);
+                        });
+
+                    g2.transform.DOScale(new Vector3(1f, 1f, 1f), 1f)
+                        .OnStart(() =>
+                        {
+                            g2.particleBoom.SetActive(true);
+                            g2.particlePP.SetActive(true);
+                        })
+                        .OnComplete(() =>
+                        {
+
+                            SolveChildOfBB(g2);
+                            g2.gameObject.SetActive(false);
+                            listBBShuffle.Remove(g2);
+                            listBB.Remove(g2);
+                        });
+
+                    g3.transform.DOScale(new Vector3(1f, 1f, 1f), 1f)
+                        .OnStart(() =>
+                        {
+                            g3.particleBoom.SetActive(true);
+                            g3.particlePP.SetActive(true);
+                        })
+                        .OnComplete(() =>
+                        {
+
+                            SolveChildOfBB(g3);
+                            g3.gameObject.SetActive(false);
+                            listBBShuffle.Remove(g3);
+                            listBB.Remove(g3);
+                        });
+                    return;
+                }
+            }
+        }
+    }
     void Update()
     {
         lineController.CreateLine(listBBShuffle);
@@ -146,6 +267,7 @@ public class LogicGame : MonoBehaviour
                 if (isHit)
                 {
                     Bubble bubble = raycastHit.collider.GetComponent<Bubble>();
+                    bubble.particleEat.SetActive(true);
                     Move(bubble);
                 }
             }
@@ -229,6 +351,9 @@ public class LogicGame : MonoBehaviour
                 listGOStored.Remove(g1);
                 listGOStored.Remove(g2);
                 listGOStored.Remove(g3);
+                g1.particleEat.SetActive(true);
+                g2.particleEat.SetActive(true);
+                g3.particleEat.SetActive(true);
                 g1.Move(g2.transform.parent, 0.3f, () =>
                 {
                     g1.gameObject.SetActive(false);
@@ -274,6 +399,37 @@ public class LogicGame : MonoBehaviour
         CheckWin();
 
     }
+
+    public IEnumerator AnimBoomBB(string str)
+    {
+        for (int i = 0; i < listBB.Count; ++i)
+        {
+            StartCoroutine(AnimBB(listBB[i]));
+            SolveChildOfBB(listBB[i]);
+            yield return new WaitForSeconds(0.2f);
+
+            listBBShuffle.Remove(listBB[i]);
+        }
+
+        yield return new WaitForSeconds(2f);
+        SceneManager.LoadScene(str);
+        DOTween.KillAll();
+    }
+
+    IEnumerator AnimBB(Bubble bb)
+    {
+        bb.particleBoom.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        foreach (var obj in bb.objs)
+        {
+            obj.SetActive(false);
+        }
+        bb.particlePP.SetActive(true);
+        yield return new WaitForSeconds(4.0f);
+
+        bb.gameObject.SetActive(false);
+    }
+
     public void CheckLose()
     {
         if (!checkLose && listGOStored.Count > 6 && !isHint && !canEat)
@@ -281,6 +437,7 @@ public class LogicGame : MonoBehaviour
             Debug.Log("you lose");
             checkLose = true;
             timer.stopTimer = true;
+
             logicUI.OpenLoseUI();
             logicUI.loseUI.OpenPanelOutOfMove();
         }
