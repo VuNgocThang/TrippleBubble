@@ -13,8 +13,10 @@ public class Timer : MonoBehaviour
     public bool stopTimer;
     public bool isFreeze;
 
-    private void Start()
+    
+    public IEnumerator InitTimerSetting()
     {
+        yield return new WaitForSeconds(3f);
         stopTimer = false;
         timeOut = false;
         isFreeze = false;

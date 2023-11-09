@@ -12,6 +12,7 @@ public class LogicGame : MonoBehaviour
 {
     public static LogicGame instance;
     public LogicGameUI logicUI;
+    public UIGameManager uiGame;
     public List<Bubble> listBB;
     [SerializeField] List<Bubble> listBBShuffle;
     [SerializeField] List<GameObject> listObject;
@@ -44,6 +45,7 @@ public class LogicGame : MonoBehaviour
     }
     void Start()
     {
+        uiGame.InitAnim();
         Application.targetFrameRate = 60;
         canClick = true;
         if (!PlayerPrefs.HasKey("WinStreak"))
@@ -60,8 +62,10 @@ public class LogicGame : MonoBehaviour
         Init();
         canShuffle = true;
         timer.timeLeft = 200f;
+        timer.stopTimer = true;
         UseBooster();
 
+        StartCoroutine(timer.InitTimerSetting());
     }
     void Init()
     {

@@ -39,4 +39,17 @@ public class AnimationPopup : MonoBehaviour
         Obj.GetComponent<RectTransform>().anchoredPosition += new Vector2(posX, posY);
         Obj.GetComponent<RectTransform>().DOAnchorPos(pos, timer);
     }
+
+    public void MoveAndActiveFalse(GameObject Obj, int posX, int posY, float timer)
+    {
+        Vector3 pos = Obj.GetComponent<RectTransform>().anchoredPosition;
+        Obj.GetComponent<RectTransform>().anchoredPosition += new Vector2(posX, posY);
+        Obj.GetComponent<RectTransform>().DOAnchorPos(pos, timer)
+            .OnComplete(() =>
+            {
+                Obj.SetActive(false);
+            });
+    }
+
+
 }
