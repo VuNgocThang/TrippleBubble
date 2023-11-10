@@ -80,6 +80,7 @@ public class Bubble : MonoBehaviour
         }
         return result;
     }
+
     public void Move(Transform parent, float time = -1, Action checkEat = null)
     {
         IsMoving = true;
@@ -156,13 +157,11 @@ public class Bubble : MonoBehaviour
         bb.rb.constraints &= ~RigidbodyConstraints.FreezePosition; // bỏ freeze pos
         bb.rb.constraints &= ~RigidbodyConstraints.FreezeRotationY;
     }
-
     public void StateAfterMove()
     {
         meshCollider.enabled = false;
         canMoveHT = false;
     }
-
     public void ResetStateIfUndo()
     {
         meshCollider.enabled = true;

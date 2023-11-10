@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class UnlockNewTiles : MonoBehaviour
 {
-    public int current;
+    public int currentTile;
     public int rewardTile;
     public int max;
     public TextMeshProUGUI text;
@@ -28,13 +28,13 @@ public class UnlockNewTiles : MonoBehaviour
 
         rewardTile = PlayerPrefs.GetInt("RewardTile");
         rewardTile += 1;
-        current = rewardTile;
+        currentTile = rewardTile;
 
         PlayerPrefs.SetInt("RewardTile", rewardTile);
         PlayerPrefs.Save();
 
-        if (current > max) current = max;
-        text.text = $"{current}/{max}";
+        if (currentTile > max) currentTile = max;
+        text.text = $"{currentTile}/{max}";
     }
 
     public void IncreaseMax()

@@ -13,11 +13,23 @@ public class Timer : MonoBehaviour
     public bool stopTimer;
     public bool isFreeze;
 
-    private void Start()
+
+    public IEnumerator InitTimerSetting()
     {
-        stopTimer = false;
-        timeOut = false;
-        isFreeze = false;
+        if (PlayerPrefs.GetInt("BoosterHint") == 1 || PlayerPrefs.GetInt("BoosterTimer") == 1 || PlayerPrefs.GetInt("BoosterLightning") == 1)
+        {
+            yield return new WaitForSeconds(2f);
+            stopTimer = false;
+            timeOut = false;
+            isFreeze = false;
+        }
+        else
+        {
+            stopTimer = false;
+            timeOut = false;
+            isFreeze = false;
+        }
+            
     }
     private void Update()
     {

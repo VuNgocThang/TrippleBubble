@@ -12,9 +12,10 @@ public class LogicGame : MonoBehaviour
 {
     public static LogicGame instance;
     public LogicGameUI logicUI;
+    public UIGameManager uiGame;
     public List<Bubble> listBB;
     [SerializeField] List<Bubble> listBBShuffle;
-    [SerializeField] List<GameObject> listObject;
+    [SerializeField] List<int> listIndex;
     [SerializeField] List<Bubble> listGOStored = new List<Bubble>();
     [SerializeField] LevelSetMap prefabLevel;
     [SerializeField] List<Transform> listPoint = new List<Transform>();
@@ -44,6 +45,7 @@ public class LogicGame : MonoBehaviour
     }
     void Start()
     {
+        uiGame.InitAnim();
         Application.targetFrameRate = 60;
         canClick = true;
         if (!PlayerPrefs.HasKey("WinStreak"))
@@ -60,14 +62,16 @@ public class LogicGame : MonoBehaviour
         Init();
         canShuffle = true;
         timer.timeLeft = 200f;
+        timer.stopTimer = true;
         UseBooster();
 
+        StartCoroutine(timer.InitTimerSetting());
     }
     void Init()
     {
         level = Instantiate(prefabLevel, transform);
 
-        int count = listObject.Count;
+        int count = listIndex.Count;
         int countAll = level.bubbles.Count;
         int max = level.maxEach;
 
@@ -75,10 +79,12 @@ public class LogicGame : MonoBehaviour
         int[] arr = new int[count];
         while (countAll > 0)
         {
-            int index = UnityEngine.Random.Range(0, count);
-            if (arr[index] < max)
+            int i = UnityEngine.Random.Range(0, count);
+            int index = listIndex[i];
+
+            if (arr[i] < max)
             {
-                arr[index] += 3;
+                arr[i] += 3;
                 for (int y = 0; y < 3; y++)
                 {
                     listRandom.Add(index);
@@ -419,7 +425,7 @@ public class LogicGame : MonoBehaviour
     IEnumerator AnimBB(Bubble bb)
     {
         bb.particleBoom.SetActive(true);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         foreach (var obj in bb.objs)
         {
             obj.SetActive(false);
@@ -603,9 +609,11 @@ public class LogicGame : MonoBehaviour
         int index = listBubbleUndo.Count - 1;
         Bubble bubble = listBubbleUndo[index];
         bubble.ResetStateIfUndo();
+        bubble.particleEat.SetActive(false);
         bubble.transform.DOMove(bubble.originalPos, 0.3f);
         bubble.transform.SetParent(level.transform);
         bubble.transform.DOScale(new Vector3(1f, 1f, 1f), 0.3f);
+
         listBB.Add(bubble);
         listBBShuffle.Add(bubble);
         listGOStored.Remove(bubble);
@@ -635,6 +643,7 @@ public class LogicGame : MonoBehaviour
             int index = listBubbleUndo.Count - 1;
             Bubble bubble = listBubbleUndo[index];
             bubble.ResetStateIfUndo();
+            bubble.particleEat.SetActive(false);
             bubble.transform.DOMove(bubble.originalPos, 0.3f);
             bubble.transform.SetParent(level.transform);
             bubble.transform.DOScale(new Vector3(1f, 1f, 1f), 0.3f);
@@ -665,6 +674,7 @@ public class LogicGame : MonoBehaviour
             int index = listBubbleUndo.Count - 1;
             Bubble bubble = listBubbleUndo[index];
             bubble.ResetStateIfUndo();
+            bubble.particleEat.SetActive(false);
             bubble.transform.DOMove(bubble.originalPos, 0.3f);
             bubble.transform.SetParent(level.transform);
             bubble.transform.DOScale(new Vector3(1f, 1f, 1f), 0.3f);
@@ -698,6 +708,10 @@ public class LogicGame : MonoBehaviour
         }
 
         heart--;
+        if (heart <= 0)
+        {
+            heart = 0;
+        }
         PlayerPrefs.SetInt("NumHeart", heart);
         PlayerPrefs.Save();
     }

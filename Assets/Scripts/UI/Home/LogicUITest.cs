@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class LogicUITest : MonoBehaviour
     [SerializeField] Button btnSetting;
     [SerializeField] Button btnCloseSetting;
     [SerializeField] GameObject panelSetting;
+    [SerializeField] CanvasGroup panelSettingCG;
 
     [Header("Star Collector")]
     [SerializeField] Button btnStarCollector;
@@ -19,6 +21,7 @@ public class LogicUITest : MonoBehaviour
     [SerializeField] Button btnPlay;
     [SerializeField] Button btnCloseSelectBooster;
     [SerializeField] SelectBoosterManager selectBooster;
+    [SerializeField] CanvasGroup selectBoosterCG;
 
 
     [Header("Shop")]
@@ -50,12 +53,18 @@ public class LogicUITest : MonoBehaviour
     void OpenPanelSetting()
     {
         panelSetting.SetActive(true);
-        AnimationPopup.instance.AnimScaleZoom(panelSetting.transform.GetChild(0));
-        
+        AnimationPopup.instance.DoTween_Button(panelSettingCG.gameObject, 0, 200, 0.5f);
+        panelSettingCG.DOFade(1f, 0.5f);
+
     }
     void ClosePanelSetting()
     {
-        AnimationPopup.instance.AnimScaleZero(panelSetting, panelSetting.transform.GetChild(0));
+        AnimationPopup.instance.FadeWhileMoveUp(panelSettingCG.gameObject, 0.5f);
+        panelSettingCG.DOFade(0f, 0.5f)
+            .OnComplete(() =>
+            {
+                panelSetting.SetActive(false);
+            });
     }
 
     void OpenPanelStarCollector()
@@ -70,13 +79,18 @@ public class LogicUITest : MonoBehaviour
     void SelectBooster()
     {
         selectBooster.gameObject.SetActive(true);
-        AnimationPopup.instance.AnimScaleZoom(selectBooster.transform.GetChild(0));
+        AnimationPopup.instance.DoTween_Button(selectBooster.selectBoosterCG.gameObject, 0 , 200, 0.5f);
+        selectBooster.selectBoosterCG.DOFade(1f, 0.5f);
+
     }
     void ClosePanelBooster()
     {
-        selectBooster.UnSelectedBtn();
-        AnimationPopup.instance.AnimScaleZero(selectBooster.gameObject, selectBooster.transform.GetChild(0));
-
+        AnimationPopup.instance.FadeWhileMoveUp(selectBooster.selectBoosterCG.gameObject, 0.5f);
+        selectBooster.selectBoosterCG.DOFade(0f, 0.5f)
+            .OnComplete(() =>
+            {
+                selectBooster.selectBoosterCG.gameObject.SetActive(false);
+            });
     }
     void OpenPanelShop()
     {

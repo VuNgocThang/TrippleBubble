@@ -11,6 +11,7 @@ public class SelectBoosterManager : MonoBehaviour
     [SerializeField] Button btnStart;
     [SerializeField] ButtonBoosterManager btnBoosterManager;
     [SerializeField] List<ButtonBooster> btnBoosters;
+    public CanvasGroup selectBoosterCG;
 
     private void Start()
     {
@@ -26,15 +27,15 @@ public class SelectBoosterManager : MonoBehaviour
                 btnBoosters[i].SubCount();
             }
         }
-        AnimationPopup.instance.AnimScaleZero(this.gameObject, this.transform.GetChild(0));
-        StartCoroutine(WaitForLoadSceneGame());
-    }
-
-    IEnumerator WaitForLoadSceneGame()
-    {
-        yield return new WaitForSeconds(0.45f);
-        SceneManager.LoadScene("SceneGame");
-        DOTween.KillAll();
+        AnimationPopup.instance.FadeWhileMoveUp(selectBoosterCG.gameObject, 0.5f);
+        selectBoosterCG.DOFade(0f, 0.5f)
+            .OnComplete(() =>
+            {
+                selectBoosterCG.gameObject.SetActive(false);
+                SceneManager.LoadScene("SceneGame");
+                DOTween.KillAll();
+            });
+        
     }
 
     public void UnSelectedBtn()

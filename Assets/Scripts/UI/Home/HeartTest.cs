@@ -16,7 +16,6 @@ public class HeartTest : MonoBehaviour
     float seconds;
     public bool canPlusHeart;
     int time = 1800;
-
     private DateTime lastHeartLossTime;
 
     private void Start()
@@ -36,6 +35,9 @@ public class HeartTest : MonoBehaviour
 
         if (PlayerPrefs.HasKey("CountdownTimer"))
         {
+            Debug.Log("date time. now" + DateTime.Now);
+            Debug.Log(PlayerPrefs.GetString("LastHeartLossTime"));
+            Debug.Log("playerprefs" + DateTime.Parse(PlayerPrefs.GetString("LastHeartLossTime")));
             float timeSinceLastLoss = (float)(DateTime.Now - DateTime.Parse(PlayerPrefs.GetString("LastHeartLossTime"))).TotalSeconds;
 
             int increaseHeart = (int)timeSinceLastLoss / time;
@@ -64,9 +66,9 @@ public class HeartTest : MonoBehaviour
     private void OnDisable()
     {
         PlayerPrefs.SetFloat("CountdownTimer", countdownTimer);
-        if (heart < maxHeart)
+        if (heart <= maxHeart)
         {
-            PlayerPrefs.SetString("LastNetworkLossTime", DateTime.Now.ToString());
+            PlayerPrefs.SetString("LastHeartLossTime", DateTime.Now.ToString());
             PlayerPrefs.Save();
         }
         PlayerPrefs.Save();
@@ -135,6 +137,7 @@ public class HeartTest : MonoBehaviour
         SaveHeart();
         PlayerPrefs.SetFloat("CountdownTimer", countdownTimer);
         PlayerPrefs.SetString("LastHeartLossTime", DateTime.Now.ToString());
+        Debug.Log(DateTime.Now.ToString() + " quit");
         PlayerPrefs.Save();
     }
 
