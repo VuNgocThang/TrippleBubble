@@ -46,7 +46,6 @@ public class UIGameManager : MonoBehaviour
         {
             Debug.Log("USE LIGHTNING");
             txtChat.text = "USE LIGHTNING";
-
         }
     }
 

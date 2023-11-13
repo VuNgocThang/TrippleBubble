@@ -16,7 +16,7 @@ public class AnimationPopup : MonoBehaviour
 
     public void AnimScaleZoom(Transform trans)
     {
-        trans.DOScale(new Vector3(1f, 1f, 1f), 0.5f)
+        trans.DOScale(new Vector3(1f, 1f, 1f), 1f)
             .SetEase(curveZoomIn);
     }
 

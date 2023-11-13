@@ -35,9 +35,6 @@ public class HeartTest : MonoBehaviour
 
         if (PlayerPrefs.HasKey("CountdownTimer"))
         {
-            Debug.Log("date time. now" + DateTime.Now);
-            Debug.Log(PlayerPrefs.GetString("LastHeartLossTime"));
-            Debug.Log("playerprefs" + DateTime.Parse(PlayerPrefs.GetString("LastHeartLossTime")));
             float timeSinceLastLoss = (float)(DateTime.Now - DateTime.Parse(PlayerPrefs.GetString("LastHeartLossTime"))).TotalSeconds;
 
             int increaseHeart = (int)timeSinceLastLoss / time;

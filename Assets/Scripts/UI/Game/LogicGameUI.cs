@@ -16,12 +16,14 @@ public class LogicGameUI : MonoBehaviour
     [SerializeField] Button btnClosePanelPause;
     [SerializeField] Button btnReplay;
     [SerializeField] GameObject panelPause;
+    [SerializeField] CanvasGroup panelPauseCG;
 
 
     [Header("NoAds")]
     [SerializeField] Button btnRemoveAds;
     [SerializeField] Button btnClosePanelRemoveAds;
     [SerializeField] GameObject panelRemoveAds;
+    [SerializeField] CanvasGroup panelRemoveAdsCG;
 
     [Header("WinUI")]
     public GameObject winUI;
@@ -49,13 +51,20 @@ public class LogicGameUI : MonoBehaviour
     void OpenPanelPause()
     {
         timer.stopTimer = true;
-        panelPause.SetActive(true);
+        panelPause.SetActive(true); 
+        AnimationPopup.instance.DoTween_Button(panelPauseCG.gameObject, 0, 200, 0.5f);
+        panelPauseCG.DOFade(1f, 0.5f);
     }
 
     void ClosePanelPause()
     {
         timer.stopTimer = false;
-        panelPause.SetActive(false);
+        AnimationPopup.instance.FadeWhileMoveUp(panelPauseCG.gameObject, 0.5f);
+        panelPauseCG.DOFade(0f, 0.5f)
+            .OnComplete(() =>
+            {
+                panelPause.SetActive(false);
+            });
     }
     void ReplayGame()
     {
@@ -67,11 +76,18 @@ public class LogicGameUI : MonoBehaviour
     {
         timer.stopTimer = true;
         panelRemoveAds.SetActive(true);
+        AnimationPopup.instance.DoTween_Button(panelRemoveAdsCG.gameObject, 0, 200, 0.5f);
+        panelRemoveAdsCG.DOFade(1f, 0.5f);
     }
     void ClosePanelRemoveAds()
     {
         timer.stopTimer = false;
-        panelRemoveAds.SetActive(false);
+        AnimationPopup.instance.FadeWhileMoveUp(panelRemoveAdsCG.gameObject, 0.5f);
+        panelRemoveAdsCG.DOFade(0f, 0.5f)
+            .OnComplete(() =>
+            {
+                panelRemoveAds.gameObject.SetActive(false);
+            });
     }
 
     public void OpenLoseUI()

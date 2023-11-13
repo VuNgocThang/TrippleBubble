@@ -89,7 +89,7 @@ public class LogicUITest : MonoBehaviour
         selectBooster.selectBoosterCG.DOFade(0f, 0.5f)
             .OnComplete(() =>
             {
-                selectBooster.selectBoosterCG.gameObject.SetActive(false);
+                selectBooster.gameObject.SetActive(false);
             });
     }
     void OpenPanelShop()

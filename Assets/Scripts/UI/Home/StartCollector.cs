@@ -36,11 +36,9 @@ public class StartCollector : MonoBehaviour
         {
             currentIndex = PlayerPrefs.GetInt("CurrentIndex");
         }
-        Debug.Log(currentIndex + " currentIndex");
 
         for (int i = 0; i < listDataRw.Count; i++)
         {
-            Debug.Log(listDataRw[i].imgBtn);
             ButtonSelector btn = Instantiate(prefab, parent);
             btn.Init(listDataRw[i].id, listDataBtn[i].cost, listDataRw[i].value, listDataRw[i].icon, listDataRw[i].imgBtn);
 

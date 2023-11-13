@@ -11,7 +11,7 @@ public class SwitchToggle : MonoBehaviour
     [SerializeField] Sprite bgOff;
     [SerializeField] Image bgImage;
 
-    Toggle toggle;
+    public Toggle toggle;
 
     Vector2 handlePosition;
 
@@ -26,6 +26,7 @@ public class SwitchToggle : MonoBehaviour
         handlePosition = uiHandleRectTransform.anchoredPosition;
 
         toggle.onValueChanged.AddListener(OnSwitch);
+
         if (toggle.isOn)
         {
             OnSwitch(true);
@@ -47,11 +48,6 @@ public class SwitchToggle : MonoBehaviour
                     canToggle = true;
                 });
         }
-
-        //uiHandleRectTransform.DOAnchorPos(on ? handlePosition * -1 : handlePosition, 0.4f)
-        //       .SetEase(Ease.InOutBack);
-
-
 
     }
 
