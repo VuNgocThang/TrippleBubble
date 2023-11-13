@@ -28,10 +28,8 @@ public class CameraResize : MonoBehaviour
         }
         else
         {
-            Debug.Log(Cam.aspect + ".....");
             if (Cam.aspect < (9 / 16f))
             {
-                Debug.Log(Cam.aspect );
                 freeLock.m_Lens.FieldOfView = 80 * Cam.aspect / (9 / 16f);
             }
         }

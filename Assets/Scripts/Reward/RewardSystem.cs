@@ -15,6 +15,7 @@ public class RewardSystem : MonoBehaviour
     {
         if (other.CompareTag("rewardNo"))
         {
+            Debug.Log("hmm");
             var multiplier = other.gameObject.name;
             rewardToShow.text = (50 * float.Parse(multiplier)).ToString();
             PlayerPrefs.SetFloat("reward", float.Parse(rewardToShow.text));
@@ -44,8 +45,7 @@ public class RewardSystem : MonoBehaviour
 
     IEnumerator StopMove()
     {
-        float t = Random.Range(0f, 4f);
-        Debug.Log(t);
+        float t = Random.Range(4f, 7f);
         yield return new WaitForSeconds(t);
         DOTween.Kill(hand);
     }

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Security.Cryptography;
 using DG.Tweening;
 using PathCreation;
 using TMPro;
@@ -15,7 +16,7 @@ public class LogicGame : MonoBehaviour
     public UIGameManager uiGame;
     public List<Bubble> listBB;
     [SerializeField] List<Bubble> listBBShuffle;
-    [SerializeField] List<int> listIndex;
+    public List<int> listIndex;
     [SerializeField] List<Bubble> listGOStored = new List<Bubble>();
     [SerializeField] LevelSetMap prefabLevel;
     [SerializeField] List<Transform> listPoint = new List<Transform>();
@@ -45,6 +46,15 @@ public class LogicGame : MonoBehaviour
     }
     void Start()
     {
+        foreach (int item in DataUseInGame.gameData.listIndex)
+        {
+            if (!listIndex.Contains(item))
+            {
+                listIndex.Add(item);
+            }
+        }
+
+
         uiGame.InitAnim();
         Application.targetFrameRate = 60;
         canClick = true;
@@ -274,6 +284,7 @@ public class LogicGame : MonoBehaviour
                 {
                     Bubble bubble = raycastHit.collider.GetComponent<Bubble>();
                     bubble.particleEat.SetActive(true);
+                    AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.click);
                     Move(bubble);
                 }
             }
@@ -357,6 +368,9 @@ public class LogicGame : MonoBehaviour
                 listGOStored.Remove(g1);
                 listGOStored.Remove(g2);
                 listGOStored.Remove(g3);
+
+                AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.eat);
+
                 g1.particleEat.SetActive(true);
                 g2.particleEat.SetActive(true);
                 g3.particleEat.SetActive(true);
@@ -459,12 +473,14 @@ public class LogicGame : MonoBehaviour
     {
         if (!checkLose && !checkWin && listBB.Count <= 0)
         {
-            Debug.Log("you win");
+            timer.stopTimer = true;
             checkWin = true;
             winStreak++;
             PlayerPrefs.SetInt("WinStreak", winStreak);
             PlayerPrefs.Save();
-            logicUI.OnWinUI();
+            AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.win);
+
+            logicUI.OpenWinUI();
 
         }
     }

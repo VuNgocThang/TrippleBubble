@@ -40,8 +40,8 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
+            backGroundMusic.Play();
             backGroundMusic.UnPause();
-
         }
 
     }

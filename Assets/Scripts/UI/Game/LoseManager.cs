@@ -42,6 +42,7 @@ public class LoseManager : MonoBehaviour
     public void OpenPanelTimeUp()
     {
         panelTimeUp.SetActive(true);
+        AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.fail);
         AnimationPopup.instance.AnimScaleZoom(panelTimeUp.transform);
     }
     public void ContinueTimeUp()
@@ -59,6 +60,7 @@ public class LoseManager : MonoBehaviour
     public void OpenPanelOutOfMove()
     {
         panelOutOfMove.SetActive(true);
+        AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.fail);
         AnimationPopup.instance.AnimScaleZoom(panelOutOfMove.transform);
     }
     public void ContinueOutOfMove()

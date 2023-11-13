@@ -48,6 +48,7 @@ public class LogicUITest : MonoBehaviour
 
         btnShop.onClick.AddListener(OpenPanelShop);
         btnHome.onClick.AddListener(OpenPanelHome);
+
     }
 
     void OpenPanelSetting()

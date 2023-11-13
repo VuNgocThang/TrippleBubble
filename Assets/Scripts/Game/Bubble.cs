@@ -34,7 +34,7 @@ public class Bubble : MonoBehaviour
     {
         meshCollider = GetComponent<MeshCollider>();
     }
-   
+
     private void FixedUpdate()
     {
         MoveHT();
@@ -166,5 +166,14 @@ public class Bubble : MonoBehaviour
     {
         meshCollider.enabled = true;
         canMoveHT = true;
+    }
+
+    public void InitBBInUI(int id)
+    {
+        ID = id;
+        SetColor(id);
+        canMoveHT = false;
+        rb.constraints = RigidbodyConstraints.FreezeAll;
+        rb.constraints &= ~RigidbodyConstraints.FreezeRotationY;
     }
 }

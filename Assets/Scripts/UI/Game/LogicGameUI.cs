@@ -1,6 +1,4 @@
 using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -25,9 +23,20 @@ public class LogicGameUI : MonoBehaviour
     [SerializeField] GameObject panelRemoveAds;
     [SerializeField] CanvasGroup panelRemoveAdsCG;
 
-    [Header("WinUI")]
-    public GameObject winUI;
+    [Header("LoseManager")]
     public LoseManager loseUI;
+
+    [Header("WinUI")]
+    [SerializeField] GameObject winUI;
+    [SerializeField] Canvas canvas;
+    [SerializeField] Camera camerUI;
+    [SerializeField] GameObject panel;
+
+    private void Awake()
+    {
+        canvas = GetComponent<Canvas>();
+    }
+
     private void Start()
     {
         btnHome.onClick.AddListener(BackHome);
@@ -39,19 +48,16 @@ public class LogicGameUI : MonoBehaviour
         btnRemoveAds.onClick.AddListener(OpenPanelRemoveAds);
         btnClosePanelRemoveAds.onClick.AddListener(ClosePanelRemoveAds);
     }
-    public void OnWinUI()
-    {
-        winUI.SetActive(true);
-    }
+    
     void BackHome()
     {
         DOTween.KillAll();
-        SceneManager.LoadScene("SceneHome"); 
+        SceneManager.LoadScene("SceneHome");
     }
     void OpenPanelPause()
     {
         timer.stopTimer = true;
-        panelPause.SetActive(true); 
+        panelPause.SetActive(true);
         AnimationPopup.instance.DoTween_Button(panelPauseCG.gameObject, 0, 200, 0.5f);
         panelPauseCG.DOFade(1f, 0.5f);
     }
@@ -94,4 +100,14 @@ public class LogicGameUI : MonoBehaviour
     {
         loseUI.gameObject.SetActive(true);
     }
+
+    public void OpenWinUI()
+    {
+        canvas.renderMode = RenderMode.ScreenSpaceCamera;
+        camerUI.gameObject.SetActive(true);
+        panel.SetActive(true);
+        winUI.gameObject.SetActive(true);
+    }
+
+    
 }
