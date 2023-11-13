@@ -15,6 +15,7 @@ public class NewTilesHandler : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log(currentIndex + " currentIndex");
         if (PlayerPrefs.HasKey("CurrentIndexNewTile"))
         {
             currentIndex = PlayerPrefs.GetInt("CurrentIndexNewTile");
@@ -28,6 +29,7 @@ public class NewTilesHandler : MonoBehaviour
         {
             Debug.Log(currentIndex);
             int index = listIndexAllGame[currentIndex].listIndex[i];
+            Debug.Log(listIndexAllGame[currentIndex].listIndex[i]);
             listNewBB[i].InitBBInUI(index);
         }
 

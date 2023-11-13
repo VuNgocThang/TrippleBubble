@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.727
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.41587842, g: 0.40485913, b: 0.40691397, a: 0.727}
+  m_IndirectSpecularColor: {r: 0.41687822, g: 0.4053517, b: 0.4077953, a: 0.727}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -207,7 +207,6 @@ GameObject:
   m_Component:
   - component: {fileID: 14980452}
   - component: {fileID: 14980455}
-  - component: {fileID: 14980454}
   - component: {fileID: 14980453}
   m_Layer: 0
   m_Name: CameraUI
@@ -263,14 +262,6 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!81 &14980454
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 14980451}
-  m_Enabled: 1
 --- !u!20 &14980455
 Camera:
   m_ObjectHideFlags: 0
@@ -1257,7 +1248,7 @@ MonoBehaviour:
       - 0
       globalNormalsAngle: 0
       flipNormals: 0
-    vertexPathUpToDate: 1
+    vertexPathUpToDate: 0
     vertexPathMaxAngleError: 0.3
     vertexPathMinVertexSpacing: 0.01
     showTransformTool: 1
@@ -1361,7 +1352,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2751347547741323121, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6042299365496451216, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_Constraints
@@ -2227,7 +2218,7 @@ MonoBehaviour:
       - 0
       globalNormalsAngle: 0
       flipNormals: 0
-    vertexPathUpToDate: 1
+    vertexPathUpToDate: 0
     vertexPathMaxAngleError: 0.3
     vertexPathMinVertexSpacing: 0.01
     showTransformTool: 1
@@ -2376,7 +2367,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2751347547741323121, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6042299365496451216, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_Constraints
@@ -4944,7 +4935,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2751347547741323121, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6042299365496451216, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_Constraints
@@ -6901,7 +6892,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 50
+  field of view: 52
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -6926,7 +6917,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.047631964, y: -0.0007144977, z: 0.000034071607, w: 0.9988647}
+  m_LocalRotation: {x: 0.04656435, y: -0.00071452896, z: 0.000033307715, w: 0.998915}
   m_LocalPosition: {x: 0.010014273, y: 7, z: -6.999993}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -7526,7 +7517,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 50
+    FieldOfView: 52
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
@@ -7547,7 +7538,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1046931341}
-  m_LocalRotation: {x: 0.19290973, y: 0.3048056, z: -0.110316955, w: -0.9261262}
+  m_LocalRotation: {x: 0.19290972, y: 0.3048056, z: -0.11031695, w: -0.9261262}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -8058,7 +8049,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2751347547741323121, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6042299365496451216, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_Constraints
@@ -10461,7 +10452,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2751347547741323121, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6042299365496451216, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_Constraints
@@ -11785,7 +11776,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 50
+    FieldOfView: 52
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
@@ -11806,7 +11797,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1733021222}
-  m_LocalRotation: {x: 0.23574716, y: 0.30960366, z: -0.09603051, w: -0.91615885}
+  m_LocalRotation: {x: 0.23769177, y: 0.30980685, z: -0.09537295, w: -0.9156562}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -11859,7 +11850,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 50
+    FieldOfView: 52
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
@@ -11880,7 +11871,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1746055232}
-  m_LocalRotation: {x: 0.21443278, y: 0.30729285, z: -0.10318614, w: -0.9213807}
+  m_LocalRotation: {x: 0.21541744, y: 0.30740297, z: -0.10285765, w: -0.921151}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -12032,7 +12023,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2751347547741323121, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6042299365496451216, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_Constraints
@@ -12834,7 +12825,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2751347547741323121, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6042299365496451216, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_Constraints
@@ -13586,7 +13577,7 @@ MonoBehaviour:
   m_Follow: {fileID: 1622456312}
   m_CommonLens: 1
   m_Lens:
-    FieldOfView: 50
+    FieldOfView: 52
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
@@ -14771,7 +14762,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2751347547741323121, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6042299365496451216, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_Constraints
