@@ -89,46 +89,46 @@ public class LogicGame : MonoBehaviour
     {
         level = Instantiate(prefabLevel, transform);
 
-        //int count = listIndex.Count;
-        //int countAll = level.bubbles.Count;
-        //int max = level.maxEach;
+        int count = listIndex.Count;
+        int countAll = level.bubbles.Count;
+        int max = level.maxEach;
 
-        //List<int> listRandom = new List<int>();
-        //int[] arr = new int[count];
-        //while (countAll > 0)
-        //{
-        //    int i = UnityEngine.Random.Range(0, count);
-        //    int index = listIndex[i];
+        List<int> listRandom = new List<int>();
+        int[] arr = new int[count];
+        while (countAll > 0)
+        {
+            int i = UnityEngine.Random.Range(0, count);
+            int index = listIndex[i];
 
-        //    if (arr[i] < max)
-        //    {
-        //        arr[i] += 3;
-        //        for (int y = 0; y < 3; y++)
-        //        {
-        //            listRandom.Add(index);
-        //            countAll--;
-        //        }
-        //    }
-        //}
+            if (arr[i] < max)
+            {
+                arr[i] += 3;
+                for (int y = 0; y < 3; y++)
+                {
+                    listRandom.Add(index);
+                    countAll--;
+                }
+            }
+        }
 
-        //List<int> list = new List<int>();
-        //int r;
-        //while (listRandom.Count > 0)
-        //{
-        //    r = UnityEngine.Random.Range(0, listRandom.Count);
-        //    list.Add(listRandom[r]);
-        //    listRandom.RemoveAt(r);
-        //}
-        //listRandom.AddRange(list);
+        List<int> list = new List<int>();
+        int r;
+        while (listRandom.Count > 0)
+        {
+            r = UnityEngine.Random.Range(0, listRandom.Count);
+            list.Add(listRandom[r]);
+            listRandom.RemoveAt(r);
+        }
+        listRandom.AddRange(list);
 
         for (int i = 0; i < level.bubbles.Count; i++)
         {
             listBB.Add(level.bubbles[i]);
         }
-        List<int> listRandom = new List<int>()
-        {
-            2,2,0,4,4,4,0,4,3,0,5,4,2,5,6,7,5
-        };
+        //List<int> listRandom = new List<int>()
+        //{
+        //    2,2,0,4,4,4,0,4,3,0,5,4,2,5,6,7,5
+        //};
         for (int i = 0; i < listRandom.Count; i++)
         {
             listBB[i].CheckHasChild();
@@ -268,12 +268,12 @@ public class LogicGame : MonoBehaviour
     void Update()
     {
         lineController.CreateLine(listBBShuffle);
-        if (Input.GetKeyDown(KeyCode.K))   auto = true; 
-        if (auto && listBB.Count > 0) Move(listBB[0]);
-        //OnClick();
+        //if (Input.GetKeyDown(KeyCode.K))   auto = true; 
+        //if (auto && listBB.Count > 0) Move(listBB[0]);
+        OnClick();
     }
 
-    bool auto =false;
+    //bool auto =false;
 
 
     float timeCount;

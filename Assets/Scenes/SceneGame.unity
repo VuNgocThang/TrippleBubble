@@ -7543,7 +7543,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1046931341}
-  m_LocalRotation: {x: 0.19290972, y: 0.3048056, z: -0.11031695, w: -0.9261262}
+  m_LocalRotation: {x: 0.19290973, y: 0.3048056, z: -0.110316955, w: -0.9261262}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -8772,7 +8772,7 @@ MonoBehaviour:
   listBBShuffle: []
   listIndex: 
   listGOStored: []
-  prefabLevel: {fileID: 7635215401405323783, guid: b8467f0d504d233438f49a3aad8c8ebf, type: 3}
+  prefabLevel: {fileID: 7219589570793363164, guid: dde60a0696d1b4e499802ae2a9f6971f, type: 3}
   listPoint:
   - {fileID: 1146936682}
   - {fileID: 1893466324}

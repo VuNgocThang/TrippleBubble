@@ -23,7 +23,7 @@ public class GameData
         indexLevel = 0;
         listIndex = new List<int>
         {
-            0,1,2,3
+            0,1,2
         };
         heart = 5;
         star = 0;

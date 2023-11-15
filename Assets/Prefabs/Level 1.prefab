@@ -90,7 +90,7 @@ MonoBehaviour:
   - {fileID: 867062172578010777}
   - {fileID: 5575989497236349253}
   - {fileID: 5620297230119225540}
-  maxEach: 6
+  maxEach: 9
 --- !u!114 &774511501829757912
 MonoBehaviour:
   m_ObjectHideFlags: 0

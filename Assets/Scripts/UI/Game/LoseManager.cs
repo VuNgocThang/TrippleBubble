@@ -47,20 +47,20 @@ public class LoseManager : MonoBehaviour
     }
     public void ContinueTimeUp()
     {
-        //if (DataUseInGame.gameData.gold >= 200)
-        //{
+        if (DataUseInGame.gameData.gold >= 200)
+        {
             AnimationPopup.instance.AnimScaleZero(loseUI, panelTimeUp.transform);
-           // GameManager.Instance.SubGold(200);
+            GameManager.Instance.SubGold(200);
             LogicGame.instance.checkLose = false;
             timer.timeOut = false;
             timer.stopTimer = false;
             timer.timeLeft += 60f;
             timer.OnGUI();
-        //}
-        //else
-        //{
-        //    Debug.Log("Not Enough Gold");
-        //}
+        }
+        else
+        {
+            Debug.Log("Not Enough Gold");
+        }
 
     }
 
@@ -73,20 +73,20 @@ public class LoseManager : MonoBehaviour
     }
     public void ContinueOutOfMove()
     {
-        //if (DataUseInGame.gameData.gold >= 200)
-        //{
+        if (DataUseInGame.gameData.gold >= 200)
+        {
             AnimationPopup.instance.AnimScaleZero(loseUI, panelOutOfMove.transform);
-            //GameManager.Instance.SubGold(200);
+            GameManager.Instance.SubGold(200);
             LogicGame.instance.canClick = false;
             LogicGame.instance.checkLose = false;
             timer.timeOut = false;
             timer.stopTimer = false;
             LogicGame.instance.UndoAll();
-        //}
-        //else
-        //{
-        //    Debug.Log("Not Enough Gold");
-        //}
+        }
+        else
+        {
+            Debug.Log("Not Enough Gold");
+        }
     }
 
     //Logic Persident
