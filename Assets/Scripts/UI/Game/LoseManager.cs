@@ -47,13 +47,21 @@ public class LoseManager : MonoBehaviour
     }
     public void ContinueTimeUp()
     {
-        Debug.Log("continue");
-        AnimationPopup.instance.AnimScaleZero(loseUI, panelTimeUp.transform);
-        LogicGame.instance.checkLose = false;
-        timer.timeOut = false;
-        timer.stopTimer = false;
-        timer.timeLeft += 60f;
-        timer.OnGUI();
+        //if (DataUseInGame.gameData.gold >= 200)
+        //{
+            AnimationPopup.instance.AnimScaleZero(loseUI, panelTimeUp.transform);
+           // GameManager.Instance.SubGold(200);
+            LogicGame.instance.checkLose = false;
+            timer.timeOut = false;
+            timer.stopTimer = false;
+            timer.timeLeft += 60f;
+            timer.OnGUI();
+        //}
+        //else
+        //{
+        //    Debug.Log("Not Enough Gold");
+        //}
+
     }
 
     //Logic OutOfMove
@@ -65,35 +73,45 @@ public class LoseManager : MonoBehaviour
     }
     public void ContinueOutOfMove()
     {
-        AnimationPopup.instance.AnimScaleZero(loseUI, panelOutOfMove.transform);
-        LogicGame.instance.canClick = false;
-        LogicGame.instance.checkLose = false;
-        timer.timeOut = false;
-        timer.stopTimer = false;
-        LogicGame.instance.UndoAll();
+        //if (DataUseInGame.gameData.gold >= 200)
+        //{
+            AnimationPopup.instance.AnimScaleZero(loseUI, panelOutOfMove.transform);
+            //GameManager.Instance.SubGold(200);
+            LogicGame.instance.canClick = false;
+            LogicGame.instance.checkLose = false;
+            timer.timeOut = false;
+            timer.stopTimer = false;
+            LogicGame.instance.UndoAll();
+        //}
+        //else
+        //{
+        //    Debug.Log("Not Enough Gold");
+        //}
     }
 
     //Logic Persident
     public void OpenPanelPersident()
     {
-        AnimationPopup.instance.AnimScaleZero(null, panelOutOfMove.transform);
+        AnimationPopup.instance.AnimScaleZero(panelOutOfMove, panelOutOfMove.transform);
+        AnimationPopup.instance.AnimScaleZero(panelTimeUp, panelOutOfMove.transform);
         panelPersident.SetActive(true);
         AnimationPopup.instance.AnimScaleZoom(panelPersident.transform);
     }
     public void Retry()
     {
-        LogicGame.instance.SubHeart();
+        //LogicGame.instance.SubHeart();
+        GameManager.Instance.SubHeart();
         AnimationPopup.instance.AnimScaleZero(null, panelPersident.transform);
         bg.SetActive(false);
         StartCoroutine(LogicGame.instance.AnimBoomBB("SceneGame"));
     }
     public void BackHome()
     {
-        LogicGame.instance.SubHeart();
+        // LogicGame.instance.SubHeart();
+        GameManager.Instance.SubHeart();
         AnimationPopup.instance.AnimScaleZero(null, panelPersident.transform);
         bg.SetActive(false);
         StartCoroutine(LogicGame.instance.AnimBoomBB("SceneHome"));
-
     }
 
 }

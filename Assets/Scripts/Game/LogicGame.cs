@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using DG.Tweening;
 using PathCreation;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -22,7 +23,7 @@ public class LogicGame : MonoBehaviour
     [SerializeField] List<Transform> listPoint = new List<Transform>();
     [SerializeField] LineController lineController;
     [SerializeField] List<Bubble> listBubbleUndo = new List<Bubble>();
-    [SerializeField] Timer timer;
+    public Timer timer;
     [SerializeField] LayerMask layerMask;
     public LevelSetMap level;
     public PathCreator pathCreater;
@@ -33,18 +34,34 @@ public class LogicGame : MonoBehaviour
     public bool checkLose;
     public bool checkWin;
     bool canEat;
-    public int currentIndex;
-    public int nextIndex;
+    //public int currentIndex;
+    //public int nextIndex;
     int winStreak;
     public TextMeshProUGUI txtCombo;
     public Transform targetHT;
     public bool canClick;
-
+    public Transform pathCreaterGift;
+    int currentTotalBB;
     private void Awake()
     {
         if (instance == null) instance = this;
     }
     void Start()
+    {
+        Debug.Log("DataUseInGame.gameData.star : " + DataUseInGame.gameData.star);
+        InitSomething();
+        InitBubbles();
+        currentTotalBB = listBB.Count;
+        canShuffle = true;
+
+        //số bóng *3 + 30 giây
+        timer.timeLeft = currentTotalBB * 3 + 30f;
+
+        timer.stopTimer = true;
+        UseBooster();
+        StartCoroutine(timer.InitTimerSetting());
+    }
+    private void InitSomething()
     {
         foreach (int item in DataUseInGame.gameData.listIndex)
         {
@@ -53,7 +70,6 @@ public class LogicGame : MonoBehaviour
                 listIndex.Add(item);
             }
         }
-
 
         uiGame.InitAnim();
         Application.targetFrameRate = 60;
@@ -68,56 +84,51 @@ public class LogicGame : MonoBehaviour
         {
             winStreak = PlayerPrefs.GetInt("WinStreak");
         }
-
-        Init();
-        canShuffle = true;
-        timer.timeLeft = 200f;
-        timer.stopTimer = true;
-        UseBooster();
-
-        StartCoroutine(timer.InitTimerSetting());
     }
-    void Init()
+    void InitBubbles()
     {
         level = Instantiate(prefabLevel, transform);
 
-        int count = listIndex.Count;
-        int countAll = level.bubbles.Count;
-        int max = level.maxEach;
+        //int count = listIndex.Count;
+        //int countAll = level.bubbles.Count;
+        //int max = level.maxEach;
 
-        List<int> listRandom = new List<int>();
-        int[] arr = new int[count];
-        while (countAll > 0)
-        {
-            int i = UnityEngine.Random.Range(0, count);
-            int index = listIndex[i];
+        //List<int> listRandom = new List<int>();
+        //int[] arr = new int[count];
+        //while (countAll > 0)
+        //{
+        //    int i = UnityEngine.Random.Range(0, count);
+        //    int index = listIndex[i];
 
-            if (arr[i] < max)
-            {
-                arr[i] += 3;
-                for (int y = 0; y < 3; y++)
-                {
-                    listRandom.Add(index);
-                    countAll--;
-                }
-            }
-        }
+        //    if (arr[i] < max)
+        //    {
+        //        arr[i] += 3;
+        //        for (int y = 0; y < 3; y++)
+        //        {
+        //            listRandom.Add(index);
+        //            countAll--;
+        //        }
+        //    }
+        //}
 
-        List<int> list = new List<int>();
-        int r;
-        while (listRandom.Count > 0)
-        {
-            r = UnityEngine.Random.Range(0, listRandom.Count);
-            list.Add(listRandom[r]);
-            listRandom.RemoveAt(r);
-        }
-        listRandom.AddRange(list);
+        //List<int> list = new List<int>();
+        //int r;
+        //while (listRandom.Count > 0)
+        //{
+        //    r = UnityEngine.Random.Range(0, listRandom.Count);
+        //    list.Add(listRandom[r]);
+        //    listRandom.RemoveAt(r);
+        //}
+        //listRandom.AddRange(list);
 
         for (int i = 0; i < level.bubbles.Count; i++)
         {
             listBB.Add(level.bubbles[i]);
         }
-
+        List<int> listRandom = new List<int>()
+        {
+            2,2,0,4,4,4,0,4,3,0,5,4,2,5,6,7,5
+        };
         for (int i = 0; i < listRandom.Count; i++)
         {
             listBB[i].CheckHasChild();
@@ -135,7 +146,6 @@ public class LogicGame : MonoBehaviour
         }
 
     }
-
     void UseBooster()
     {
         if (PlayerPrefs.GetInt("BoosterHint") == 1)
@@ -156,7 +166,6 @@ public class LogicGame : MonoBehaviour
             UseBoosterLightning();
         }
     }
-
     int indexHint = -1;
     void UseBoosterHint()
     {
@@ -259,9 +268,14 @@ public class LogicGame : MonoBehaviour
     void Update()
     {
         lineController.CreateLine(listBBShuffle);
-        OnClick();
-
+        if (Input.GetKeyDown(KeyCode.K))   auto = true; 
+        if (auto && listBB.Count > 0) Move(listBB[0]);
+        //OnClick();
     }
+
+    bool auto =false;
+
+
     float timeCount;
     void OnClick()
     {
@@ -277,6 +291,7 @@ public class LogicGame : MonoBehaviour
                 if (checkLose) return;
                 if (timer.stopTimer) return;
                 if (!canClick) return;
+                if (listGOStored.Count > 6) return;
 
                 RaycastHit raycastHit;
                 bool isHit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out raycastHit, 1000f, layerMask);
@@ -297,7 +312,7 @@ public class LogicGame : MonoBehaviour
 
         SolveChildOfBB(bubble);
 
-        bubble.StateAfterMove();
+        //bubble.StateAfterMove();
 
         listBB.Remove(bubble);
         listBBShuffle.Remove(bubble);
@@ -419,13 +434,13 @@ public class LogicGame : MonoBehaviour
         CheckWin();
 
     }
-
     public IEnumerator AnimBoomBB(string str)
     {
         for (int i = 0; i < listBB.Count; ++i)
         {
             StartCoroutine(AnimBB(listBB[i]));
             SolveChildOfBB(listBB[i]);
+            AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.pop);
             yield return new WaitForSeconds(0.2f);
 
             listBBShuffle.Remove(listBB[i]);
@@ -435,7 +450,6 @@ public class LogicGame : MonoBehaviour
         SceneManager.LoadScene(str);
         DOTween.KillAll();
     }
-
     IEnumerator AnimBB(Bubble bb)
     {
         bb.particleBoom.SetActive(true);
@@ -449,7 +463,6 @@ public class LogicGame : MonoBehaviour
 
         bb.gameObject.SetActive(false);
     }
-
     public void CheckLose()
     {
         if (!checkLose && listGOStored.Count > 6 && !isHint && !canEat)
@@ -479,14 +492,28 @@ public class LogicGame : MonoBehaviour
             PlayerPrefs.SetInt("WinStreak", winStreak);
             PlayerPrefs.Save();
             AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.win);
-
-            logicUI.OpenWinUI();
-
+            pathCreaterGift.DOMove(new Vector3(pathCreaterGift.position.x, -1.5f, pathCreaterGift.transform.position.z), 2f)
+                .OnComplete(() =>
+                {
+                    Debug.Log(Mathf.RoundToInt(timer.timeLeft));
+                    logicUI.OpenWinUI();
+                    GameManager.Instance.AddStar();
+                });
         }
     }
-    public List<Vector3> listNewPosShuffle = new List<Vector3>();
+
+    bool isShuffleing = false;
+    List<Vector3> listNewPosShuffle = new List<Vector3>();
     public void Shuffle()
     {
+        int numShuffle = DataUseInGame.gameData.numShuffleItem;
+        if (numShuffle <= 0) return;
+        if (isShuffleing) return;
+
+        numShuffle--;
+        DataUseInGame.gameData.numShuffleItem = numShuffle;
+        DataUseInGame.instance.SaveData();
+
         listNewPosShuffle.Clear();
 
         List<Bubble> list = new List<Bubble>();
@@ -518,13 +545,15 @@ public class LogicGame : MonoBehaviour
                     {
                         canShuffle = false;
                         canClick = false;
+                        isShuffleing = true;
                     })
 
                     .OnComplete(() =>
                     {
-                        canShuffle = true;
                         Physics.autoSimulation = true;
+                        canShuffle = true;
                         canClick = true;
+                        isShuffleing = false;
                     });
             }
         }
@@ -534,9 +563,16 @@ public class LogicGame : MonoBehaviour
     bool hinting = false;
     public void Hint()
     {
+        int numHint = DataUseInGame.gameData.numHintItem;
+        if (numHint <= 0) return;
+
         isHint = true;
         if (checkLose || canEat || listGOStored.Count > 6) return;
         if (hinting) return;
+
+        numHint--;
+        DataUseInGame.gameData.numHintItem = numHint;
+        DataUseInGame.instance.SaveData();
 
         if (listGOStored.Count > 0)
         {
@@ -618,9 +654,16 @@ public class LogicGame : MonoBehaviour
     }
     public void Undo()
     {
+        int numUndo = DataUseInGame.gameData.numUndoItem;
+
+        if (numUndo <= 0) return;
         if (listBubbleUndo.Count <= 0) return;
         if (checkLose) return;
         if (canEat) return;
+
+        numUndo--;
+        DataUseInGame.gameData.numUndoItem = numUndo;
+        DataUseInGame.instance.SaveData();
 
         int index = listBubbleUndo.Count - 1;
         Bubble bubble = listBubbleUndo[index];
@@ -640,17 +683,28 @@ public class LogicGame : MonoBehaviour
         }
         return;
     }
+
+    bool isUndoing = false;
     public void UndoTripple()
     {
+        int numTrippleUndo = DataUseInGame.gameData.numTrippleUndoItem;
+
+        if (numTrippleUndo <= 0) return;
         if (listBubbleUndo.Count <= 0) return;
         if (checkLose) return;
         if (canEat) return;
+        if (isUndoing) return;
 
+        numTrippleUndo--;
+        DataUseInGame.gameData.numTrippleUndoItem = numTrippleUndo;
+        DataUseInGame.instance.SaveData();
         StartCoroutine(UndoTrippleCoroutine());
     }
     private IEnumerator UndoTrippleCoroutine()
     {
+        isUndoing = true;
         int count = 0;
+
         for (int i = listBubbleUndo.Count - 1; i >= 0; --i)
         {
             if (count >= 3) break;
@@ -674,6 +728,8 @@ public class LogicGame : MonoBehaviour
                 listGOStored[j].Move(listPoint[j], -1, CheckDone);
             }
         }
+
+        isUndoing = false;
     }
     public void UndoAll()
     {
@@ -703,15 +759,27 @@ public class LogicGame : MonoBehaviour
         Shuffle();
         canClick = true;
     }
+
+    bool isFreezeing = false;
     public void Freeze()
     {
+        int numFreeze = DataUseInGame.gameData.numFreezeTimeItem;
+        if (numFreeze <= 0) return;
+        if (isFreezeing) return;
+
+        numFreeze--;
+        DataUseInGame.gameData.numFreezeTimeItem = numFreeze;
+        DataUseInGame.instance.SaveData();
+
         timer.isFreeze = true;
         StartCoroutine(StopFreeze());
     }
     IEnumerator StopFreeze()
     {
+        isFreezeing = true;
         yield return new WaitForSeconds(5f);
         timer.isFreeze = false;
+        isFreezeing = false;
     }
     public void SubHeart()
     {
@@ -731,4 +799,6 @@ public class LogicGame : MonoBehaviour
         PlayerPrefs.SetInt("NumHeart", heart);
         PlayerPrefs.Save();
     }
+
+
 }

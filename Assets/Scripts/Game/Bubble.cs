@@ -87,7 +87,7 @@ public class Bubble : MonoBehaviour
         transform.SetParent(parent);
         tweenerMove = transform.DOLocalMove(Vector3.zero, time == -1 ? 0.3f : time);
         transform.DOScale(new Vector3(1.3f, 1.3f, 1.3f), 0.3f);
-
+        StateAfterMove();
         SelectMaterial(0);
         for (int i = 0; i < objs.Count; i++)
         {
@@ -106,6 +106,10 @@ public class Bubble : MonoBehaviour
             LogicGame.instance.count -= 1;
             IsMoving = false;
             checkEat?.Invoke();
+            //if (LogicGame.instance.count == 0)
+            //{
+            //    LogicGame.instance.CheckLose();
+            //}
         });
     }
     public void MoveHT()
@@ -161,11 +165,15 @@ public class Bubble : MonoBehaviour
     {
         meshCollider.enabled = false;
         canMoveHT = false;
+        rb.constraints = RigidbodyConstraints.FreezeAll;
+        //rb.constraints = RigidbodyConstraints.FreezeRotation;
     }
     public void ResetStateIfUndo()
     {
         meshCollider.enabled = true;
         canMoveHT = true;
+        rb.constraints &= ~RigidbodyConstraints.FreezePosition;
+        rb.constraints &= ~RigidbodyConstraints.FreezeRotationY;
     }
 
     public void InitBBInUI(int id)

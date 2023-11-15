@@ -49,4 +49,10 @@ public class UIGameManager : MonoBehaviour
         }
     }
 
+    private void OnGUI()
+    {
+        int star = DataUseInGame.gameData.star;
+        txtStar.text = star.ToString();
+    }
+
 }

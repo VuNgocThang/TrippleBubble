@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class DataReward
 {
     public int id;
-    public Sprite icon;
     public int value;
+    public string nameRW;
+    public Sprite icon;
     public Sprite imgBtn;
 }

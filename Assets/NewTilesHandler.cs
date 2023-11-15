@@ -15,6 +15,7 @@ public class NewTilesHandler : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log(currentIndex + " currentIndex");
         if (PlayerPrefs.HasKey("CurrentIndexNewTile"))
         {
             currentIndex = PlayerPrefs.GetInt("CurrentIndexNewTile");
@@ -26,7 +27,6 @@ public class NewTilesHandler : MonoBehaviour
 
         for (int i = 0; i < listNewBB.Count; i++)
         {
-            Debug.Log(currentIndex);
             int index = listIndexAllGame[currentIndex].listIndex[i];
             listNewBB[i].InitBBInUI(index);
         }
@@ -35,12 +35,19 @@ public class NewTilesHandler : MonoBehaviour
         {
             if (!DataUseInGame.gameData.listIndex.Contains(item))
             {
-                DataUseInGame.gameData.listIndex.Add(item);
+               // DataUseInGame.gameData.listIndex.Add(item);
             }
             DataUseInGame.instance.SaveData();
         }
 
-        currentIndex++;
+        if (currentIndex < listIndexAllGame.Count - 1)
+        {
+            currentIndex++;
+        }
+        else
+        {
+            currentIndex = listIndexAllGame.Count - 1;
+        }
         PlayerPrefs.SetInt("CurrentIndexNewTile", currentIndex);
         PlayerPrefs.Save();
 

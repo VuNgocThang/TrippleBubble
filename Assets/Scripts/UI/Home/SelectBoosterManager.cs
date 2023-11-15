@@ -20,22 +20,30 @@ public class SelectBoosterManager : MonoBehaviour
 
     void StartGame()
     {
-        for (int i = 0; i < btnBoosters.Count; i++)
+        if (DataUseInGame.gameData.heart > 0 || DataUseInGame.gameData.isHeartInfinity)
         {
-            if (btnBoosters[i].isSelected)
+            for (int i = 0; i < btnBoosters.Count; i++)
             {
-                btnBoosters[i].SubCount();
+                if (btnBoosters[i].isSelected)
+                {
+                    btnBoosters[i].SubCount();
+                }
             }
+            AnimationPopup.instance.FadeWhileMoveUp(selectBoosterCG.gameObject, 0.5f);
+            selectBoosterCG.DOFade(0f, 0.5f)
+                .OnComplete(() =>
+                {
+                    selectBoosterCG.gameObject.SetActive(false);
+                    SceneManager.LoadScene("SceneGame");
+                    DOTween.KillAll();
+                });
         }
-        AnimationPopup.instance.FadeWhileMoveUp(selectBoosterCG.gameObject, 0.5f);
-        selectBoosterCG.DOFade(0f, 0.5f)
-            .OnComplete(() =>
-            {
-                selectBoosterCG.gameObject.SetActive(false);
-                SceneManager.LoadScene("SceneGame");
-                DOTween.KillAll();
-            });
-        
+        else
+        {
+            Debug.Log("Not Enough Heart");
+        }
+
+
     }
 
     public void UnSelectedBtn()

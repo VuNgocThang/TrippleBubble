@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class StartCollector : MonoBehaviour
@@ -12,6 +13,7 @@ public class StartCollector : MonoBehaviour
     public ListUnlockReward unlockReward = new ListUnlockReward();
     public int currentIndex;
     public Transform parent;
+    public int star;
 
     private void Awake()
     {
@@ -19,6 +21,7 @@ public class StartCollector : MonoBehaviour
     }
     private void Start()
     {
+        star = DataUseInGame.gameData.star;
         Init();
         UnlockNewBtnSelector();
         LoadDataItems();
@@ -40,10 +43,15 @@ public class StartCollector : MonoBehaviour
         for (int i = 0; i < listDataRw.Count; i++)
         {
             ButtonSelector btn = Instantiate(prefab, parent);
-            btn.Init(listDataRw[i].id, listDataBtn[i].cost, listDataRw[i].value, listDataRw[i].icon, listDataRw[i].imgBtn);
+            btn.Init(listDataRw[i].id, listDataBtn[i].cost, listDataRw[i].value, listDataRw[i].icon, listDataRw[i].imgBtn, listDataRw[i].nameRW);
 
             DataUnlockReward data = new DataUnlockReward();
             unlockReward.listUnlockReward.Add(data);
+            if (star < btn.cost)
+            {
+                btn.btnBuy.interactable = false;
+            }
+
             if (btn.id > currentIndex)
             {
                 btn.btnBuy.interactable = false;
@@ -57,7 +65,7 @@ public class StartCollector : MonoBehaviour
     {
         foreach (var btn in listDataRw)
         {
-            if (btn.id== index)
+            if (btn.id == index)
             {
                 return listDataRw.IndexOf(btn);
             }
@@ -74,6 +82,7 @@ public class StartCollector : MonoBehaviour
             listBtnSelector[a].btnBuy.onClick.AddListener(() =>
             {
                 listBtnSelector[a].btnBuy.interactable = false;
+                SwitchAdd(listBtnSelector[a].stringName, listBtnSelector[a].value);
 
                 currentIndex++;
                 listBtnSelector[a].idBought = 1;
@@ -83,7 +92,7 @@ public class StartCollector : MonoBehaviour
                 UpdateUnlockBtn();
 
                 if (currentIndex >= listBtnSelector.Count) return;
-                
+
                 listBtnSelector[GetButtonByIndex(currentIndex)].lockObject.SetActive(false);
             });
         }
@@ -96,6 +105,10 @@ public class StartCollector : MonoBehaviour
             if (buttonSelector.id == currentIndex)
             {
                 buttonSelector.btnBuy.interactable = true;
+            }
+            if (star < buttonSelector.cost)
+            {
+                buttonSelector.btnBuy.interactable = false;
             }
         }
     }
@@ -130,6 +143,27 @@ public class StartCollector : MonoBehaviour
         {
             unlockReward = JsonUtility.FromJson<ListUnlockReward>(PlayerPrefs.GetString("Data_Huy"));
             LoadDataItemsJson();
+        }
+    }
+
+    void SwitchAdd(string str, int value)
+    {
+        switch (str)
+        {
+            case "gold":
+                GameManager.Instance.AddGold(value);
+                break;
+            case "star":
+                // do something;
+                break;
+            case "hint":
+                // do something;
+                break;
+            case "lightning":
+                //do something;
+                break;
+            default:
+                break;
         }
     }
 

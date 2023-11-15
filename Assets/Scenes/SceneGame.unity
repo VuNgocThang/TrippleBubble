@@ -207,7 +207,6 @@ GameObject:
   m_Component:
   - component: {fileID: 14980452}
   - component: {fileID: 14980455}
-  - component: {fileID: 14980454}
   - component: {fileID: 14980453}
   m_Layer: 0
   m_Name: CameraUI
@@ -263,14 +262,6 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!81 &14980454
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 14980451}
-  m_Enabled: 1
 --- !u!20 &14980455
 Camera:
   m_ObjectHideFlags: 0
@@ -1361,7 +1352,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2751347547741323121, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6042299365496451216, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_Constraints
@@ -1598,7 +1589,7 @@ GameObject:
   - component: {fileID: 227162267}
   - component: {fileID: 227162266}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: txt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1643,7 +1634,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 5
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b666e7bf2c4d307488ea98b33e8d95a4, type: 2}
   m_sharedMaterial: {fileID: 3465561441409540418, guid: b666e7bf2c4d307488ea98b33e8d95a4, type: 2}
@@ -2376,7 +2367,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2751347547741323121, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6042299365496451216, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_Constraints
@@ -4189,11 +4180,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 104f32eae1c8b9d43a5b37c5c2e7c7ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  btnShuffle: {fileID: 1644926995}
-  btnUndo: {fileID: 1157867686}
   btnHint: {fileID: 1505846206}
+  btnUndo: {fileID: 1157867686}
   btnTrippleUndo: {fileID: 815075324}
+  btnShuffle: {fileID: 1644926995}
   btnFreeze: {fileID: 2106163611}
+  txtNumHint: {fileID: 827793634}
+  txtNumUndo: {fileID: 582154816}
+  txtNumTrippleUndo: {fileID: 227162266}
+  txtNumShuffle: {fileID: 1694798215}
+  txtNumFreeze: {fileID: 1108622652}
 --- !u!1 &563571005
 GameObject:
   m_ObjectHideFlags: 0
@@ -4356,7 +4352,7 @@ GameObject:
   - component: {fileID: 582154817}
   - component: {fileID: 582154816}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: txt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4401,7 +4397,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 5
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b666e7bf2c4d307488ea98b33e8d95a4, type: 2}
   m_sharedMaterial: {fileID: 3465561441409540418, guid: b666e7bf2c4d307488ea98b33e8d95a4, type: 2}
@@ -4944,7 +4940,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2751347547741323121, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6042299365496451216, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_Constraints
@@ -6009,7 +6005,7 @@ GameObject:
   - component: {fileID: 827793635}
   - component: {fileID: 827793634}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: txt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6054,7 +6050,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 5
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b666e7bf2c4d307488ea98b33e8d95a4, type: 2}
   m_sharedMaterial: {fileID: 3465561441409540418, guid: b666e7bf2c4d307488ea98b33e8d95a4, type: 2}
@@ -6901,7 +6897,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 50
+  field of view: 56
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -6926,7 +6922,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.047631964, y: -0.0007144977, z: 0.000034071607, w: 0.9988647}
+  m_LocalRotation: {x: 0.044373482, y: -0.0007146047, z: 0.00003174077, w: 0.9990148}
   m_LocalPosition: {x: 0.010014273, y: 7, z: -6.999993}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -7526,7 +7522,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 50
+    FieldOfView: 56
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
@@ -7547,7 +7543,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1046931341}
-  m_LocalRotation: {x: 0.19290973, y: 0.3048056, z: -0.110316955, w: -0.9261262}
+  m_LocalRotation: {x: 0.19290972, y: 0.3048056, z: -0.11031695, w: -0.9261262}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -7564,6 +7560,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1069076592}
+  - component: {fileID: 1069076593}
   m_Layer: 5
   m_Name: mid
   m_TagString: Untagged
@@ -7593,6 +7590,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 76.76367}
   m_SizeDelta: {x: 795, y: 566.9028}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1069076593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1069076591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9837f49278d261a4c99e36b15f07ccc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toggleMusic: {fileID: 1369352661}
+  toggleSound: {fileID: 1070068963}
+  toggleVibrate: {fileID: 589997353}
 --- !u!1 &1070068961
 GameObject:
   m_ObjectHideFlags: 0
@@ -7791,7 +7803,7 @@ GameObject:
   - component: {fileID: 1108622653}
   - component: {fileID: 1108622652}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: txt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7836,7 +7848,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 5
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b666e7bf2c4d307488ea98b33e8d95a4, type: 2}
   m_sharedMaterial: {fileID: 3465561441409540418, guid: b666e7bf2c4d307488ea98b33e8d95a4, type: 2}
@@ -8058,7 +8070,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2751347547741323121, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6042299365496451216, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_Constraints
@@ -8760,7 +8772,7 @@ MonoBehaviour:
   listBBShuffle: []
   listIndex: 
   listGOStored: []
-  prefabLevel: {fileID: 7219589570793363164, guid: 43de2f2f639f28041ad1f0909ef7d178, type: 3}
+  prefabLevel: {fileID: 7635215401405323783, guid: b8467f0d504d233438f49a3aad8c8ebf, type: 3}
   listPoint:
   - {fileID: 1146936682}
   - {fileID: 1893466324}
@@ -8784,12 +8796,10 @@ MonoBehaviour:
   canShuffle: 0
   checkLose: 0
   checkWin: 0
-  currentIndex: 0
-  nextIndex: 0
   txtCombo: {fileID: 0}
   targetHT: {fileID: 1680275427}
   canClick: 0
-  listNewPosShuffle: []
+  pathCreaterGift: {fileID: 319048781}
 --- !u!1 &1253038786
 GameObject:
   m_ObjectHideFlags: 0
@@ -10461,7 +10471,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2751347547741323121, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6042299365496451216, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_Constraints
@@ -11140,6 +11150,7 @@ MonoBehaviour:
   canvas: {fileID: 1596831846}
   camerUI: {fileID: 14980455}
   panel: {fileID: 163636511}
+  btnClaim: {fileID: 404355321}
 --- !u!1 &1622456311
 GameObject:
   m_ObjectHideFlags: 0
@@ -11484,7 +11495,7 @@ GameObject:
   - component: {fileID: 1694798216}
   - component: {fileID: 1694798215}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: txt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11529,7 +11540,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 5
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b666e7bf2c4d307488ea98b33e8d95a4, type: 2}
   m_sharedMaterial: {fileID: 3465561441409540418, guid: b666e7bf2c4d307488ea98b33e8d95a4, type: 2}
@@ -11785,7 +11796,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 50
+    FieldOfView: 56
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
@@ -11806,7 +11817,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1733021222}
-  m_LocalRotation: {x: 0.23574716, y: 0.30960366, z: -0.09603051, w: -0.91615885}
+  m_LocalRotation: {x: 0.24167483, y: 0.31021902, z: -0.09402365, w: -0.91461307}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -11859,7 +11870,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 50
+    FieldOfView: 56
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
@@ -11880,7 +11891,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1746055232}
-  m_LocalRotation: {x: 0.21443278, y: 0.30729285, z: -0.10318614, w: -0.9213807}
+  m_LocalRotation: {x: 0.21743712, y: 0.3076278, z: -0.10218323, w: -0.92067635}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -12032,7 +12043,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2751347547741323121, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6042299365496451216, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_Constraints
@@ -12834,7 +12845,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2751347547741323121, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6042299365496451216, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_Constraints
@@ -13586,7 +13597,7 @@ MonoBehaviour:
   m_Follow: {fileID: 1622456312}
   m_CommonLens: 1
   m_Lens:
-    FieldOfView: 50
+    FieldOfView: 56
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
@@ -14771,7 +14782,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2751347547741323121, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6042299365496451216, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_Constraints

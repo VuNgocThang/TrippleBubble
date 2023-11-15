@@ -31,6 +31,7 @@ public class LogicGameUI : MonoBehaviour
     [SerializeField] Canvas canvas;
     [SerializeField] Camera camerUI;
     [SerializeField] GameObject panel;
+    [SerializeField] Button btnClaim;
 
     private void Awake()
     {
@@ -47,8 +48,10 @@ public class LogicGameUI : MonoBehaviour
 
         btnRemoveAds.onClick.AddListener(OpenPanelRemoveAds);
         btnClosePanelRemoveAds.onClick.AddListener(ClosePanelRemoveAds);
+
+        btnClaim.onClick.AddListener(CloseWinUI);
     }
-    
+
     void BackHome()
     {
         DOTween.KillAll();
@@ -109,5 +112,14 @@ public class LogicGameUI : MonoBehaviour
         winUI.gameObject.SetActive(true);
     }
 
-    
+    public void CloseWinUI()
+    {
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        camerUI.gameObject.SetActive(false);
+        panel.SetActive(false);
+        winUI.gameObject.SetActive(false);
+        SceneManager.LoadScene("SceneHome");
+    }
+
+
 }

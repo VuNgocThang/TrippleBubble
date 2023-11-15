@@ -6,7 +6,7 @@ public class CameraResize : MonoBehaviour
     public CinemachineFreeLook freeLock;
 
     public Camera Cam;
-   
+
     const float iPhanRatio = 2340f / 1080;
 
     [SerializeField] float minSize = 540;
@@ -28,9 +28,13 @@ public class CameraResize : MonoBehaviour
         }
         else
         {
-            if (Cam.aspect < (9 / 16f))
+            if (Cam.aspect < (18 / 37f))
             {
-                freeLock.m_Lens.FieldOfView = 80 * Cam.aspect / (9 / 16f);
+                freeLock.m_Lens.FieldOfView = 62f;
+            }
+            else
+            {
+                freeLock.m_Lens.FieldOfView = 56f;
             }
         }
     }

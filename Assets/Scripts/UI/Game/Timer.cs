@@ -41,7 +41,7 @@ public class Timer : MonoBehaviour
                 timeLeft = 0;
                 stopTimer = true;
                 timeOut = true;
-                Debug.Log("you lose");
+                Debug.Log("you lose out of time");
                 LogicGame.instance.checkLose = true;
                 LogicGame.instance.Lose();
                 LogicGame.instance.logicUI.OpenLoseUI();

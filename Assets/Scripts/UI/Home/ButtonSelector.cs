@@ -8,6 +8,7 @@ public class ButtonSelector : MonoBehaviour
 {
     public int id;
     public int idBought;
+    public string stringName;
     public int cost;
     public int value;
     public TextMeshProUGUI txtCost;
@@ -22,7 +23,7 @@ public class ButtonSelector : MonoBehaviour
     {
         imgButton = GetComponent<Image>();
     }
-    public void Init(int id, int cost, int value, Sprite icon, Sprite imgBtn)
+    public void Init(int id, int cost, int value, Sprite icon, Sprite imgBtn, string name)
     {
         this.id = id;
         this.cost = cost;
@@ -31,6 +32,7 @@ public class ButtonSelector : MonoBehaviour
         this.imgButton.sprite = imgBtn;
         txtCost.text = cost.ToString();
         txtValue.text = $"x{value}";
+        this.stringName = name;
     }
     
 }
