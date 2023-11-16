@@ -29,7 +29,7 @@ public class Timer : MonoBehaviour
             timeOut = false;
             isFreeze = false;
         }
-            
+
     }
     private void Update()
     {
@@ -48,6 +48,11 @@ public class Timer : MonoBehaviour
                 LogicGame.instance.logicUI.loseUI.OpenPanelTimeUp();
 
             }
+        }
+
+        if (timeLeft < 0.6f)
+        {
+            LogicGame.instance.canClick = false;
         }
     }
     public void OnGUI()

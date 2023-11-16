@@ -291,6 +291,7 @@ public class LogicGame : MonoBehaviour
                 if (timer.stopTimer) return;
                 if (!canClick) return;
                 if (listGOStored.Count > 6) return;
+                //if (timer.timeLeft < 1f) return;
 
                 RaycastHit raycastHit;
                 bool isHit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out raycastHit, 1000f, layerMask);
@@ -504,6 +505,7 @@ public class LogicGame : MonoBehaviour
         }
     }
 
+    public bool useByBtn;
     bool isShuffleing = false;
     List<Vector3> listNewPosShuffle = new List<Vector3>();
     public void Shuffle()
@@ -511,8 +513,10 @@ public class LogicGame : MonoBehaviour
         int numShuffle = DataUseInGame.gameData.numShuffleItem;
         if (numShuffle <= 0) return;
         if (isShuffleing) return;
-
-        numShuffle--;
+        if (useByBtn)
+        {
+            numShuffle--;
+        }
         DataUseInGame.gameData.numShuffleItem = numShuffle;
         DataUseInGame.instance.SaveData();
 
@@ -556,6 +560,7 @@ public class LogicGame : MonoBehaviour
                         canShuffle = true;
                         canClick = true;
                         isShuffleing = false;
+                        useByBtn = false;
                     });
             }
         }
@@ -746,11 +751,13 @@ public class LogicGame : MonoBehaviour
         if (listBubbleUndo.Count <= 0) return;
         if (checkLose) return;
         if (canEat) return;
+        if (isUndoing) return;
 
         StartCoroutine(UndoAllCoroutine());
     }
     private IEnumerator UndoAllCoroutine()
     {
+        isUndoing = true;
         for (int i = listBubbleUndo.Count - 1; i >= 0; --i)
         {
             int index = listBubbleUndo.Count - 1;
@@ -770,8 +777,11 @@ public class LogicGame : MonoBehaviour
             listBubbleUndo.RemoveAt(index);
             yield return new WaitForSeconds(0.2f);
         }
+
         Shuffle();
         canClick = true;
+        isUndoing = false;
+        timer.stopTimer = false;
     }
 
     bool isFreezeing = false;
@@ -814,5 +824,11 @@ public class LogicGame : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-
+    public IEnumerator CanClickAgain()
+    {
+        yield return new WaitForSeconds(0.4f);
+        timer.stopTimer = false;
+        canClick = true;
+        CheckLose();
+    }
 }

@@ -30,7 +30,14 @@ public class ButtonController : MonoBehaviour
         btnHint.onClick.AddListener(LogicGame.instance.Hint);
         btnUndo.onClick.AddListener(LogicGame.instance.Undo);
         btnTrippleUndo.onClick.AddListener(LogicGame.instance.UndoTripple);
-        btnShuffle.onClick.AddListener(LogicGame.instance.Shuffle);
+
+        //btnShuffle.onClick.AddListener(LogicGame.instance.Shuffle);
+        btnShuffle.onClick.AddListener(() =>
+        {
+            LogicGame.instance.useByBtn = true;
+            LogicGame.instance.Shuffle();
+        });
+
         btnFreeze.onClick.AddListener(LogicGame.instance.Freeze);
     }
 

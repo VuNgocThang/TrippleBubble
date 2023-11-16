@@ -1,8 +1,6 @@
 using DG.Tweening;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LoseManager : MonoBehaviour
@@ -62,26 +60,27 @@ public class LoseManager : MonoBehaviour
                     loseUI.gameObject.SetActive(false);
                 });
             GameManager.Instance.SubGold(200);
-            LogicGame.instance.checkLose = false;
-            timer.timeOut = false;
-            timer.stopTimer = false;
             timer.timeLeft += 60f;
+            LogicGame.instance.checkLose = false;
             timer.OnGUI();
+            timer.timeOut = false;
+            StartCoroutine(LogicGame.instance.CanClickAgain());
         }
         else
         {
             Debug.Log("Not Enough Gold");
         }
-
     }
+
+    
 
     //Logic OutOfMove
     public void OpenPanelOutOfMove()
     {
         AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.fail);
         panelOutOfMove.SetActive(true);
-        AnimationPopup.instance.DoTween_Button(panelOutOfMoveCG.gameObject, 0, 200, 0.5f);
         panelOutOfMoveCG.DOFade(1f, 0.5f);
+        AnimationPopup.instance.DoTween_Button(panelOutOfMoveCG.gameObject, 0, 200, 0.55f);
     }
     public void ContinueOutOfMove()
     {
@@ -99,8 +98,8 @@ public class LoseManager : MonoBehaviour
             GameManager.Instance.SubGold(200);
             LogicGame.instance.canClick = false;
             LogicGame.instance.checkLose = false;
+            timer.stopTimer = true;
             timer.timeOut = false;
-            timer.stopTimer = false;
             LogicGame.instance.UndoAll();
         }
         else

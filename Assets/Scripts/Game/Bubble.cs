@@ -34,10 +34,14 @@ public class Bubble : MonoBehaviour
     {
         meshCollider = GetComponent<MeshCollider>();
     }
-
-    private void FixedUpdate()
+    private void Update()
     {
         MoveHT();
+        transform.localRotation = Quaternion.Euler(new Vector3(0f, transform.localRotation.y, 0f));
+    }
+    private void FixedUpdate()
+    {
+        //MoveHT();
     }
 
     public void Init(int id)
@@ -106,17 +110,14 @@ public class Bubble : MonoBehaviour
             LogicGame.instance.count -= 1;
             IsMoving = false;
             checkEat?.Invoke();
-            //if (LogicGame.instance.count == 0)
-            //{
-            //    LogicGame.instance.CheckLose();
-            //}
         });
     }
     public void MoveHT()
     {
         if (canMoveHT)
         {
-            rb.velocity += (LogicGame.instance.targetHT.position - transform.position) * Time.fixedDeltaTime;
+            rb.velocity += (LogicGame.instance.targetHT.position - transform.position) * Time.deltaTime;
+            //rb.velocity += (LogicGame.instance.targetHT.position - transform.position) * Time.fixedDeltaTime;
         }
     }
     public void SelectMaterial(int index)
@@ -175,6 +176,7 @@ public class Bubble : MonoBehaviour
         canMoveHT = true;
         rb.constraints &= ~RigidbodyConstraints.FreezePosition;
         rb.constraints &= ~RigidbodyConstraints.FreezeRotationY;
+        transform.localRotation = Quaternion.Euler(new Vector3(0f, transform.localRotation.y, 0f));
     }
 
     public void InitBBInUI(int id)

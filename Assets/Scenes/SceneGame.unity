@@ -7588,7 +7588,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1046931341}
-  m_LocalRotation: {x: 0.19290973, y: 0.3048056, z: -0.110316955, w: -0.9261262}
+  m_LocalRotation: {x: 0.19290972, y: 0.3048056, z: -0.11031695, w: -0.9261262}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -8856,6 +8856,7 @@ MonoBehaviour:
   targetHT: {fileID: 1680275427}
   canClick: 0
   pathCreaterGift: {fileID: 319048781}
+  useByBtn: 0
 --- !u!1 &1253038786
 GameObject:
   m_ObjectHideFlags: 0
