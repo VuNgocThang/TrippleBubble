@@ -62,4 +62,22 @@ public class AnimationPopup : MonoBehaviour
     }
 
 
+    //void OpenPanelSetting()
+    //{
+    //    panelSetting.SetActive(true);
+    //    AnimationPopup.instance.DoTween_Button(panelSettingCG.gameObject, 0, 200, 0.5f);
+    //    panelSettingCG.DOFade(1f, 0.5f);
+
+    //}
+    //void ClosePanelSetting()
+    //{
+    //    AnimationPopup.instance.FadeWhileMoveUp(panelSettingCG.gameObject, 0.5f);
+    //    panelSettingCG.DOFade(0f, 0.5f)
+    //        .OnComplete(() =>
+    //        {
+    //            panelSetting.SetActive(false);
+    //        });
+    //}
+
+
 }

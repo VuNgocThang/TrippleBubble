@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -12,6 +13,7 @@ public class SelectBoosterManager : MonoBehaviour
     [SerializeField] ButtonBoosterManager btnBoosterManager;
     [SerializeField] List<ButtonBooster> btnBoosters;
     public CanvasGroup selectBoosterCG;
+    [SerializeField] TextMeshProUGUI txtNumLV;
 
     private void Start()
     {
@@ -53,6 +55,12 @@ public class SelectBoosterManager : MonoBehaviour
             btnBoosters[i].selected.SetActive(false);
             btnBoosters[i].SaveStateBooster(btnBoosters[i].nameBooster, 0);
         }
+    }
+
+    private void OnGUI()
+    {
+        int indexLevel = DataUseInGame.gameData.indexLevel + 1;
+        txtNumLV.text = indexLevel.ToString();
     }
 
 }

@@ -26,13 +26,13 @@ public class GameData
             0,1,2
         };
         heart = 5;
-        star = 0;
-        gold = 0;
-        numHintItem = 999;
-        numShuffleItem = 999;
-        numUndoItem = 999;
-        numTrippleUndoItem = 999;
-        numFreezeTimeItem = 999;
+        star = 1000000;
+        gold = 1000000;
+        numHintItem = 100;
+        numShuffleItem = 100;
+        numUndoItem = 100;
+        numTrippleUndoItem = 100;
+        numFreezeTimeItem = 100;
         isHeartInfinity = false;
         timeHeartInfinity = 0;
     }
@@ -57,6 +57,7 @@ public class DataUseInGame : MonoBehaviour
     private void Start()
     {
         LoadData();
+
         CheckTimeHeartInfinity();
     }
 

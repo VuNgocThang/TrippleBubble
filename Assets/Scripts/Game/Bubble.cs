@@ -166,11 +166,12 @@ public class Bubble : MonoBehaviour
         meshCollider.enabled = false;
         canMoveHT = false;
         rb.constraints = RigidbodyConstraints.FreezeAll;
+        transform.localRotation = Quaternion.Euler(new Vector3(0f, 90f, 0f));
         //rb.constraints = RigidbodyConstraints.FreezeRotation;
     }
     public void ResetStateIfUndo()
     {
-        meshCollider.enabled = true;
+        //meshCollider.enabled = true;
         canMoveHT = true;
         rb.constraints &= ~RigidbodyConstraints.FreezePosition;
         rb.constraints &= ~RigidbodyConstraints.FreezeRotationY;

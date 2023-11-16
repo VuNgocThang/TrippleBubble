@@ -114,6 +114,14 @@ public class LogicGameUI : MonoBehaviour
 
     public void CloseWinUI()
     {
+        int index = DataUseInGame.gameData.indexLevel;
+        if (index < LogicGame.instance.listLevel.Count - 1)
+        {
+            index++;
+        }
+        DataUseInGame.gameData.indexLevel = index;
+        DataUseInGame.instance.SaveData();
+
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
         camerUI.gameObject.SetActive(false);
         panel.SetActive(false);

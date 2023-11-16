@@ -53,6 +53,9 @@ public class UIGameManager : MonoBehaviour
     {
         int star = DataUseInGame.gameData.star;
         txtStar.text = star.ToString();
+
+        int indexLevel = DataUseInGame.gameData.indexLevel + 1;
+        txtLevel.text = indexLevel.ToString();
     }
 
 }

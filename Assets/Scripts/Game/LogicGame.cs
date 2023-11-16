@@ -1,12 +1,9 @@
-﻿using System;
+﻿using DG.Tweening;
+using PathCreation;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
-using System.Security.Cryptography;
-using DG.Tweening;
-using PathCreation;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -19,12 +16,14 @@ public class LogicGame : MonoBehaviour
     [SerializeField] List<Bubble> listBBShuffle;
     public List<int> listIndex;
     [SerializeField] List<Bubble> listGOStored = new List<Bubble>();
-    [SerializeField] LevelSetMap prefabLevel;
+    //[SerializeField] LevelSetMap prefabLevel;
     [SerializeField] List<Transform> listPoint = new List<Transform>();
     [SerializeField] LineController lineController;
     [SerializeField] List<Bubble> listBubbleUndo = new List<Bubble>();
     public Timer timer;
     [SerializeField] LayerMask layerMask;
+    public List<LevelSetMap> listLevel;
+    public int indexLevel;
     public LevelSetMap level;
     public PathCreator pathCreater;
     public int count;
@@ -34,21 +33,21 @@ public class LogicGame : MonoBehaviour
     public bool checkLose;
     public bool checkWin;
     bool canEat;
-    //public int currentIndex;
-    //public int nextIndex;
     int winStreak;
     public TextMeshProUGUI txtCombo;
     public Transform targetHT;
     public bool canClick;
     public Transform pathCreaterGift;
     int currentTotalBB;
+    //[SerializeField] TextMeshProUGUI textTest;
     private void Awake()
     {
         if (instance == null) instance = this;
     }
     void Start()
     {
-        Debug.Log("DataUseInGame.gameData.star : " + DataUseInGame.gameData.star);
+        indexLevel = DataUseInGame.gameData.indexLevel;
+
         InitSomething();
         InitBubbles();
         currentTotalBB = listBB.Count;
@@ -87,7 +86,7 @@ public class LogicGame : MonoBehaviour
     }
     void InitBubbles()
     {
-        level = Instantiate(prefabLevel, transform);
+        level = Instantiate(listLevel[indexLevel], transform);
 
         int count = listIndex.Count;
         int countAll = level.bubbles.Count;
@@ -268,12 +267,12 @@ public class LogicGame : MonoBehaviour
     void Update()
     {
         lineController.CreateLine(listBBShuffle);
-        //if (Input.GetKeyDown(KeyCode.K))   auto = true; 
-        //if (auto && listBB.Count > 0) Move(listBB[0]);
+        if (Input.GetKeyDown(KeyCode.K)) auto = true;
+        if (auto && listBB.Count > 0) Move(listBB[0]);
         OnClick();
     }
 
-    //bool auto =false;
+    bool auto = false;
 
 
     float timeCount;
@@ -383,6 +382,9 @@ public class LogicGame : MonoBehaviour
                 listGOStored.Remove(g1);
                 listGOStored.Remove(g2);
                 listGOStored.Remove(g3);
+
+                //textTest.text = "123321";
+                //textTest.transform.position = Camera.main.WorldToScreenPoint(g2.transform.position);
 
                 AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.eat);
 
@@ -669,7 +671,11 @@ public class LogicGame : MonoBehaviour
         Bubble bubble = listBubbleUndo[index];
         bubble.ResetStateIfUndo();
         bubble.particleEat.SetActive(false);
-        bubble.transform.DOMove(bubble.originalPos, 0.3f);
+        bubble.transform.DOMove(bubble.originalPos, 0.3f).
+            OnComplete(() =>
+            {
+                bubble.meshCollider.enabled = true;
+            });
         bubble.transform.SetParent(level.transform);
         bubble.transform.DOScale(new Vector3(1f, 1f, 1f), 0.3f);
 
@@ -714,7 +720,11 @@ public class LogicGame : MonoBehaviour
             Bubble bubble = listBubbleUndo[index];
             bubble.ResetStateIfUndo();
             bubble.particleEat.SetActive(false);
-            bubble.transform.DOMove(bubble.originalPos, 0.3f);
+            bubble.transform.DOMove(bubble.originalPos, 0.3f)
+                .OnComplete(() =>
+                {
+                    bubble.meshCollider.enabled = true;
+                });
             bubble.transform.SetParent(level.transform);
             bubble.transform.DOScale(new Vector3(1f, 1f, 1f), 0.3f);
             listBB.Add(bubble);
@@ -747,7 +757,11 @@ public class LogicGame : MonoBehaviour
             Bubble bubble = listBubbleUndo[index];
             bubble.ResetStateIfUndo();
             bubble.particleEat.SetActive(false);
-            bubble.transform.DOMove(bubble.originalPos, 0.3f);
+            bubble.transform.DOMove(bubble.originalPos, 0.3f)
+                .OnComplete(() =>
+                {
+                    bubble.meshCollider.enabled = true;
+                });
             bubble.transform.SetParent(level.transform);
             bubble.transform.DOScale(new Vector3(1f, 1f, 1f), 0.3f);
             listBB.Add(bubble);

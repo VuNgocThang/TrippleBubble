@@ -15,16 +15,20 @@ public class LoseManager : MonoBehaviour
     public GameObject panelTimeUp;
     public Button btnContinueTimeUp;
     public Button btnGiveUpTimeUp;
+    public CanvasGroup panelTimeUpCG;
 
     [Header("Out of Move")]
     public GameObject panelOutOfMove;
     public Button btnContinueOutOfMove;
     public Button btnGiveUpOutOfMove;
+    public CanvasGroup panelOutOfMoveCG;
+
 
     [Header("Persident")]
     public GameObject panelPersident;
     public Button btnRetry;
     public Button btnHome;
+    public CanvasGroup panelPersidentCG;
 
     private void Start()
     {
@@ -41,15 +45,22 @@ public class LoseManager : MonoBehaviour
     // Logic TimeUp
     public void OpenPanelTimeUp()
     {
-        panelTimeUp.SetActive(true);
         AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.fail);
-        AnimationPopup.instance.AnimScaleZoom(panelTimeUp.transform);
+        panelTimeUp.SetActive(true);
+        AnimationPopup.instance.DoTween_Button(panelTimeUpCG.gameObject, 0, 200, 0.5f);
+        panelTimeUpCG.DOFade(1f, 0.5f);
     }
     public void ContinueTimeUp()
     {
         if (DataUseInGame.gameData.gold >= 200)
         {
-            AnimationPopup.instance.AnimScaleZero(loseUI, panelTimeUp.transform);
+            AnimationPopup.instance.FadeWhileMoveUp(panelTimeUpCG.gameObject, 0.5f);
+            panelTimeUpCG.DOFade(0f, 0.5f)
+                .OnComplete(() =>
+                {
+                    panelTimeUp.SetActive(false);
+                    loseUI.gameObject.SetActive(false);
+                });
             GameManager.Instance.SubGold(200);
             LogicGame.instance.checkLose = false;
             timer.timeOut = false;
@@ -67,15 +78,24 @@ public class LoseManager : MonoBehaviour
     //Logic OutOfMove
     public void OpenPanelOutOfMove()
     {
-        panelOutOfMove.SetActive(true);
         AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.fail);
-        AnimationPopup.instance.AnimScaleZoom(panelOutOfMove.transform);
+        panelOutOfMove.SetActive(true);
+        AnimationPopup.instance.DoTween_Button(panelOutOfMoveCG.gameObject, 0, 200, 0.5f);
+        panelOutOfMoveCG.DOFade(1f, 0.5f);
     }
     public void ContinueOutOfMove()
     {
         if (DataUseInGame.gameData.gold >= 200)
         {
-            AnimationPopup.instance.AnimScaleZero(loseUI, panelOutOfMove.transform);
+            AnimationPopup.instance.FadeWhileMoveUp(panelOutOfMoveCG.gameObject, 0.5f);
+            panelOutOfMoveCG.DOFade(0f, 0.5f)
+                .OnComplete(() =>
+                {
+                    panelOutOfMove.SetActive(false);
+                    loseUI.gameObject.SetActive(false);
+
+                });
+
             GameManager.Instance.SubGold(200);
             LogicGame.instance.canClick = false;
             LogicGame.instance.checkLose = false;
@@ -92,16 +112,30 @@ public class LoseManager : MonoBehaviour
     //Logic Persident
     public void OpenPanelPersident()
     {
-        AnimationPopup.instance.AnimScaleZero(panelOutOfMove, panelOutOfMove.transform);
-        AnimationPopup.instance.AnimScaleZero(panelTimeUp, panelOutOfMove.transform);
+        AnimationPopup.instance.FadeWhileMoveUp(panelOutOfMoveCG.gameObject, 0.5f);
+        panelOutOfMoveCG.DOFade(0f, 0.5f)
+            .OnComplete(() =>
+            {
+                panelOutOfMove.SetActive(false);
+            });
+
+        AnimationPopup.instance.FadeWhileMoveUp(panelTimeUpCG.gameObject, 0.5f);
+        panelTimeUpCG.DOFade(0f, 0.5f)
+               .OnComplete(() =>
+               {
+                   panelTimeUp.SetActive(false);
+               });
+
         panelPersident.SetActive(true);
-        AnimationPopup.instance.AnimScaleZoom(panelPersident.transform);
+        AnimationPopup.instance.DoTween_Button(panelPersidentCG.gameObject, 0, 200, 0.5f);
+        panelPersidentCG.DOFade(1f, 0.5f);
     }
     public void Retry()
     {
-        //LogicGame.instance.SubHeart();
         GameManager.Instance.SubHeart();
-        AnimationPopup.instance.AnimScaleZero(null, panelPersident.transform);
+        AnimationPopup.instance.FadeWhileMoveUp(panelPersidentCG.gameObject, 0.5f);
+        panelPersidentCG.DOFade(0f, 0.5f);
+
         bg.SetActive(false);
         StartCoroutine(LogicGame.instance.AnimBoomBB("SceneGame"));
     }
@@ -109,9 +143,31 @@ public class LoseManager : MonoBehaviour
     {
         // LogicGame.instance.SubHeart();
         GameManager.Instance.SubHeart();
-        AnimationPopup.instance.AnimScaleZero(null, panelPersident.transform);
+        AnimationPopup.instance.FadeWhileMoveUp(panelPersidentCG.gameObject, 0.5f);
+        panelPersidentCG.DOFade(0f, 0.5f);
         bg.SetActive(false);
         StartCoroutine(LogicGame.instance.AnimBoomBB("SceneHome"));
     }
+
+
+
+
+
+    //void OpenPanelSetting()
+    //{
+    //    panelSetting.SetActive(true);
+    //    AnimationPopup.instance.DoTween_Button(panelSettingCG.gameObject, 0, 200, 0.5f);
+    //    panelSettingCG.DOFade(1f, 0.5f);
+
+    //}
+    //void ClosePanelSetting()
+    //{
+    //    AnimationPopup.instance.FadeWhileMoveUp(panelSettingCG.gameObject, 0.5f);
+    //    panelSettingCG.DOFade(0f, 0.5f)
+    //        .OnComplete(() =>
+    //        {
+    //            panelSetting.SetActive(false);
+    //        });
+    //}
 
 }

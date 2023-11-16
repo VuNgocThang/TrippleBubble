@@ -35,7 +35,7 @@ public class NewTilesHandler : MonoBehaviour
         {
             if (!DataUseInGame.gameData.listIndex.Contains(item))
             {
-               // DataUseInGame.gameData.listIndex.Add(item);
+               DataUseInGame.gameData.listIndex.Add(item);
             }
             DataUseInGame.instance.SaveData();
         }
