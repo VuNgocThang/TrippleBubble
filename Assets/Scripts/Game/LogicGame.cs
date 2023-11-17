@@ -38,7 +38,7 @@ public class LogicGame : MonoBehaviour
     public bool canClick;
     public Transform pathCreaterGift;
     int currentTotalBB;
-    //[SerializeField] TextMeshProUGUI textTest;
+    public GameObject particleTest;
     private void Awake()
     {
         if (instance == null) instance = this;
@@ -53,8 +53,7 @@ public class LogicGame : MonoBehaviour
         canShuffle = true;
 
         //số bóng *3 + 30 giây
-        //timer.timeLeft = currentTotalBB * 3 + 30f;
-        timer.timeLeft =4f;
+        timer.timeLeft = currentTotalBB * 3 + 30f;
 
         timer.stopTimer = true;
         UseBooster();
@@ -132,7 +131,7 @@ public class LogicGame : MonoBehaviour
         {
             listBB[i].CheckHasChild();
             listBB[i].Init(listRandom[i]);
-            listBB[i].originalPos = listBB[i].transform.position;
+            //listBB[i].originalPos = listBB[i].transform.position;
             listBB[i].originalScale = listBB[i].transform.localScale;
         }
 
@@ -273,8 +272,6 @@ public class LogicGame : MonoBehaviour
     }
 
     bool auto = false;
-
-
     float timeCount;
     void OnClick()
     {
@@ -297,6 +294,7 @@ public class LogicGame : MonoBehaviour
                 if (isHit)
                 {
                     Bubble bubble = raycastHit.collider.GetComponent<Bubble>();
+                    bubble.originalPos = bubble.transform.position;
                     bubble.particleEat.SetActive(true);
                     AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.click);
                     Move(bubble);
@@ -385,12 +383,15 @@ public class LogicGame : MonoBehaviour
 
                 //textTest.text = "123321";
                 //textTest.transform.position = Camera.main.WorldToScreenPoint(g2.transform.position);
+                Instantiate(particleTest);
+                particleTest.transform.position = Camera.main.WorldToScreenPoint(g2.transform.position);
 
                 AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.eat);
 
                 g1.particleEat.SetActive(true);
                 g2.particleEat.SetActive(true);
                 g3.particleEat.SetActive(true);
+
                 g1.Move(g2.transform.parent, 0.3f, () =>
                 {
                     g1.gameObject.SetActive(false);
@@ -499,7 +500,6 @@ public class LogicGame : MonoBehaviour
                 {
                     Debug.Log(Mathf.RoundToInt(timer.timeLeft));
                     logicUI.OpenWinUI();
-                    GameManager.Instance.AddStar();
                 });
         }
     }

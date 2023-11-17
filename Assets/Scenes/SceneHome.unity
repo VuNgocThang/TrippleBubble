@@ -3945,6 +3945,7 @@ MonoBehaviour:
   btnStarCollector: {fileID: 154883160}
   btnCloseStarCollector: {fileID: 1276926032}
   panelStarCollector: {fileID: 466486504}
+  txtTimerStarCollector: {fileID: 1744478484}
   btnPlay: {fileID: 225616107}
   btnCloseSelectBooster: {fileID: 1653439401}
   selectBooster: {fileID: 328724493}
@@ -5061,6 +5062,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   countdownTimerHeartInfinity: 0
+  countdownTimerStarCollector: 0
 --- !u!1 &431587415
 GameObject:
   m_ObjectHideFlags: 0

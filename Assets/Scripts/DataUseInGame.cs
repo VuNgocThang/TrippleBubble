@@ -17,6 +17,7 @@ public class GameData
     public int numFreezeTimeItem;
     public bool isHeartInfinity;
     public float timeHeartInfinity;
+    public float timeStarCollector;
 
     public GameData()
     {
@@ -35,6 +36,7 @@ public class GameData
         numFreezeTimeItem = 100;
         isHeartInfinity = false;
         timeHeartInfinity = 0;
+        timeStarCollector = 84600f;
     }
 }
 
@@ -44,8 +46,8 @@ public class DataUseInGame : MonoBehaviour
     public static DataUseInGame instance;
     public static GameData gameData;
 
-    float timeHeartInfinity;
     public float countdownTimerHeartInfinity;
+    public float countdownTimerStarCollector;
 
     private void Awake()
     {
@@ -59,6 +61,9 @@ public class DataUseInGame : MonoBehaviour
         LoadData();
 
         CheckTimeHeartInfinity();
+
+        CheckTimeStarCollector();
+        Debug.Log(gameData.timeStarCollector);
     }
 
     public void SaveData()
@@ -100,7 +105,15 @@ public class DataUseInGame : MonoBehaviour
             gameData.isHeartInfinity = false;
         }
 
-
+        if (gameData.timeStarCollector > 0)
+        {
+            gameData.timeStarCollector -= Time.deltaTime;
+            countdownTimerStarCollector = gameData.timeStarCollector;
+        }
+        else
+        {
+            gameData.timeStarCollector = 0;
+        }
     }
 
     void CheckTimeHeartInfinity()
@@ -124,17 +137,45 @@ public class DataUseInGame : MonoBehaviour
             countdownTimerHeartInfinity = gameData.timeHeartInfinity;
         }
     }
+    void CheckTimeStarCollector()
+    {
+        if (PlayerPrefs.HasKey("CountdownTimerStarCollector"))
+        {
+            float timeSinceLastLoss = (float)(DateTime.Now - DateTime.Parse(PlayerPrefs.GetString("LastTimerStarQuit"))).TotalSeconds;
 
 
+            gameData.timeStarCollector = PlayerPrefs.GetFloat("CountdownTimerStarCollector") - timeSinceLastLoss;
+
+            gameData.timeStarCollector = Mathf.Max(gameData.timeStarCollector, 0);
+
+            if (gameData.timeStarCollector <= 0)
+            {
+                countdownTimerStarCollector = 0;
+            }
+        }
+        else
+        {
+            countdownTimerStarCollector = gameData.timeStarCollector;
+        }
+    }
 
 
     private void OnApplicationQuit()
     {
-        gameData.timeHeartInfinity = timeHeartInfinity;
         SaveData();
 
         PlayerPrefs.SetFloat("CountdownTimerHeartInfinity", countdownTimerHeartInfinity);
         PlayerPrefs.SetString("LastTimerQuit", DateTime.Now.ToString());
         PlayerPrefs.Save();
+
+
+        SaveData();
+
+        PlayerPrefs.SetFloat("CountdownTimerStarCollector", countdownTimerHeartInfinity);
+        PlayerPrefs.SetString("LastTimerStarQuit", DateTime.Now.ToString());
+        PlayerPrefs.Save();
     }
+
+    
+
 }

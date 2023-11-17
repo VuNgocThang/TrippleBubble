@@ -39,7 +39,6 @@ public class StartCollector : MonoBehaviour
         {
             currentIndex = PlayerPrefs.GetInt("CurrentIndex");
         }
-
         for (int i = 0; i < listDataRw.Count; i++)
         {
             ButtonSelector btn = Instantiate(prefab, parent);
@@ -83,7 +82,7 @@ public class StartCollector : MonoBehaviour
             {
                 listBtnSelector[a].btnBuy.interactable = false;
                 SwitchAdd(listBtnSelector[a].stringName, listBtnSelector[a].value);
-
+                GameManager.Instance.SubStar(listBtnSelector[a].cost);
                 currentIndex++;
                 listBtnSelector[a].idBought = 1;
                 SaveDataItemsJson(a);
@@ -130,6 +129,36 @@ public class StartCollector : MonoBehaviour
                 listBtnSelector[a].lockObject.SetActive(false);
             }
         }
+    }
+    private void Update()
+    {
+        //if (Input.GetKeyDown(KeyCode.D))
+        //{
+        //    PlayerPrefs.DeleteKey("CurrentIndex");
+        //    PlayerPrefs.DeleteKey("Data_Huy");
+
+        //    if (!PlayerPrefs.HasKey("CurrentIndex"))
+        //    {
+        //        currentIndex = 0;
+        //        PlayerPrefs.SetInt("CurrentIndex", currentIndex);
+        //        PlayerPrefs.Save();
+        //    }
+        //    else
+        //    {
+        //        currentIndex = PlayerPrefs.GetInt("CurrentIndex");
+        //    }
+
+        //    for (int i = 0; i < listBtnSelector.Count; i++)
+        //    {
+        //        if (listBtnSelector[i].id > currentIndex)
+        //        {
+        //            listBtnSelector[i].btnBuy.interactable = false;
+        //            listBtnSelector[i].lockObject.SetActive(true);
+        //        }
+        //    }
+        //    UpdateUnlockBtn();
+        //}
+
     }
     public void LoadDataItems()
     {

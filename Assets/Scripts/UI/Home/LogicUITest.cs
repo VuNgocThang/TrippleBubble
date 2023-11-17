@@ -1,6 +1,7 @@
-using DG.Tweening;
+﻿using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +17,7 @@ public class LogicUITest : MonoBehaviour
     [SerializeField] Button btnStarCollector;
     [SerializeField] Button btnCloseStarCollector;
     [SerializeField] GameObject panelStarCollector;
+    [SerializeField] TextMeshProUGUI txtTimerStarCollector;
 
     [Header("Play")]
     [SerializeField] Button btnPlay;
@@ -80,7 +82,7 @@ public class LogicUITest : MonoBehaviour
     void SelectBooster()
     {
         selectBooster.gameObject.SetActive(true);
-        AnimationPopup.instance.DoTween_Button(selectBooster.selectBoosterCG.gameObject, 0 , 200, 0.5f);
+        AnimationPopup.instance.DoTween_Button(selectBooster.selectBoosterCG.gameObject, 0, 200, 0.5f);
         selectBooster.selectBoosterCG.DOFade(1f, 0.5f);
 
     }
@@ -109,5 +111,17 @@ public class LogicUITest : MonoBehaviour
 
         panelHome.SetActive(true);
         imgHomeSelected.sprite = spriteSelects[0];
+    }
+
+    private void OnGUI()
+    {
+        float timerStarCollector = DataUseInGame.gameData.timeStarCollector;
+        float hours = Mathf.Floor(timerStarCollector / 3600);
+
+        float timePerHour = timerStarCollector - hours * 3600;
+        float minutes = Mathf.Floor(timePerHour / 60);
+        float seconds = Mathf.RoundToInt(timePerHour % 60);
+
+        txtTimerStarCollector.text = hours.ToString("00") + ":" + minutes.ToString("00") + ":" + seconds.ToString("00");
     }
 }

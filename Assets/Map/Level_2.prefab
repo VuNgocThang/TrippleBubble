@@ -80,7 +80,7 @@ MonoBehaviour:
   - {fileID: 6830998338808203866}
   - {fileID: 6830998340849862576}
   - {fileID: 6830998339667672946}
-  maxEach: 3
+  maxEach: 6
 --- !u!1001 &573284825980582303
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -28,10 +28,14 @@ public class LogicGameUI : MonoBehaviour
 
     [Header("WinUI")]
     [SerializeField] GameObject winUI;
+    [SerializeField] GameObject newTile;
+    [SerializeField] GameObject panel;
     [SerializeField] Canvas canvas;
     [SerializeField] Camera camerUI;
-    [SerializeField] GameObject panel;
     [SerializeField] Button btnClaim;
+    [SerializeField] CanvasGroup winUICG;
+    public Button btnClaimStar;
+
 
     private void Awake()
     {
@@ -50,6 +54,8 @@ public class LogicGameUI : MonoBehaviour
         btnClosePanelRemoveAds.onClick.AddListener(ClosePanelRemoveAds);
 
         btnClaim.onClick.AddListener(CloseWinUI);
+        btnClaimStar.onClick.AddListener(ClaimStar);
+
     }
 
     void BackHome()
@@ -109,25 +115,53 @@ public class LogicGameUI : MonoBehaviour
         canvas.renderMode = RenderMode.ScreenSpaceCamera;
         camerUI.gameObject.SetActive(true);
         panel.SetActive(true);
+
         winUI.gameObject.SetActive(true);
+        AnimationPopup.instance.DoTween_Button(winUICG.gameObject, 0, 200, 0.5f);
+        winUICG.DOFade(1f, 0.5f);
+    }
+
+    public void ClaimStar()
+    {
+        GameManager.Instance.AddStar();
+        AnimationPopup.instance.FadeWhileMoveUp(winUICG.gameObject, 0.5f);
+        winUICG.DOFade(0f, 0.5f)
+            .OnComplete(() =>
+            {
+                winUI.SetActive(false);
+                if (DataUseInGame.gameData.indexLevel == 4 || DataUseInGame.gameData.indexLevel == 9)
+                {
+                    newTile.SetActive(true);
+                    int index = DataUseInGame.gameData.indexLevel;
+                    if (index < LogicGame.instance.listLevel.Count - 1)
+                    {
+                        index++;
+                    }
+                    DataUseInGame.gameData.indexLevel = index;
+                    DataUseInGame.instance.SaveData();
+                }
+                else
+                {
+                    int index = DataUseInGame.gameData.indexLevel;
+                    if (index < LogicGame.instance.listLevel.Count - 1)
+                    {
+                        index++;
+                    }
+                    DataUseInGame.gameData.indexLevel = index;
+                    DataUseInGame.instance.SaveData();
+
+                    SceneManager.LoadScene("SceneHome");
+                }
+            });
     }
 
     public void CloseWinUI()
     {
-        int index = DataUseInGame.gameData.indexLevel;
-        if (index < LogicGame.instance.listLevel.Count - 1)
-        {
-            index++;
-        }
-        DataUseInGame.gameData.indexLevel = index;
-        DataUseInGame.instance.SaveData();
-
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
         camerUI.gameObject.SetActive(false);
         panel.SetActive(false);
         winUI.gameObject.SetActive(false);
         SceneManager.LoadScene("SceneHome");
     }
-
 
 }

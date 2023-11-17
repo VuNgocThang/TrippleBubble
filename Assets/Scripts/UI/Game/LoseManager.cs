@@ -68,9 +68,9 @@ public class LoseManager : MonoBehaviour
             GameManager.Instance.SubGold(200);
             timer.timeLeft += 60f;
             
-            LogicGame.instance.checkLose = false;
             timer.OnGUI();
             timer.timeOut = false;
+            LogicGame.instance.checkLose = false;
             StartCoroutine(LogicGame.instance.CanClickAgain());
         }
         else
