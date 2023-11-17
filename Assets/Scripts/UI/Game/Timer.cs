@@ -50,10 +50,6 @@ public class Timer : MonoBehaviour
             }
         }
 
-        if (timeLeft < 0.6f)
-        {
-            LogicGame.instance.canClick = false;
-        }
     }
     public void OnGUI()
     {

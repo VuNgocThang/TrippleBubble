@@ -13,14 +13,13 @@ public class LogicGame : MonoBehaviour
     public LogicGameUI logicUI;
     public UIGameManager uiGame;
     public List<Bubble> listBB;
-    [SerializeField] List<Bubble> listBBShuffle;
     public List<int> listIndex;
-    [SerializeField] List<Bubble> listGOStored = new List<Bubble>();
-    //[SerializeField] LevelSetMap prefabLevel;
+    public Timer timer;
+    public List<Bubble> listGOStored = new List<Bubble>();
+    [SerializeField] List<Bubble> listBBShuffle;
     [SerializeField] List<Transform> listPoint = new List<Transform>();
     [SerializeField] LineController lineController;
     [SerializeField] List<Bubble> listBubbleUndo = new List<Bubble>();
-    public Timer timer;
     [SerializeField] LayerMask layerMask;
     public List<LevelSetMap> listLevel;
     public int indexLevel;
@@ -54,7 +53,8 @@ public class LogicGame : MonoBehaviour
         canShuffle = true;
 
         //số bóng *3 + 30 giây
-        timer.timeLeft = currentTotalBB * 3 + 30f;
+        //timer.timeLeft = currentTotalBB * 3 + 30f;
+        timer.timeLeft =4f;
 
         timer.stopTimer = true;
         UseBooster();
@@ -291,7 +291,6 @@ public class LogicGame : MonoBehaviour
                 if (timer.stopTimer) return;
                 if (!canClick) return;
                 if (listGOStored.Count > 6) return;
-                //if (timer.timeLeft < 1f) return;
 
                 RaycastHit raycastHit;
                 bool isHit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out raycastHit, 1000f, layerMask);
@@ -827,8 +826,11 @@ public class LogicGame : MonoBehaviour
     public IEnumerator CanClickAgain()
     {
         yield return new WaitForSeconds(0.4f);
+        if (listGOStored.Count > 6)
+        {
+            UndoAll();
+        }
         timer.stopTimer = false;
         canClick = true;
-        CheckLose();
     }
 }
