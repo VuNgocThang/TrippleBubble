@@ -53,7 +53,8 @@ public class LogicGame : MonoBehaviour
         canShuffle = true;
 
         //số bóng *3 + 30 giây
-        timer.timeLeft = currentTotalBB * 3 + 30f;
+        //timer.timeLeft = currentTotalBB * 3 + 30f;
+        timer.timeLeft = 11111f;
 
         timer.stopTimer = true;
         UseBooster();

@@ -28,6 +28,7 @@ public class Bubble : MonoBehaviour
     public GameObject particleBoom;
     public GameObject particleEat;
     public GameObject particlePP;
+
     public bool CanMoving => !IsMoving && !IsDone;
 
     private void Awake()
@@ -52,6 +53,7 @@ public class Bubble : MonoBehaviour
     public void SetColor(int index)
     {
         int i = SetIndexObjs(index);
+        Debug.Log(i);
         objs[i].SetActive(true);
         if (hasChildren)
         {
@@ -85,6 +87,20 @@ public class Bubble : MonoBehaviour
         return result;
     }
 
+    //public int SetIndexObjs(int i)
+    //{
+    //    switch (i)
+    //    {
+    //        case int n when (n >= 0 && n <= 9):
+    //            return 0;
+    //        case int n when (n >= 10 && n <= 18):
+    //            return 1;
+    //        case int n when (n >= 19 && n <= 27):
+    //            return 2;
+    //        default:
+    //            return -1;
+    //    }
+    //}
     public void Move(Transform parent, float time = -1, Action checkEat = null)
     {
         IsMoving = true;

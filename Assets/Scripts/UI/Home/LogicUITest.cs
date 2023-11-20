@@ -1,5 +1,4 @@
 ﻿using DG.Tweening;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -28,11 +27,15 @@ public class LogicUITest : MonoBehaviour
 
     [Header("Shop")]
     [SerializeField] Button btnShop;
+    [SerializeField] TextMeshProUGUI txtShop;
+    [SerializeField] RectTransform imgShop;
     [SerializeField] GameObject panelShop;
     [SerializeField] Image imgShopSelected;
 
     [Header("Home")]
     [SerializeField] Button btnHome;
+    [SerializeField] TextMeshProUGUI txtHome;
+    [SerializeField] RectTransform imgHome;
     [SerializeField] GameObject panelHome;
     [SerializeField] Image imgHomeSelected;
 
@@ -97,20 +100,37 @@ public class LogicUITest : MonoBehaviour
     }
     void OpenPanelShop()
     {
+        // 1 unselect
+        // 0 select
         panelHome.SetActive(false);
         imgHomeSelected.sprite = spriteSelects[1];
+        txtHome.gameObject.SetActive(false);
+        imgHome.DOAnchorPosY(25, 0.3f, true);
 
         panelShop.SetActive(true);
         imgShopSelected.sprite = spriteSelects[0];
+        imgShop.DOAnchorPosY(70, 0.3f, true).OnComplete(() =>
+        {
+            txtShop.gameObject.SetActive(true);
+            txtShop.gameObject.SetActive(true);
+        });
+
     }
 
     void OpenPanelHome()
     {
         panelShop.SetActive(false);
         imgShopSelected.sprite = spriteSelects[1];
+        txtShop.gameObject.SetActive(false);
+        imgShop.DOAnchorPosY(0, 0.3f, true);
 
         panelHome.SetActive(true);
         imgHomeSelected.sprite = spriteSelects[0];
+        imgHome.DOAnchorPosY(87, 0.3f, true).OnComplete(() =>
+        {
+            imgHome.gameObject.SetActive(true);
+            txtHome.gameObject.SetActive(true);
+        });
     }
 
     private void OnGUI()

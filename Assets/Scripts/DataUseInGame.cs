@@ -24,7 +24,7 @@ public class GameData
         indexLevel = 0;
         listIndex = new List<int>
         {
-            0,1,2
+            0,1,2,3,4,5,6,9,10,11,12,13,14,15,18,19,20,21,22,23,24
         };
         heart = 5;
         star = 1000000;
@@ -63,7 +63,6 @@ public class DataUseInGame : MonoBehaviour
         CheckTimeHeartInfinity();
 
         CheckTimeStarCollector();
-        Debug.Log(gameData.timeStarCollector);
     }
 
     public void SaveData()

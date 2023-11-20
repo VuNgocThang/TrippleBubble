@@ -1767,6 +1767,7 @@ GameObject:
   - component: {fileID: 1446145188}
   - component: {fileID: 1446145187}
   - component: {fileID: 1446145189}
+  - component: {fileID: 1446145190}
   m_Layer: 5
   m_Name: hand
   m_TagString: Untagged
@@ -1790,7 +1791,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -215.1, y: 48.5}
+  m_AnchoredPosition: {x: -220.4, y: 48.5}
   m_SizeDelta: {x: 43, y: 58}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1446145185
@@ -1867,7 +1868,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1446145183}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d2896c38408ba8488bc73f894a940b7, type: 3}
   m_Name: 
@@ -1876,6 +1877,24 @@ MonoBehaviour:
   hand: {fileID: 1446145184}
   startPos: {x: -215, y: 60, z: 0}
   endPos: {x: 215, y: 60, z: 0}
+--- !u!114 &1446145190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446145183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b3623d330417284a8dc93898b65999a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spinner: {fileID: 1446145184}
+  numberOfSegments: 7
+  spinSpeed: 500
+  isSpinning: 0
+  predefinedResult: 0
+  lineLength: 443
 --- !u!1 &1658589333
 GameObject:
   m_ObjectHideFlags: 0
