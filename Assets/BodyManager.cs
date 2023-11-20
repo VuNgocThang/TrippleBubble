@@ -56,8 +56,11 @@ public class BodyManager : MonoBehaviour
         {
             button.button.onClick.AddListener(() =>
             {
-                OnClickState();
-                SetSelected(button, true);
+                if (!button.isDone)
+                {
+                    OnClickState();
+                    SetSelected(button, true);
+                }
             });
         }
     }
@@ -70,10 +73,7 @@ public class BodyManager : MonoBehaviour
     {
         foreach (var button in buttonsManager)
         {
-            if (!button.isDone)
-            {
-                SetSelected(button, false);
-            }
+            SetSelected(button, false);
         }
     }
 
