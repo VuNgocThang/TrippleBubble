@@ -53,7 +53,6 @@ public class Bubble : MonoBehaviour
     public void SetColor(int index)
     {
         int i = SetIndexObjs(index);
-        Debug.Log(i);
         objs[i].SetActive(true);
         if (hasChildren)
         {

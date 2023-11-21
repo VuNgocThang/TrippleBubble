@@ -22,8 +22,6 @@ public class HomeUI : MonoBehaviour
     public int gold;
     public TextMeshProUGUI txtGold;
 
-   
-
     private void Start()
     {
         AnimationPopup.instance.DoTween_Button(heartUI, 0, 300, 1f);
@@ -39,8 +37,6 @@ public class HomeUI : MonoBehaviour
         AnimationPopup.instance.DoTween_Button(dailyUI, 0, -300, 1f);
 
         AnimationPopup.instance.AnimScaleZoom(playUI.transform);
-
-        
     }
 
     private void OnGUI()

@@ -196,8 +196,8 @@ MonoBehaviour:
   - {fileID: 5764452756724623772}
   - {fileID: 4041349920469401975}
   mats:
-  - {fileID: 2100000, guid: 1324d02cd0f581644b68db6339e25e35, type: 2}
-  - {fileID: 2100000, guid: de5f371303e1b8f4b9dc85f600692a7e, type: 2}
+  - {fileID: 2100000, guid: db8bffecfcca79c45bc436599f9398ca, type: 2}
+  - {fileID: 2100000, guid: b0f27d83accd3a448bc58229ff3f200d, type: 2}
   canMoveHT: 1
   meshCollider: {fileID: 6458984091241748381}
   rb: {fileID: 2575850157028869117}
@@ -516,7 +516,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 0e7551372d71a6d4d9043c636fc724e0, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 1324d02cd0f581644b68db6339e25e35, type: 2}
+      objectReference: {fileID: 2100000, guid: db8bffecfcca79c45bc436599f9398ca, type: 2}
     - target: {fileID: -5754084199372789682, guid: 0e7551372d71a6d4d9043c636fc724e0, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -599,7 +599,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 7a101c036bca0d14fabf508692f8cb07, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 1324d02cd0f581644b68db6339e25e35, type: 2}
+      objectReference: {fileID: 2100000, guid: db8bffecfcca79c45bc436599f9398ca, type: 2}
     - target: {fileID: -5754084199372789682, guid: 7a101c036bca0d14fabf508692f8cb07, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -756,7 +756,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: a31a302e7cbbb824094b86e5e934705f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 1324d02cd0f581644b68db6339e25e35, type: 2}
+      objectReference: {fileID: 2100000, guid: db8bffecfcca79c45bc436599f9398ca, type: 2}
     - target: {fileID: -5754084199372789682, guid: a31a302e7cbbb824094b86e5e934705f, type: 3}
       propertyPath: m_Mesh
       value: 

@@ -27,13 +27,5 @@ public class ButtonManager : MonoBehaviour
         button = GetComponent<Button>();
     }
 
-    //private void Start()
-    //{
-    //    button.onClick.AddListener(OnClickBtn);
-    //}
-
    
-    
-
-
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -12,9 +13,10 @@ public class BodyManager : MonoBehaviour
     private List<GameObject> cells;
     public List<ButtonManager> buttonsManager;
 
+    DateTime dateTime = new DateTime();
     public void Initialize(int year, int month)
     {
-        var dateTime = new DateTime(year, month, 1);
+        dateTime = new DateTime(year, month, 1);
         var daysInMonth = DateTime.DaysInMonth(year, month);
 
         var dayOfWeek = (int)dateTime.DayOfWeek;
@@ -48,6 +50,19 @@ public class BodyManager : MonoBehaviour
             }
             cells.Add(instance);
         }
+        for (int j = 0; j < buttonsManager.Count; j++)
+        {
+            for (int i = 0; i < DataUseInGame.gameData.dailyData.Count; i++)
+            {
+                if (dateTime.Year == DataUseInGame.gameData.dailyData[i].year
+                    && dateTime.Month == DataUseInGame.gameData.dailyData[i].month
+                    && buttonsManager[j].index == DataUseInGame.gameData.dailyData[i].day)
+                {
+                    buttonsManager[j].label.color = Color.red;
+                    buttonsManager[j].isDone = true;
+                }
+            }
+        }
     }
 
     public void OnClickButton()
@@ -60,15 +75,19 @@ public class BodyManager : MonoBehaviour
                 {
                     OnClickState();
                     SetSelected(button, true);
+                    UpdateState();
+
+                    DataUseInGame.gameData.isDaily = true;
+                    DataUseInGame.gameData.indexDailyLV = button.index - 1;
+                    DataUseInGame.gameData.year = dateTime.Year;
+                    DataUseInGame.gameData.month = dateTime.Month;
+                    DataUseInGame.gameData.day = button.index;
+                    DataUseInGame.instance.SaveData();
                 }
             });
         }
     }
-    public void Test()
-    {
-        buttonsManager[0].isDone = true;
-        buttonsManager[0].label.color = Color.red;
-    }
+
     public void OnClickState()
     {
         foreach (var button in buttonsManager)
@@ -85,9 +104,40 @@ public class BodyManager : MonoBehaviour
         {
             btn.mark.SetActive(true);
         }
-        else
+    }
+
+    public void UpdateState()
+    {
+        foreach (var button in buttonsManager)
         {
-            btn.mark.SetActive(false);
+            if (button.isSelected)
+            {
+                button.mark.SetActive(true);
+            }
+            else
+            {
+                button.mark.SetActive(false);
+            }
+        }
+    }
+
+    public void SetStateBeforeNow()
+    {
+        foreach (var button in buttonsManager)
+        {
+            if (dateTime.Month < DateTime.Now.Month || button.index < DateTime.Now.Day)
+            {
+                if (!button.isDone)
+                {
+                    button.label.color = new Color(0.5f, 0.5f, 0.5f, 1f);
+                }
+            }
+
+            if (dateTime.Month > DateTime.Now.Month || button.index > DateTime.Now.Day)
+            {
+                button.button.interactable = false;
+            }
+
         }
     }
 

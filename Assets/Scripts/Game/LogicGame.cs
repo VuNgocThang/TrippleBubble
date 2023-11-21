@@ -22,6 +22,7 @@ public class LogicGame : MonoBehaviour
     [SerializeField] List<Bubble> listBubbleUndo = new List<Bubble>();
     [SerializeField] LayerMask layerMask;
     public List<LevelSetMap> listLevel;
+    public List<LevelSetMap> listLevelDaily;
     public int indexLevel;
     public LevelSetMap level;
     public PathCreator pathCreater;
@@ -45,7 +46,18 @@ public class LogicGame : MonoBehaviour
     }
     void Start()
     {
-        indexLevel = DataUseInGame.gameData.indexLevel;
+        if (!DataUseInGame.gameData.isDaily)
+        {
+            indexLevel = DataUseInGame.gameData.indexLevel;
+            level = Instantiate(listLevel[indexLevel], transform);
+
+        }
+        else
+        {
+            indexLevel = DataUseInGame.gameData.indexDailyLV;
+            level = Instantiate(listLevelDaily[indexLevel], transform);
+
+        }
 
         InitSomething();
         InitBubbles();
@@ -86,7 +98,6 @@ public class LogicGame : MonoBehaviour
     }
     void InitBubbles()
     {
-        level = Instantiate(listLevel[indexLevel], transform);
 
         int count = listIndex.Count;
         int countAll = level.bubbles.Count;
@@ -499,7 +510,6 @@ public class LogicGame : MonoBehaviour
             pathCreaterGift.DOMove(new Vector3(pathCreaterGift.position.x, -1.5f, pathCreaterGift.transform.position.z), 2f)
                 .OnComplete(() =>
                 {
-                    Debug.Log(Mathf.RoundToInt(timer.timeLeft));
                     logicUI.OpenWinUI();
                 });
         }

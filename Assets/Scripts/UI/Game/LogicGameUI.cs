@@ -60,6 +60,9 @@ public class LogicGameUI : MonoBehaviour
 
     void BackHome()
     {
+        DataUseInGame.gameData.isDaily = false;
+        DataUseInGame.instance.SaveData();
+
         DOTween.KillAll();
         SceneManager.LoadScene("SceneHome");
     }
@@ -129,29 +132,45 @@ public class LogicGameUI : MonoBehaviour
             .OnComplete(() =>
             {
                 winUI.SetActive(false);
-                if (DataUseInGame.gameData.indexLevel == 4 || DataUseInGame.gameData.indexLevel == 9)
+                if (!DataUseInGame.gameData.isDaily)
                 {
-                    newTile.SetActive(true);
-                    int index = DataUseInGame.gameData.indexLevel;
-                    if (index < LogicGame.instance.listLevel.Count - 1)
+                    if (DataUseInGame.gameData.indexLevel == 4 || DataUseInGame.gameData.indexLevel == 9)
                     {
-                        index++;
+                        newTile.SetActive(true);
+                        int index = DataUseInGame.gameData.indexLevel;
+                        if (index < LogicGame.instance.listLevel.Count - 1)
+                        {
+                            index++;
+                        }
+                        DataUseInGame.gameData.indexLevel = index;
+                        DataUseInGame.instance.SaveData();
                     }
-                    DataUseInGame.gameData.indexLevel = index;
-                    DataUseInGame.instance.SaveData();
+                    else
+                    {
+                        int index = DataUseInGame.gameData.indexLevel;
+                        if (index < LogicGame.instance.listLevel.Count - 1)
+                        {
+                            index++;
+                        }
+                        DataUseInGame.gameData.indexLevel = index;
+                        DataUseInGame.instance.SaveData();
+
+                        SceneManager.LoadScene("SceneHome");
+                    }
                 }
                 else
                 {
-                    int index = DataUseInGame.gameData.indexLevel;
-                    if (index < LogicGame.instance.listLevel.Count - 1)
+                    DataUseInGame.gameData.isDaily = false;
+                    DataUseInGame.gameData.dailyData.Add(new DailyData()
                     {
-                        index++;
-                    }
-                    DataUseInGame.gameData.indexLevel = index;
+                        year = 2023,
+                        month = DataUseInGame.gameData.month,
+                        day = DataUseInGame.gameData.day,
+                    });
                     DataUseInGame.instance.SaveData();
-
                     SceneManager.LoadScene("SceneHome");
                 }
+
             });
     }
 

@@ -38,10 +38,19 @@ public class LogicUITest : MonoBehaviour
     [SerializeField] RectTransform imgHome;
     [SerializeField] GameObject panelHome;
     [SerializeField] Image imgHomeSelected;
+    [SerializeField] GameObject topObject;
+
+    [Header("Daily")]
+    [SerializeField] Button btnDaily;
+    [SerializeField] TextMeshProUGUI txtDaily;
+    [SerializeField] RectTransform imgDaily;
+    [SerializeField] GameObject panelDaily;
+    [SerializeField] Image imgDailySelected;
+
 
     public List<Sprite> spriteSelects = new List<Sprite>();
     private void Start()
-    {
+    {       
         btnSetting.onClick.AddListener(OpenPanelSetting);
         btnCloseSetting.onClick.AddListener(ClosePanelSetting);
 
@@ -53,7 +62,7 @@ public class LogicUITest : MonoBehaviour
 
         btnShop.onClick.AddListener(OpenPanelShop);
         btnHome.onClick.AddListener(OpenPanelHome);
-
+        btnDaily.onClick.AddListener(OpenDailyPanel);
     }
 
     void OpenPanelSetting()
@@ -82,7 +91,7 @@ public class LogicUITest : MonoBehaviour
         panelStarCollector.SetActive(false);
     }
 
-    void SelectBooster()
+    public void SelectBooster()
     {
         selectBooster.gameObject.SetActive(true);
         AnimationPopup.instance.DoTween_Button(selectBooster.selectBoosterCG.gameObject, 0, 200, 0.5f);
@@ -98,22 +107,33 @@ public class LogicUITest : MonoBehaviour
                 selectBooster.gameObject.SetActive(false);
             });
     }
+
+    // 1 unselect
+    // 0 select
     void OpenPanelShop()
     {
-        // 1 unselect
-        // 0 select
         panelHome.SetActive(false);
         imgHomeSelected.sprite = spriteSelects[1];
         txtHome.gameObject.SetActive(false);
         imgHome.DOAnchorPosY(25, 0.3f, true);
+        topObject.SetActive(false);
+
+        panelDaily.SetActive(false);
+        imgDailySelected.sprite = spriteSelects[1];
+        txtDaily.gameObject.SetActive(false);
+        imgDaily.DOAnchorPosY(0, 0.3f, true);
+        topObject.SetActive(false);
 
         panelShop.SetActive(true);
         imgShopSelected.sprite = spriteSelects[0];
         imgShop.DOAnchorPosY(70, 0.3f, true).OnComplete(() =>
         {
-            txtShop.gameObject.SetActive(true);
+            imgShop.gameObject.SetActive(true);
             txtShop.gameObject.SetActive(true);
         });
+
+        DataUseInGame.gameData.isDaily = false;
+        DataUseInGame.instance.SaveData();
 
     }
 
@@ -124,6 +144,12 @@ public class LogicUITest : MonoBehaviour
         txtShop.gameObject.SetActive(false);
         imgShop.DOAnchorPosY(0, 0.3f, true);
 
+        panelDaily.SetActive(false);
+        imgDailySelected.sprite = spriteSelects[1];
+        txtDaily.gameObject.SetActive(false);
+        imgDaily.DOAnchorPosY(0, 0.3f, true);
+
+        topObject.SetActive(true);
         panelHome.SetActive(true);
         imgHomeSelected.sprite = spriteSelects[0];
         imgHome.DOAnchorPosY(87, 0.3f, true).OnComplete(() =>
@@ -131,6 +157,35 @@ public class LogicUITest : MonoBehaviour
             imgHome.gameObject.SetActive(true);
             txtHome.gameObject.SetActive(true);
         });
+
+        DataUseInGame.gameData.isDaily = false;
+        DataUseInGame.instance.SaveData();
+
+    }
+
+    void OpenDailyPanel()
+    {
+        panelHome.SetActive(false);
+        imgHomeSelected.sprite = spriteSelects[1];
+        txtHome.gameObject.SetActive(false);
+        imgHome.DOAnchorPosY(25, 0.3f, true);
+        topObject.SetActive(true);
+
+        panelShop.SetActive(false);
+        imgShopSelected.sprite = spriteSelects[1];
+        txtShop.gameObject.SetActive(false);
+        imgShop.DOAnchorPosY(0, 0.3f, true);
+
+        panelDaily.SetActive(true);
+        imgDailySelected.sprite = spriteSelects[0];
+        imgDaily.DOAnchorPosY(70, 0.3f, true).OnComplete(() =>
+        {
+            imgDaily.gameObject.SetActive(true);
+            txtDaily.gameObject.SetActive(true);
+        });
+
+        DataUseInGame.gameData.isDaily = true;
+        DataUseInGame.instance.SaveData();
     }
 
     private void OnGUI()
@@ -144,4 +199,5 @@ public class LogicUITest : MonoBehaviour
 
         txtTimerStarCollector.text = hours.ToString("00") + ":" + minutes.ToString("00") + ":" + seconds.ToString("00");
     }
+
 }

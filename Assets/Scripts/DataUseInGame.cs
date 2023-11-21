@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 public class GameData
 {
     public int indexLevel;
@@ -19,12 +19,19 @@ public class GameData
     public float timeHeartInfinity;
     public float timeStarCollector;
 
+    public bool isDaily;
+    public int indexDailyLV;
+    public int year;
+    public int month;
+    public int day;
+    public List<DailyData> dailyData;
+
     public GameData()
     {
         indexLevel = 0;
         listIndex = new List<int>
         {
-            0,1,2,3,4,5,6,9,10,11,12,13,14,15,18,19,20,21,22,23,24
+            0,1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24
         };
         heart = 5;
         star = 1000000;
@@ -37,7 +44,20 @@ public class GameData
         isHeartInfinity = false;
         timeHeartInfinity = 0;
         timeStarCollector = 84600f;
+
+        isDaily = false;
+        indexDailyLV = 2;
+        year = 2023;
+        dailyData = new List<DailyData>();
     }
+}
+
+[System.Serializable]
+public class DailyData
+{
+    public int year;
+    public int month;
+    public int day;
 }
 
 
@@ -46,8 +66,8 @@ public class DataUseInGame : MonoBehaviour
     public static DataUseInGame instance;
     public static GameData gameData;
 
-    public float countdownTimerHeartInfinity;
-    public float countdownTimerStarCollector;
+    [HideInInspector] public float countdownTimerHeartInfinity;
+    [HideInInspector] public float countdownTimerStarCollector;
 
     private void Awake()
     {
@@ -63,14 +83,13 @@ public class DataUseInGame : MonoBehaviour
         CheckTimeHeartInfinity();
 
         CheckTimeStarCollector();
-    }
 
+    }
     public void SaveData()
     {
         string s = JsonUtility.ToJson(gameData);
         PlayerPrefs.SetString("gamedata", s);
     }
-
     public void LoadData()
     {
         string s = PlayerPrefs.GetString("gamedata", "");
@@ -88,7 +107,6 @@ public class DataUseInGame : MonoBehaviour
             gameData.isHeartInfinity = false;
         }
     }
-
     private void Update()
     {
         if (gameData.timeHeartInfinity > 0)
@@ -114,7 +132,6 @@ public class DataUseInGame : MonoBehaviour
             gameData.timeStarCollector = 0;
         }
     }
-
     void CheckTimeHeartInfinity()
     {
         if (PlayerPrefs.HasKey("CountdownTimerHeartInfinity"))
@@ -157,8 +174,6 @@ public class DataUseInGame : MonoBehaviour
             countdownTimerStarCollector = gameData.timeStarCollector;
         }
     }
-
-
     private void OnApplicationQuit()
     {
         SaveData();
@@ -173,8 +188,8 @@ public class DataUseInGame : MonoBehaviour
         PlayerPrefs.SetFloat("CountdownTimerStarCollector", countdownTimerHeartInfinity);
         PlayerPrefs.SetString("LastTimerStarQuit", DateTime.Now.ToString());
         PlayerPrefs.Save();
+
+        gameData.isDaily = false;
+        SaveData();
     }
-
-    
-
 }

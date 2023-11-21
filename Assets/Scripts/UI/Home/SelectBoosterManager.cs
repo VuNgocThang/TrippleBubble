@@ -59,8 +59,17 @@ public class SelectBoosterManager : MonoBehaviour
 
     private void OnGUI()
     {
-        int indexLevel = DataUseInGame.gameData.indexLevel + 1;
-        txtNumLV.text = indexLevel.ToString();
+        if (!DataUseInGame.gameData.isDaily)
+        {
+            int indexLevel = DataUseInGame.gameData.indexLevel + 1;
+            txtNumLV.text = indexLevel.ToString();
+        }
+        else
+        {
+            int indexLevel = DataUseInGame.gameData.indexDailyLV + 1;
+            txtNumLV.text = indexLevel.ToString();
+        }
+       
     }
 
 }
