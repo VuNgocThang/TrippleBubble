@@ -50,7 +50,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2183587030377625258}
-  m_Mesh: {fileID: -2840984316813056734, guid: 826f1a0f908321142b4528f28458d201, type: 3}
+  m_Mesh: {fileID: 2268938616918710155, guid: 1d7475f134431e34b9906cd45a73c1ae, type: 3}
 --- !u!23 &382054615193048959
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -133,8 +133,8 @@ MonoBehaviour:
   - {fileID: 4583184949514558193}
   - {fileID: 5219688492338852378}
   mats:
-  - {fileID: 2100000, guid: 1324d02cd0f581644b68db6339e25e35, type: 2}
-  - {fileID: 2100000, guid: de5f371303e1b8f4b9dc85f600692a7e, type: 2}
+  - {fileID: 2100000, guid: db8bffecfcca79c45bc436599f9398ca, type: 2}
+  - {fileID: 2100000, guid: b0f27d83accd3a448bc58229ff3f200d, type: 2}
   canMoveHT: 1
   meshCollider: {fileID: 3010417341318161648}
   rb: {fileID: 6042299365496451216}
@@ -143,6 +143,7 @@ MonoBehaviour:
   particleBoom: {fileID: 8463052633291107253}
   particleEat: {fileID: 4264076547382548831}
   particlePP: {fileID: 3552574036399960286}
+  ptBoom: {fileID: 786269345663086145}
 --- !u!54 &6042299365496451216
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -154,7 +155,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 10
   m_AngularDrag: 0.05
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 80
@@ -302,6 +303,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7900065424776864945, guid: db4f6e871c1f2c94f98bbfe83aa19ef6, type: 3}
   m_PrefabInstance: {fileID: 938265110907339460}
   m_PrefabAsset: {fileID: 0}
+--- !u!198 &786269345663086145 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 570832250925526149, guid: db4f6e871c1f2c94f98bbfe83aa19ef6, type: 3}
+  m_PrefabInstance: {fileID: 938265110907339460}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3093878203749384736
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -356,7 +362,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: a31a302e7cbbb824094b86e5e934705f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 1324d02cd0f581644b68db6339e25e35, type: 2}
+      objectReference: {fileID: 2100000, guid: db8bffecfcca79c45bc436599f9398ca, type: 2}
     - target: {fileID: -5754084199372789682, guid: a31a302e7cbbb824094b86e5e934705f, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -439,7 +445,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 7a101c036bca0d14fabf508692f8cb07, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 1324d02cd0f581644b68db6339e25e35, type: 2}
+      objectReference: {fileID: 2100000, guid: db8bffecfcca79c45bc436599f9398ca, type: 2}
     - target: {fileID: -5754084199372789682, guid: 7a101c036bca0d14fabf508692f8cb07, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -522,11 +528,11 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 0e7551372d71a6d4d9043c636fc724e0, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 1324d02cd0f581644b68db6339e25e35, type: 2}
+      objectReference: {fileID: 2100000, guid: db8bffecfcca79c45bc436599f9398ca, type: 2}
     - target: {fileID: -5754084199372789682, guid: 0e7551372d71a6d4d9043c636fc724e0, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: -2840984316813056734, guid: 826f1a0f908321142b4528f28458d201, type: 3}
+      objectReference: {fileID: 2268938616918710155, guid: 1d7475f134431e34b9906cd45a73c1ae, type: 3}
     - target: {fileID: 919132149155446097, guid: 0e7551372d71a6d4d9043c636fc724e0, type: 3}
       propertyPath: m_Name
       value: balloon_dot

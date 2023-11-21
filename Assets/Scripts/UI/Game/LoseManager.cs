@@ -1,8 +1,6 @@
 using DG.Tweening;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LoseManager : MonoBehaviour
@@ -15,16 +13,20 @@ public class LoseManager : MonoBehaviour
     public GameObject panelTimeUp;
     public Button btnContinueTimeUp;
     public Button btnGiveUpTimeUp;
+    public CanvasGroup panelTimeUpCG;
 
     [Header("Out of Move")]
     public GameObject panelOutOfMove;
     public Button btnContinueOutOfMove;
     public Button btnGiveUpOutOfMove;
+    public CanvasGroup panelOutOfMoveCG;
+
 
     [Header("Persident")]
     public GameObject panelPersident;
     public Button btnRetry;
     public Button btnHome;
+    public CanvasGroup panelPersidentCG;
 
     private void Start()
     {
@@ -41,59 +43,131 @@ public class LoseManager : MonoBehaviour
     // Logic TimeUp
     public void OpenPanelTimeUp()
     {
-        panelTimeUp.SetActive(true);
         AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.fail);
-        AnimationPopup.instance.AnimScaleZoom(panelTimeUp.transform);
+        panelTimeUp.SetActive(true);
+        AnimationPopup.instance.DoTween_Button(panelTimeUpCG.gameObject, 0, 200, 0.5f);
+        panelTimeUpCG.DOFade(1f, 0.5f);
     }
     public void ContinueTimeUp()
     {
-        Debug.Log("continue");
-        AnimationPopup.instance.AnimScaleZero(loseUI, panelTimeUp.transform);
-        LogicGame.instance.checkLose = false;
-        timer.timeOut = false;
-        timer.stopTimer = false;
-        timer.timeLeft += 60f;
-        timer.OnGUI();
+        if (DataUseInGame.gameData.gold >= 200)
+        {
+            btnContinueTimeUp.interactable = false;
+            btnGiveUpTimeUp.interactable = false;
+
+            AnimationPopup.instance.FadeWhileMoveUp(panelTimeUpCG.gameObject, 0.5f);
+            panelTimeUpCG.DOFade(0f, 0.5f)
+                .OnComplete(() =>
+                {
+                    btnContinueTimeUp.interactable = true;
+                    btnGiveUpTimeUp.interactable = true;
+
+                    panelTimeUp.SetActive(false);
+                    loseUI.gameObject.SetActive(false);
+                });
+            GameManager.Instance.SubGold(200);
+            timer.timeLeft += 60f;
+            
+            timer.OnGUI();
+            timer.timeOut = false;
+            LogicGame.instance.checkLose = false;
+            StartCoroutine(LogicGame.instance.CanClickAgain());
+        }
+        else
+        {
+            Debug.Log("Not Enough Gold");
+        }
     }
 
     //Logic OutOfMove
     public void OpenPanelOutOfMove()
     {
-        panelOutOfMove.SetActive(true);
         AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.fail);
-        AnimationPopup.instance.AnimScaleZoom(panelOutOfMove.transform);
+        panelOutOfMove.SetActive(true);
+        panelOutOfMoveCG.DOFade(1f, 0.5f);
+        AnimationPopup.instance.DoTween_Button(panelOutOfMoveCG.gameObject, 0, 200, 0.55f);
     }
     public void ContinueOutOfMove()
     {
-        AnimationPopup.instance.AnimScaleZero(loseUI, panelOutOfMove.transform);
-        LogicGame.instance.canClick = false;
-        LogicGame.instance.checkLose = false;
-        timer.timeOut = false;
-        timer.stopTimer = false;
-        LogicGame.instance.UndoAll();
+        if (DataUseInGame.gameData.gold >= 200)
+        {
+            btnContinueOutOfMove.interactable = false;
+            btnGiveUpOutOfMove.interactable = false;
+            AnimationPopup.instance.FadeWhileMoveUp(panelOutOfMoveCG.gameObject, 0.5f);
+            panelOutOfMoveCG.DOFade(0f, 0.5f)
+                .OnComplete(() =>
+                {
+                    btnContinueOutOfMove.interactable = true;
+                    btnGiveUpOutOfMove.interactable = true;
+
+                    panelOutOfMove.SetActive(false);
+                    loseUI.gameObject.SetActive(false);
+                });
+
+            GameManager.Instance.SubGold(200);
+            LogicGame.instance.canClick = false;
+            LogicGame.instance.checkLose = false;
+            timer.stopTimer = true;
+            timer.timeOut = false;
+            LogicGame.instance.UndoAll();
+        }
+        else
+        {
+            Debug.Log("Not Enough Gold");
+        }
     }
 
     //Logic Persident
     public void OpenPanelPersident()
     {
-        AnimationPopup.instance.AnimScaleZero(null, panelOutOfMove.transform);
+        AnimationPopup.instance.FadeWhileMoveUp(panelOutOfMoveCG.gameObject, 0.5f);
+        panelOutOfMoveCG.DOFade(0f, 0.5f)
+            .OnComplete(() =>
+            {
+                panelOutOfMove.SetActive(false);
+            });
+
+        AnimationPopup.instance.FadeWhileMoveUp(panelTimeUpCG.gameObject, 0.5f);
+        panelTimeUpCG.DOFade(0f, 0.5f)
+               .OnComplete(() =>
+               {
+                   panelTimeUp.SetActive(false);
+               });
+
         panelPersident.SetActive(true);
-        AnimationPopup.instance.AnimScaleZoom(panelPersident.transform);
+        AnimationPopup.instance.DoTween_Button(panelPersidentCG.gameObject, 0, 200, 0.5f);
+        panelPersidentCG.DOFade(1f, 0.5f);
     }
     public void Retry()
     {
-        LogicGame.instance.SubHeart();
-        AnimationPopup.instance.AnimScaleZero(null, panelPersident.transform);
+        GameManager.Instance.SubHeart();
+        btnRetry.interactable = false;
+        btnHome.interactable = false;
+        AnimationPopup.instance.FadeWhileMoveUp(panelPersidentCG.gameObject, 0.5f);
+        panelPersidentCG.DOFade(0f, 0.5f)
+            .OnComplete(() =>
+            {
+                btnRetry.interactable = true;
+                btnHome.interactable = true;
+            });
+
         bg.SetActive(false);
         StartCoroutine(LogicGame.instance.AnimBoomBB("SceneGame"));
     }
     public void BackHome()
     {
-        LogicGame.instance.SubHeart();
-        AnimationPopup.instance.AnimScaleZero(null, panelPersident.transform);
+        GameManager.Instance.SubHeart();
+        btnRetry.interactable = false;
+        btnHome.interactable = false;
+        AnimationPopup.instance.FadeWhileMoveUp(panelPersidentCG.gameObject, 0.5f);
+        panelPersidentCG.DOFade(0f, 0.5f)
+            .OnComplete(() =>
+            {
+                btnRetry.interactable = true;
+                btnHome.interactable = true;
+            });
         bg.SetActive(false);
         StartCoroutine(LogicGame.instance.AnimBoomBB("SceneHome"));
-
     }
 
 }

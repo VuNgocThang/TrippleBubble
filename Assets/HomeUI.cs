@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class HomeUI : MonoBehaviour
@@ -14,6 +15,12 @@ public class HomeUI : MonoBehaviour
     [SerializeField] GameObject shopUI;
     [SerializeField] GameObject homeUI;
     [SerializeField] GameObject dailyUI;
+
+    public int star;
+    public TextMeshProUGUI txtStar;
+
+    public int gold;
+    public TextMeshProUGUI txtGold;
 
     private void Start()
     {
@@ -30,5 +37,14 @@ public class HomeUI : MonoBehaviour
         AnimationPopup.instance.DoTween_Button(dailyUI, 0, -300, 1f);
 
         AnimationPopup.instance.AnimScaleZoom(playUI.transform);
+    }
+
+    private void OnGUI()
+    {
+        star = DataUseInGame.gameData.star;
+        gold = DataUseInGame.gameData.gold;
+
+        txtStar.text = star.ToString();
+        txtGold.text = gold.ToString();
     }
 }

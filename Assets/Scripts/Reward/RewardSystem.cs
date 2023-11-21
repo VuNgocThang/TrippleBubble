@@ -15,7 +15,6 @@ public class RewardSystem : MonoBehaviour
     {
         if (other.CompareTag("rewardNo"))
         {
-            Debug.Log("hmm");
             var multiplier = other.gameObject.name;
             rewardToShow.text = (50 * float.Parse(multiplier)).ToString();
             PlayerPrefs.SetFloat("reward", float.Parse(rewardToShow.text));

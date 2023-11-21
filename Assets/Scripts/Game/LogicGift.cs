@@ -9,29 +9,24 @@ public class LogicGift : MonoBehaviour
     public PathCreator creator;
     public float speed = 0.2f;
     float distacne;
+    bool checkOut;
 
     private void Update()
     {
         distacne += speed * Time.deltaTime;
         transform.position = creator.path.GetPointAtDistance(distacne);
 
-        Camera mainCamera = Camera.main;
-
-        if (IsObjectOutOfScreen(mainCamera, transform.position))
+        if (IsObjectOutOfEyes() && !checkOut)
         {
-            Debug.Log("Object is out of screen!");
+            checkOut = true;
+            Debug.Log("hmm");
         }
     }
 
-    bool IsObjectOutOfScreen(Camera camera, Vector3 position)
+    bool IsObjectOutOfEyes()
     {
-        Vector3 screenPoint = camera.WorldToScreenPoint(position);
+        Vector3 pos = transform.position;
 
-        // Lấy kích thước của màn hình
-        float screenWidth = Screen.width;
-        float screenHeight = Screen.height;
-
-        // Kiểm tra xem đối tượng có nằm ngoài màn hình không
-        return (screenPoint.y + 5f < 0 || screenPoint.x + 2f < 0);
+        return (pos.y < -1f);
     }
 }

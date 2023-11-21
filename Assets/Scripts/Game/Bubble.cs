@@ -28,16 +28,21 @@ public class Bubble : MonoBehaviour
     public GameObject particleBoom;
     public GameObject particleEat;
     public GameObject particlePP;
+
     public bool CanMoving => !IsMoving && !IsDone;
 
     private void Awake()
     {
         meshCollider = GetComponent<MeshCollider>();
     }
-
-    private void FixedUpdate()
+    private void Update()
     {
         MoveHT();
+        transform.localRotation = Quaternion.Euler(new Vector3(0f, transform.localRotation.y, 0f));
+    }
+    private void FixedUpdate()
+    {
+        //MoveHT();
     }
 
     public void Init(int id)
@@ -81,13 +86,27 @@ public class Bubble : MonoBehaviour
         return result;
     }
 
+    //public int SetIndexObjs(int i)
+    //{
+    //    switch (i)
+    //    {
+    //        case int n when (n >= 0 && n <= 9):
+    //            return 0;
+    //        case int n when (n >= 10 && n <= 18):
+    //            return 1;
+    //        case int n when (n >= 19 && n <= 27):
+    //            return 2;
+    //        default:
+    //            return -1;
+    //    }
+    //}
     public void Move(Transform parent, float time = -1, Action checkEat = null)
     {
         IsMoving = true;
         transform.SetParent(parent);
         tweenerMove = transform.DOLocalMove(Vector3.zero, time == -1 ? 0.3f : time);
         transform.DOScale(new Vector3(1.3f, 1.3f, 1.3f), 0.3f);
-
+        StateAfterMove();
         SelectMaterial(0);
         for (int i = 0; i < objs.Count; i++)
         {
@@ -112,7 +131,8 @@ public class Bubble : MonoBehaviour
     {
         if (canMoveHT)
         {
-            rb.velocity += (LogicGame.instance.targetHT.position - transform.position) * Time.fixedDeltaTime;
+            rb.velocity += (LogicGame.instance.targetHT.position - transform.position) * Time.deltaTime;
+            //rb.velocity += (LogicGame.instance.targetHT.position - transform.position) * Time.fixedDeltaTime;
         }
     }
     public void SelectMaterial(int index)
@@ -161,11 +181,17 @@ public class Bubble : MonoBehaviour
     {
         meshCollider.enabled = false;
         canMoveHT = false;
+        rb.constraints = RigidbodyConstraints.FreezeAll;
+        transform.localRotation = Quaternion.Euler(new Vector3(0f, 90f, 0f));
+        //rb.constraints = RigidbodyConstraints.FreezeRotation;
     }
     public void ResetStateIfUndo()
     {
-        meshCollider.enabled = true;
+        //meshCollider.enabled = true;
         canMoveHT = true;
+        rb.constraints &= ~RigidbodyConstraints.FreezePosition;
+        rb.constraints &= ~RigidbodyConstraints.FreezeRotationY;
+        transform.localRotation = Quaternion.Euler(new Vector3(0f, transform.localRotation.y, 0f));
     }
 
     public void InitBBInUI(int id)

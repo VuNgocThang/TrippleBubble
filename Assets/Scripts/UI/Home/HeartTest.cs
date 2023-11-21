@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using System.Data;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class HeartTest : MonoBehaviour
 {
+    // ∞
     public int heart;
     public int maxHeart = 5;
     public float countdownTimer;
@@ -22,15 +24,7 @@ public class HeartTest : MonoBehaviour
     {
         canPlusHeart = true;
 
-        if (!PlayerPrefs.HasKey("NumHeart"))
-        {
-            heart = 5;
-            SaveHeart();
-        }
-        else
-        {
-            heart = PlayerPrefs.GetInt("NumHeart");
-        }
+        heart = DataUseInGame.gameData.heart;
 
 
         if (PlayerPrefs.HasKey("CountdownTimer"))
@@ -62,6 +56,7 @@ public class HeartTest : MonoBehaviour
     }
     private void OnDisable()
     {
+        //heart
         PlayerPrefs.SetFloat("CountdownTimer", countdownTimer);
         if (heart <= maxHeart)
         {
@@ -69,20 +64,15 @@ public class HeartTest : MonoBehaviour
             PlayerPrefs.Save();
         }
         PlayerPrefs.Save();
+
+        //infinityHeart
+        PlayerPrefs.SetFloat("CountdownTimerHeartInfinity", DataUseInGame.instance.countdownTimerHeartInfinity);
+        PlayerPrefs.SetString("LastTimerQuit", DateTime.Now.ToString());
+        PlayerPrefs.Save();
+
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            heart--;
-            if (heart <= 0)
-            {
-                heart = 0;
-            }
-
-            SaveHeart();
-        }
-
         if (countdownTimer <= 0 && canPlusHeart)
         {
             heart++;
@@ -95,52 +85,62 @@ public class HeartTest : MonoBehaviour
 
     private void OnGUI()
     {
-        txtNumHeart.text = heart.ToString();
-
-        if (heart == maxHeart)
+        if (DataUseInGame.gameData.isHeartInfinity)
         {
-            txtCountdownTimer.text = "FULL";
+            float minutes = Mathf.Floor(DataUseInGame.gameData.timeHeartInfinity / 60);
+            float seconds = Mathf.RoundToInt(DataUseInGame.gameData.timeHeartInfinity % 60);
+
+            txtNumHeart.text = "∞";
+            txtCountdownTimer.text = minutes.ToString("00") + ":" + seconds.ToString("00");
+
         }
         else
         {
-            TimeSpan timeSinceLoss = DateTime.Now - lastHeartLossTime;
+            txtNumHeart.text = heart.ToString();
 
-            if (timeSinceLoss.TotalSeconds < countdownTimer)
+            if (heart == maxHeart)
             {
-                countdownTimer -= (float)timeSinceLoss.TotalSeconds;
+                txtCountdownTimer.text = "FULL";
             }
             else
             {
-                countdownTimer = 0;
+                TimeSpan timeSinceLoss = DateTime.Now - lastHeartLossTime;
+
+                if (timeSinceLoss.TotalSeconds < countdownTimer)
+                {
+                    countdownTimer -= (float)timeSinceLoss.TotalSeconds;
+                }
+                else
+                {
+                    countdownTimer = 0;
+                }
+
+                lastHeartLossTime = DateTime.Now;
+
+                if (countdownTimer > 0)
+                {
+                    canPlusHeart = true;
+                    minutes = Mathf.Floor(countdownTimer / 60);
+                    seconds = Mathf.RoundToInt(countdownTimer % 60);
+
+                    txtCountdownTimer.text = minutes.ToString("00") + ":" + seconds.ToString("00");
+                }
             }
 
-            lastHeartLossTime = DateTime.Now;
-
-            if (countdownTimer > 0)
-            {
-                canPlusHeart = true;
-                minutes = Mathf.Floor(countdownTimer / 60);
-                seconds = Mathf.RoundToInt(countdownTimer % 60);
-
-                txtCountdownTimer.text = minutes.ToString("00") + ":" + seconds.ToString("00");
-            }
         }
-
-
     }
-
     private void OnApplicationQuit()
     {
         SaveHeart();
         PlayerPrefs.SetFloat("CountdownTimer", countdownTimer);
         PlayerPrefs.SetString("LastHeartLossTime", DateTime.Now.ToString());
-        Debug.Log(DateTime.Now.ToString() + " quit");
         PlayerPrefs.Save();
     }
 
     public void SaveHeart()
     {
-        PlayerPrefs.SetInt("NumHeart", heart);
-        PlayerPrefs.Save();
+        DataUseInGame.gameData.heart = heart;
+        DataUseInGame.instance.SaveData();
+
     }
 }
