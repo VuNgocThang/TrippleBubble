@@ -87,11 +87,24 @@ public class HeartTest : MonoBehaviour
     {
         if (DataUseInGame.gameData.isHeartInfinity)
         {
-            float minutes = Mathf.Floor(DataUseInGame.gameData.timeHeartInfinity / 60);
-            float seconds = Mathf.RoundToInt(DataUseInGame.gameData.timeHeartInfinity % 60);
+            float timer = DataUseInGame.gameData.timeHeartInfinity;
+            float hours = Mathf.Floor(timer / 3600);
+            float timePerHour = timer - hours * 3600;
+            float minutes = Mathf.Floor(timePerHour / 60);
+            float seconds = Mathf.RoundToInt(timePerHour % 60);
+
+            //float minutes = Mathf.Floor(DataUseInGame.gameData.timeHeartInfinity / 60);
+            //float seconds = Mathf.RoundToInt(DataUseInGame.gameData.timeHeartInfinity % 60);
 
             txtNumHeart.text = "∞";
-            txtCountdownTimer.text = minutes.ToString("00") + ":" + seconds.ToString("00");
+            if (hours > 0)
+            {
+                txtCountdownTimer.text = hours.ToString("00") + ":" + minutes.ToString("00") + ":" + seconds.ToString("00");
+            }
+            else
+            {
+                txtCountdownTimer.text = minutes.ToString("00") + ":" + seconds.ToString("00");
+            }
 
         }
         else

@@ -26,9 +26,9 @@ public class Bubble : MonoBehaviour
     public bool IsDone;
     public Tweener tweenerMove;
     public GameObject particleBoom;
-    public GameObject particleEat;
+    //public GameObject particleEat;
     public GameObject particlePP;
-
+    public ParticleSystem particleEatt;
     public bool CanMoving => !IsMoving && !IsDone;
 
     private void Awake()

@@ -1,7 +1,9 @@
 using DG.Tweening;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class LogicGameUI : MonoBehaviour
 {
@@ -16,6 +18,13 @@ public class LogicGameUI : MonoBehaviour
     [SerializeField] GameObject panelPause;
     [SerializeField] CanvasGroup panelPauseCG;
 
+    [Header("Persident")]
+    public Button btnClosePersident;
+    public Button btnRetry;
+    public Button btnHomePersident;
+    public GameObject bgBlackPersident;
+    public GameObject panelPersident;
+    public CanvasGroup panelPersidentCG;
 
     [Header("NoAds")]
     [SerializeField] Button btnRemoveAds;
@@ -27,7 +36,7 @@ public class LogicGameUI : MonoBehaviour
     public LoseManager loseUI;
 
     [Header("WinUI")]
-    [SerializeField] GameObject winUI;
+    [SerializeField] WinUI winUI;
     [SerializeField] GameObject newTile;
     [SerializeField] GameObject panel;
     [SerializeField] Canvas canvas;
@@ -49,6 +58,10 @@ public class LogicGameUI : MonoBehaviour
         btnResume.onClick.AddListener(ClosePanelPause);
         btnClosePanelPause.onClick.AddListener(ClosePanelPause);
         btnReplay.onClick.AddListener(ReplayGame);
+
+        btnClosePersident.onClick.AddListener(ClosePersident);
+        btnRetry.onClick.AddListener(Retry);
+        btnHomePersident.onClick.AddListener(BackHomePersident);
 
         btnRemoveAds.onClick.AddListener(OpenPanelRemoveAds);
         btnClosePanelRemoveAds.onClick.AddListener(ClosePanelRemoveAds);
@@ -86,25 +99,86 @@ public class LogicGameUI : MonoBehaviour
     }
     void ReplayGame()
     {
-        DOTween.KillAll();
-        SceneManager.LoadScene("SceneGame");
+        OpenPanelPersident();
+    }
+    public void OpenPanelPersident()
+    {
+        bgBlackPersident.SetActive(true);
+        btnClosePersident.gameObject.SetActive(true);
+        LogicGame.instance.canClick = false;
+
+        AnimationPopup.instance.FadeWhileMoveUp(panelPauseCG.gameObject, 0.5f);
+        panelPauseCG.DOFade(0f, 0.5f)
+            .OnComplete(() =>
+            {
+                panelPause.SetActive(false);
+            });
+
+        panelPersident.SetActive(true);
+        AnimationPopup.instance.DoTween_Button(panelPersidentCG.gameObject, 0, 200, 0.5f);
+        panelPersidentCG.DOFade(1f, 0.5f);
+    }
+    public void ClosePersident()
+    {
+        AnimationPopup.instance.FadeWhileMoveUp(panelPersidentCG.gameObject, 0.5f);
+        panelPersidentCG.DOFade(0f, 0.5f)
+            .OnComplete(() =>
+            {
+                bgBlackPersident.SetActive(false);
+                panelPersident.SetActive(false);
+                StartCoroutine(CanClickAgain());
+
+            });
+    }
+    public void Retry()
+    {
+        GameManager.Instance.SubHeart();
+        btnRetry.interactable = false;
+        btnHome.interactable = false;
+        AnimationPopup.instance.FadeWhileMoveUp(panelPersidentCG.gameObject, 0.5f);
+        panelPersidentCG.DOFade(0f, 0.5f)
+            .OnComplete(() =>
+            {
+                btnRetry.interactable = true;
+                btnHome.interactable = true;
+            });
+
+        bgBlackPersident.SetActive(false);
+        StartCoroutine(LogicGame.instance.AnimBoomBB("SceneGame"));
+    }
+    public void BackHomePersident()
+    {
+        GameManager.Instance.SubHeart();
+        btnRetry.interactable = false;
+        btnHome.interactable = false;
+        AnimationPopup.instance.FadeWhileMoveUp(panelPersidentCG.gameObject, 0.5f);
+        panelPersidentCG.DOFade(0f, 0.5f)
+            .OnComplete(() =>
+            {
+                btnRetry.interactable = true;
+                btnHome.interactable = true;
+            });
+
+        bgBlackPersident.SetActive(false);
+        StartCoroutine(LogicGame.instance.AnimBoomBB("SceneHome"));
     }
 
     void OpenPanelRemoveAds()
     {
         timer.stopTimer = true;
+        LogicGame.instance.canClick = false;
         panelRemoveAds.SetActive(true);
         AnimationPopup.instance.DoTween_Button(panelRemoveAdsCG.gameObject, 0, 200, 0.5f);
         panelRemoveAdsCG.DOFade(1f, 0.5f);
     }
     void ClosePanelRemoveAds()
     {
-        timer.stopTimer = false;
         AnimationPopup.instance.FadeWhileMoveUp(panelRemoveAdsCG.gameObject, 0.5f);
         panelRemoveAdsCG.DOFade(0f, 0.5f)
             .OnComplete(() =>
             {
                 panelRemoveAds.gameObject.SetActive(false);
+                StartCoroutine(CanClickAgain());
             });
     }
 
@@ -126,12 +200,13 @@ public class LogicGameUI : MonoBehaviour
 
     public void ClaimStar()
     {
-        GameManager.Instance.AddStar();
+        //GameManager.Instance.AddStar();
+        GameManager.Instance.AddStar(winUI.Multi());
         AnimationPopup.instance.FadeWhileMoveUp(winUICG.gameObject, 0.5f);
         winUICG.DOFade(0f, 0.5f)
             .OnComplete(() =>
             {
-                winUI.SetActive(false);
+                winUI.gameObject.SetActive(false);
                 if (!DataUseInGame.gameData.isDaily)
                 {
                     if (DataUseInGame.gameData.indexLevel == 4 || DataUseInGame.gameData.indexLevel == 9)
@@ -155,7 +230,7 @@ public class LogicGameUI : MonoBehaviour
                         DataUseInGame.gameData.indexLevel = index;
                         DataUseInGame.instance.SaveData();
 
-                        SceneManager.LoadScene("SceneHome");
+                        SceneManager.LoadScene("SceneGame");
                     }
                 }
                 else
@@ -183,4 +258,10 @@ public class LogicGameUI : MonoBehaviour
         SceneManager.LoadScene("SceneHome");
     }
 
+    IEnumerator CanClickAgain()
+    {
+        yield return new WaitForSeconds(0.2f);
+        timer.stopTimer = false;
+        LogicGame.instance.canClick = true;
+    }
 }

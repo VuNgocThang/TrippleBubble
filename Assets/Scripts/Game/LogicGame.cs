@@ -66,7 +66,7 @@ public class LogicGame : MonoBehaviour
 
         //số bóng *3 + 30 giây
         //timer.timeLeft = currentTotalBB * 3 + 30f;
-        timer.timeLeft = 11111f;
+        timer.timeLeft = 1111f;
 
         timer.stopTimer = true;
         UseBooster();
@@ -307,7 +307,8 @@ public class LogicGame : MonoBehaviour
                 {
                     Bubble bubble = raycastHit.collider.GetComponent<Bubble>();
                     bubble.originalPos = bubble.transform.position;
-                    bubble.particleEat.SetActive(true);
+                    //bubble.particleEat.SetActive(true);
+                    bubble.particleEatt.Play();
                     AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.click);
                     Move(bubble);
                 }
@@ -400,9 +401,9 @@ public class LogicGame : MonoBehaviour
 
                 AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.eat);
 
-                g1.particleEat.SetActive(true);
-                g2.particleEat.SetActive(true);
-                g3.particleEat.SetActive(true);
+                //g1.particleEatt.Play();
+                //g2.particleEatt.Play();
+                //g3.particleEatt.Play();
 
                 g1.Move(g2.transform.parent, 0.3f, () =>
                 {
@@ -468,7 +469,7 @@ public class LogicGame : MonoBehaviour
     IEnumerator AnimBB(Bubble bb)
     {
         bb.particleBoom.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.05f);
         foreach (var obj in bb.objs)
         {
             obj.SetActive(false);
@@ -685,7 +686,7 @@ public class LogicGame : MonoBehaviour
         int index = listBubbleUndo.Count - 1;
         Bubble bubble = listBubbleUndo[index];
         bubble.ResetStateIfUndo();
-        bubble.particleEat.SetActive(false);
+        //bubble.particleEat.SetActive(false);
         bubble.transform.DOMove(bubble.originalPos, 0.3f).
             OnComplete(() =>
             {
@@ -734,7 +735,7 @@ public class LogicGame : MonoBehaviour
             int index = listBubbleUndo.Count - 1;
             Bubble bubble = listBubbleUndo[index];
             bubble.ResetStateIfUndo();
-            bubble.particleEat.SetActive(false);
+            //bubble.particleEat.SetActive(false);
             bubble.transform.DOMove(bubble.originalPos, 0.3f)
                 .OnComplete(() =>
                 {
@@ -773,7 +774,7 @@ public class LogicGame : MonoBehaviour
             int index = listBubbleUndo.Count - 1;
             Bubble bubble = listBubbleUndo[index];
             bubble.ResetStateIfUndo();
-            bubble.particleEat.SetActive(false);
+            //bubble.particleEat.SetActive(false);
             bubble.transform.DOMove(bubble.originalPos, 0.3f)
                 .OnComplete(() =>
                 {
@@ -815,25 +816,6 @@ public class LogicGame : MonoBehaviour
         timer.isFreeze = false;
         isFreezeing = false;
     }
-    public void SubHeart()
-    {
-        int heart = PlayerPrefs.GetInt("NumHeart");
-
-        if (heart >= 5)
-        {
-            PlayerPrefs.SetString("LastHeartLossTime", DateTime.Now.ToString());
-            PlayerPrefs.Save();
-        }
-
-        heart--;
-        if (heart <= 0)
-        {
-            heart = 0;
-        }
-        PlayerPrefs.SetInt("NumHeart", heart);
-        PlayerPrefs.Save();
-    }
-
     public IEnumerator CanClickAgain()
     {
         yield return new WaitForSeconds(0.4f);

@@ -115,7 +115,7 @@ public class StartCollector : MonoBehaviour
     {
         unlockReward.listUnlockReward[i].id = listBtnSelector[i].idBought;
         string json = JsonUtility.ToJson(unlockReward, true);
-        PlayerPrefs.SetString("Data_Huy", json);
+        PlayerPrefs.SetString("DataStarCollector", json);
     }
     void LoadDataItemsJson()
     {
@@ -130,47 +130,18 @@ public class StartCollector : MonoBehaviour
             }
         }
     }
-    private void Update()
-    {
-        //if (Input.GetKeyDown(KeyCode.D))
-        //{
-        //    PlayerPrefs.DeleteKey("CurrentIndex");
-        //    PlayerPrefs.DeleteKey("Data_Huy");
-
-        //    if (!PlayerPrefs.HasKey("CurrentIndex"))
-        //    {
-        //        currentIndex = 0;
-        //        PlayerPrefs.SetInt("CurrentIndex", currentIndex);
-        //        PlayerPrefs.Save();
-        //    }
-        //    else
-        //    {
-        //        currentIndex = PlayerPrefs.GetInt("CurrentIndex");
-        //    }
-
-        //    for (int i = 0; i < listBtnSelector.Count; i++)
-        //    {
-        //        if (listBtnSelector[i].id > currentIndex)
-        //        {
-        //            listBtnSelector[i].btnBuy.interactable = false;
-        //            listBtnSelector[i].lockObject.SetActive(true);
-        //        }
-        //    }
-        //    UpdateUnlockBtn();
-        //}
-
-    }
+  
     public void LoadDataItems()
     {
-        if (PlayerPrefs.GetString("Data_Huy").Equals(""))
+        if (PlayerPrefs.GetString("DataStarCollector").Equals(""))
         {
             SaveDataItemsJson(0);
-            unlockReward = JsonUtility.FromJson<ListUnlockReward>(PlayerPrefs.GetString("Data_Huy"));
+            unlockReward = JsonUtility.FromJson<ListUnlockReward>(PlayerPrefs.GetString("DataStarCollector"));
             LoadDataItemsJson();
         }
         else
         {
-            unlockReward = JsonUtility.FromJson<ListUnlockReward>(PlayerPrefs.GetString("Data_Huy"));
+            unlockReward = JsonUtility.FromJson<ListUnlockReward>(PlayerPrefs.GetString("DataStarCollector"));
             LoadDataItemsJson();
         }
     }

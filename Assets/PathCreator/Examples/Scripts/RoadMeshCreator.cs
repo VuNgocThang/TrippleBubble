@@ -56,7 +56,7 @@ namespace PathCreation.Examples {
                 Vector3 localUp = (usePathNormals) ? Vector3.Cross (path.GetTangent (i), path.GetNormal (i)) : path.up;
                 Vector3 localRight = (usePathNormals) ? path.GetNormal (i) : Vector3.Cross (localUp, path.GetTangent (i));
 
-                // Find position to left and right of currentTile path vertex
+                // Find position to left and right of currentReward path vertex
                 Vector3 vertSideA = path.GetPoint (i) - localRight * Mathf.Abs (roadWidth);
                 Vector3 vertSideB = path.GetPoint (i) + localRight * Mathf.Abs (roadWidth);
 

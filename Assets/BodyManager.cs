@@ -125,7 +125,7 @@ public class BodyManager : MonoBehaviour
     {
         foreach (var button in buttonsManager)
         {
-            if (dateTime.Month < DateTime.Now.Month || button.index < DateTime.Now.Day)
+            if (dateTime.Month < DateTime.Now.Month || button.index < DateTime.Now.Day && dateTime.Month <= DateTime.Now.Month)
             {
                 if (!button.isDone)
                 {
@@ -133,7 +133,7 @@ public class BodyManager : MonoBehaviour
                 }
             }
 
-            if (dateTime.Month > DateTime.Now.Month || button.index > DateTime.Now.Day)
+            if (dateTime.Month > DateTime.Now.Month || button.index > DateTime.Now.Day && dateTime.Month >= DateTime.Now.Month)
             {
                 button.button.interactable = false;
             }

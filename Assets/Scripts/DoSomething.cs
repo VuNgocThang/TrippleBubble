@@ -14,6 +14,8 @@ public class DoSomething : MonoBehaviour
         {
             To[i].gameObject.SetActive(true);
             To[i].position = From[i].position;
+
+            To[i].localScale = From[i].localScale;
         }
     }
 }

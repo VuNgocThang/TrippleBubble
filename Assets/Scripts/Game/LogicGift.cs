@@ -19,7 +19,6 @@ public class LogicGift : MonoBehaviour
         if (IsObjectOutOfEyes() && !checkOut)
         {
             checkOut = true;
-            Debug.Log("hmm");
         }
     }
 

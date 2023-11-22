@@ -1,56 +1,43 @@
-using System;
+using DG.Tweening;
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using DG.Tweening;
 using UnityEngine.UI;
 
-public class WinUI : MonoBehaviour
+public class TestMulti : MonoBehaviour
 {
-    public TextMeshProUGUI txtPoint;
-    public TextMeshProUGUI txtPointMulti;
-    public GameObject vfx;
-
+    public TextMeshProUGUI rewardToShow;
     public Transform hand;
     public Vector3 startPos;
     public Vector3 endPos;
     public Button btnStop;
-
-    private void OnGUI()
-    {
-        int star = 100 + (DataUseInGame.gameData.indexLevel + 1) * 20 + Mathf.RoundToInt(LogicGame.instance.timer.timeLeft) * 2;
-        txtPoint.text = star.ToString();
-        txtPointMulti.text = (star * MultiResult(hand.GetComponent<RectTransform>())).ToString();
-    }
-
-    private void Update()
-    {
-        vfx.transform.Rotate(new Vector3(0, 0, 1) * 100f * Time.deltaTime);
-    }
 
     private void Start()
     {
         Move();
         btnStop.onClick.AddListener(StopMoveHand);
     }
-
+   
     void Move()
     {
-        hand.DOLocalMove(endPos, 1f)
+        hand.DOLocalMove(endPos, 0.75f)
             .SetEase(Ease.InOutCubic)
             .OnComplete(() =>
             {
-                hand.DOLocalMove(startPos, 1f)
+                hand.DOLocalMove(startPos, 0.75f)
                 .SetEase(Ease.InOutCubic)
                 .OnComplete(Move);
             });
     }
-    public void StopMoveHand()
+    void StopMoveHand()
     {
         DOTween.Kill(hand);
         MultiResult(hand.GetComponent<RectTransform>());
+        Debug.Log(MultiResult(hand.GetComponent<RectTransform>()));
     }
 
-    public int MultiResult(RectTransform hand)
+    int MultiResult(RectTransform hand)
     {
         int multi;
         float x = Mathf.Abs(hand.anchoredPosition.x);
@@ -70,12 +57,8 @@ public class WinUI : MonoBehaviour
         {
             multi = 2;
         }
-
         return multi;
     }
 
-    public int Multi()
-    {
-        return MultiResult(hand.GetComponent<RectTransform>());
-    }
+   
 }
