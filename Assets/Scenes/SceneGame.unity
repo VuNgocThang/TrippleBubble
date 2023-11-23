@@ -8725,7 +8725,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1046931341}
-  m_LocalRotation: {x: 0.19258188, y: 0.3091825, z: -0.11190105, w: -0.92455214}
+  m_LocalRotation: {x: 0.19258189, y: 0.3091825, z: -0.11190104, w: -0.92455214}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -10368,13 +10368,17 @@ MonoBehaviour:
   - {fileID: 1715566177942809551, guid: 183efe9388f7c20448d3d10abd0c123e, type: 3}
   - {fileID: 8886841381315483529, guid: 80b8e72111feb6045a2521f0bc9c24ab, type: 3}
   - {fileID: 6705715405055311048, guid: 23a896d94727aea46b360e398ccb5c80, type: 3}
-  listLevelDaily:
-  - {fileID: 6851343335815195293, guid: 0048da15b73f43945bde086f3bd565d0, type: 3}
-  - {fileID: 1236365032723069638, guid: 1124c54fad3912642ade1967e10fcc27, type: 3}
-  - {fileID: 7057772584574341575, guid: 7d49ba73d04c6c94c88d6435116ef14e, type: 3}
-  - {fileID: 6898930311583677503, guid: 4e1a7c57205482644aba7129f7e0887f, type: 3}
-  - {fileID: 1176326729774165802, guid: d7c85db9f8d84164db016605703c7b8e, type: 3}
-  - {fileID: 7241499456708831401, guid: b705fdd8e9ee6a9468d681c2e3414686, type: 3}
+  - {fileID: 4416269953595178569, guid: cde1a28d47566f2449a7d3d0f6df3cba, type: 3}
+  - {fileID: 6851159060832813894, guid: 4e7f1d9e6d82f2744b22e1e8030e5cb8, type: 3}
+  - {fileID: 7039096914572484237, guid: 2cec19fa721fea64497d4b57f433139f, type: 3}
+  - {fileID: 8058567460985627312, guid: 158c3c2ddfab0ae44bdf5c237a2108fa, type: 3}
+  - {fileID: 9199426655947146175, guid: 34605bf05c4e8bc4f88ec8d75b11b9e6, type: 3}
+  - {fileID: 1392908652873359674, guid: 9b65816b7b6f063499acf882ea8dabe6, type: 3}
+  - {fileID: 3374143931784147433, guid: 49cbf6df97b60a340b9cc9087113d9a3, type: 3}
+  - {fileID: 6018743234327610544, guid: 0818a999777b9b543be8e6eaf5d71d7b, type: 3}
+  - {fileID: 3559137509367323246, guid: 1ea3f96dee21bf749adc39f95d7f9f7d, type: 3}
+  - {fileID: 5120450204097622650, guid: 673009ff4065c9e4fbefbd2b7a5554b4, type: 3}
+  listLevelDaily: []
   indexLevel: 0
   level: {fileID: 0}
   pathCreater: {fileID: 176268558}

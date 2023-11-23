@@ -43,10 +43,9 @@ public class GameManager : MonoBehaviour
     {
         //100 + số level * 20 + số giây còn lại * 2
         int star = DataUseInGame.gameData.star;
-        star += 100 + (DataUseInGame.gameData.indexLevel + 1) * 20 + Mathf.RoundToInt(LogicGame.instance.timer.timeLeft) * 2;
-
-        int multiStar = multi * star;
-        DataUseInGame.gameData.star = multiStar;
+        int starAdd = 100 + (DataUseInGame.gameData.indexLevel + 1) * 20 + Mathf.RoundToInt(LogicGame.instance.timer.timeLeft) * 2;
+        int multiStar = multi * starAdd;
+        DataUseInGame.gameData.star = star + multiStar;
         DataUseInGame.instance.SaveData();
     }
     public void SubStar(int starSub)

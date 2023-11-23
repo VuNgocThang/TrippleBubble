@@ -12,6 +12,7 @@ public class BodyManager : MonoBehaviour
     private GameObject placeHolderPrefab;
     private List<GameObject> cells;
     public List<ButtonManager> buttonsManager;
+    [SerializeField] DailyManager dailyManager;
 
     DateTime dateTime = new DateTime();
     public void Initialize(int year, int month)
@@ -83,6 +84,9 @@ public class BodyManager : MonoBehaviour
                     DataUseInGame.gameData.month = dateTime.Month;
                     DataUseInGame.gameData.day = button.index;
                     DataUseInGame.instance.SaveData();
+
+                    dailyManager.StateBtnPlay();
+
                 }
             });
         }

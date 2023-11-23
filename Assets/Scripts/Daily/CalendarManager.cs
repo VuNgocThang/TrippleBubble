@@ -7,6 +7,7 @@ public class CalendarManager : MonoBehaviour
 {
     [SerializeField] HeaderManager headerManager;
     [SerializeField] BodyManager bodyManager;
+    [SerializeField] DailyManager dailyManager;
 
     private DateTime targetDateTime;
     private CultureInfo cultureInfo;
@@ -17,13 +18,26 @@ public class CalendarManager : MonoBehaviour
     private void Start()
     {
         targetDateTime = DateTime.Now;
-        Debug.Log(targetDateTime.Day);
         cultureInfo = new CultureInfo("en-US");
         Refresh(targetDateTime.Year, targetDateTime.Month);
-        bodyManager.SetSelected(bodyManager.buttonsManager[targetDateTime.Day - 1], true);
+        if (!bodyManager.buttonsManager[targetDateTime.Day - 1].isDone)
+        {
+            bodyManager.SetSelected(bodyManager.buttonsManager[targetDateTime.Day - 1], true);
+            DataUseInGame.gameData.indexDailyLV = bodyManager.buttonsManager[targetDateTime.Day - 1].index - 1;
+            DataUseInGame.gameData.year = targetDateTime.Year;
+            DataUseInGame.gameData.month = targetDateTime.Month;
+            DataUseInGame.gameData.day = bodyManager.buttonsManager[targetDateTime.Day - 1].index;
+            DataUseInGame.instance.SaveData();
+        }
+        else
+        {
+            DataUseInGame.gameData.indexDailyLV = -1;
+            DataUseInGame.instance.SaveData();
+        }
+
+            
         bodyManager.SetStateBeforeNow();
         bodyManager.OnClickButton();
-
         btnPrev.onClick.AddListener(OnGoToPreviousMonthButtonClicked);
         btnNext.onClick.AddListener(OnGoToNextMonthButtonClicked);
     }

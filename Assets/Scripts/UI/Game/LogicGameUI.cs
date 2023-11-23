@@ -236,6 +236,12 @@ public class LogicGameUI : MonoBehaviour
                 else
                 {
                     DataUseInGame.gameData.isDaily = false;
+
+                    //if (DataUseInGame.gameData.currentRewardDaily < DataUseInGame.gameData.maxRewardDaily)
+                    //{
+                    DataUseInGame.gameData.currentRewardDaily++;
+                    //}
+
                     DataUseInGame.gameData.dailyData.Add(new DailyData()
                     {
                         year = 2023,

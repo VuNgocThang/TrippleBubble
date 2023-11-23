@@ -19,6 +19,8 @@ public class GameData
     public float timeHeartInfinity;
     public float timeStarCollector;
 
+    public float currentRewardDaily;
+    public float maxRewardDaily;
     public bool isDaily;
     public int indexDailyLV;
     public int year;
@@ -26,16 +28,20 @@ public class GameData
     public int day;
     public List<DailyData> dailyData;
 
+
+
     public GameData()
     {
         indexLevel = 0;
         listIndex = new List<int>
         {
-            0,1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24
+            0, 1, 2, 3, 4, 5, 6, 7, 8,
+            9, 10, 11, 12, 13, 14, 15, 16, 17, 
+            18, 19, 20, 21, 22, 23, 24, 25, 26
         };
         heart = 5;
-        star = 1000000;
-        gold = 1000000;
+        star = 0;
+        gold = 0;
         numHintItem = 100;
         numShuffleItem = 100;
         numUndoItem = 100;
@@ -45,8 +51,10 @@ public class GameData
         timeHeartInfinity = 0;
         timeStarCollector = 84600f;
 
+        currentRewardDaily = 0;
+        maxRewardDaily = 28;
         isDaily = false;
-        indexDailyLV = 2;
+        indexDailyLV = -1;
         year = 2023;
         dailyData = new List<DailyData>();
     }

@@ -13,14 +13,21 @@ public class DailyManager : MonoBehaviour
     private void Start()
     {
         btnPlayThisDay.onClick.AddListener(LoadSceneGame);
-        //Debug.Log(DataUseInGame.gameData.dailyData.Count + " count");
-        //for (int i = 0; i < DataUseInGame.gameData.dailyData.Count; i++)
-        //{
-        //    Debug.Log(DataUseInGame.gameData.dailyData[i].year);
-        //    Debug.Log(DataUseInGame.gameData.dailyData[i].month);
-        //    Debug.Log(DataUseInGame.gameData.dailyData[i].day);
-        //}
+        StateBtnPlay();
     }
+
+    public void StateBtnPlay()
+    {
+        if (DataUseInGame.gameData.indexDailyLV >= 0)
+        {
+            btnPlayThisDay.interactable = true;
+        }
+        else
+        {
+            btnPlayThisDay.interactable = false;
+        }
+    }
+
     void LoadSceneGame()
     {
         logicUI.SelectBooster();
