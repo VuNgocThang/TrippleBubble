@@ -17,7 +17,7 @@ public class HeartTest : MonoBehaviour
     float minutes;
     float seconds;
     public bool canPlusHeart;
-    int time = 1800;
+    int time = 30;
     private DateTime lastHeartLossTime;
 
     private void Start()

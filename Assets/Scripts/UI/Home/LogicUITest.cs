@@ -31,6 +31,7 @@ public class LogicUITest : MonoBehaviour
     [SerializeField] RectTransform imgShop;
     [SerializeField] GameObject panelShop;
     [SerializeField] Image imgShopSelected;
+    [SerializeField] GameObject imgBottom;
 
     [Header("Home")]
     [SerializeField] Button btnHome;
@@ -50,7 +51,7 @@ public class LogicUITest : MonoBehaviour
 
     public List<Sprite> spriteSelects = new List<Sprite>();
     private void Start()
-    {       
+    {
         btnSetting.onClick.AddListener(OpenPanelSetting);
         btnCloseSetting.onClick.AddListener(ClosePanelSetting);
 
@@ -125,6 +126,7 @@ public class LogicUITest : MonoBehaviour
         topObject.SetActive(false);
 
         panelShop.SetActive(true);
+        imgBottom.SetActive(true);
         imgShopSelected.sprite = spriteSelects[0];
         imgShop.DOAnchorPosY(70, 0.3f, true).OnComplete(() =>
         {
@@ -140,6 +142,7 @@ public class LogicUITest : MonoBehaviour
     void OpenPanelHome()
     {
         panelShop.SetActive(false);
+        imgBottom.SetActive(false);
         imgShopSelected.sprite = spriteSelects[1];
         txtShop.gameObject.SetActive(false);
         imgShop.DOAnchorPosY(0, 0.3f, true);
@@ -166,6 +169,7 @@ public class LogicUITest : MonoBehaviour
     void OpenDailyPanel()
     {
         panelHome.SetActive(false);
+        imgBottom.SetActive(false);
         imgHomeSelected.sprite = spriteSelects[1];
         txtHome.gameObject.SetActive(false);
         imgHome.DOAnchorPosY(25, 0.3f, true);

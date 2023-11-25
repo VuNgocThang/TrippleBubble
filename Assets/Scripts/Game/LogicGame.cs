@@ -27,12 +27,11 @@ public class LogicGame : MonoBehaviour
     public LevelSetMap level;
     public PathCreator pathCreater;
     public int count;
-    public bool an = false;
     public bool isDrag;
     public bool canShuffle;
     public bool checkLose;
     public bool checkWin;
-    bool canEat;
+    public bool canEat;
     int winStreak;
     public TextMeshProUGUI txtCombo;
     public Transform targetHT;
@@ -74,13 +73,27 @@ public class LogicGame : MonoBehaviour
     }
     private void InitSomething()
     {
-        foreach (int item in DataUseInGame.gameData.listIndex)
+        if (DataUseInGame.gameData.isDaily)
         {
-            if (!listIndex.Contains(item))
+            foreach (int item in DataUseInGame.gameData.listIndexDaily)
             {
-                listIndex.Add(item);
+                if (!listIndex.Contains(item))
+                {
+                    listIndex.Add(item);
+                }
             }
         }
+        else
+        {
+            foreach (int item in DataUseInGame.gameData.listIndex)
+            {
+                if (!listIndex.Contains(item))
+                {
+                    listIndex.Add(item);
+                }
+            }
+        }
+
 
         uiGame.InitAnim();
         Application.targetFrameRate = 60;
@@ -95,6 +108,8 @@ public class LogicGame : MonoBehaviour
         {
             winStreak = PlayerPrefs.GetInt("WinStreak");
         }
+
+        count = 0;
     }
     void InitBubbles()
     {
@@ -135,10 +150,7 @@ public class LogicGame : MonoBehaviour
         {
             listBB.Add(level.bubbles[i]);
         }
-        //List<int> listRandom = new List<int>()
-        //{
-        //    2,2,0,4,4,4,0,4,3,0,5,4,2,5,6,7,5
-        //};
+
         for (int i = 0; i < listRandom.Count; i++)
         {
             listBB[i].CheckHasChild();
@@ -323,7 +335,7 @@ public class LogicGame : MonoBehaviour
         SolveChildOfBB(bubble);
 
         //bubble.StateAfterMove();
-
+        isHint = false;
         listBB.Remove(bubble);
         listBBShuffle.Remove(bubble);
         listBubbleUndo.Add(bubble);
@@ -404,6 +416,9 @@ public class LogicGame : MonoBehaviour
                 //g1.particleEatt.Play();
                 //g2.particleEatt.Play();
                 //g3.particleEatt.Play();
+                g1.particleBoom.SetActive(true);
+                g2.particleBoom.SetActive(true);
+                g3.particleBoom.SetActive(true);
 
                 g1.Move(g2.transform.parent, 0.3f, () =>
                 {
@@ -414,6 +429,8 @@ public class LogicGame : MonoBehaviour
                     listBubbleUndo.Remove(g1);
                     listBubbleUndo.Remove(g2);
                     listBubbleUndo.Remove(g3);
+
+                    canClick = true;
                 });
                 g2.Move(g2.transform.parent, 0.31f);
                 g3.Move(g2.transform.parent, 0.31f);
@@ -457,19 +474,17 @@ public class LogicGame : MonoBehaviour
             StartCoroutine(AnimBB(listBB[i]));
             SolveChildOfBB(listBB[i]);
             AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.pop);
-            yield return new WaitForSeconds(0.2f);
-
             listBBShuffle.Remove(listBB[i]);
         }
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(4f);
         SceneManager.LoadScene(str);
         DOTween.KillAll();
     }
     IEnumerator AnimBB(Bubble bb)
     {
         bb.particleBoom.SetActive(true);
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.005f);
         foreach (var obj in bb.objs)
         {
             obj.SetActive(false);
@@ -481,15 +496,14 @@ public class LogicGame : MonoBehaviour
     }
     public void CheckLose()
     {
-        if (!checkLose && listGOStored.Count > 6 && !isHint && !canEat)
-        {
-            Debug.Log("you lose");
-            checkLose = true;
-            timer.stopTimer = true;
+        if (checkLose || listGOStored.Count <= 6 || isHint || canEat) return;
 
-            logicUI.OpenLoseUI();
-            logicUI.loseUI.OpenPanelOutOfMove();
-        }
+        Debug.Log("you lose");
+        checkLose = true;
+        timer.stopTimer = true;
+
+        logicUI.OpenLoseUI();
+        logicUI.loseUI.OpenPanelOutOfMove();
 
     }
     public void Lose()
@@ -577,8 +591,8 @@ public class LogicGame : MonoBehaviour
         }
     }
 
-    bool isHint;
-    bool hinting = false;
+    public bool isHint;
+    public bool hinting = false;
     public void Hint()
     {
         int numHint = DataUseInGame.gameData.numHintItem;
@@ -589,6 +603,7 @@ public class LogicGame : MonoBehaviour
         if (hinting) return;
 
         numHint--;
+        canClick = false;
         DataUseInGame.gameData.numHintItem = numHint;
         DataUseInGame.instance.SaveData();
 
@@ -602,9 +617,9 @@ public class LogicGame : MonoBehaviour
                     {
                         if (listGOStored[0].ID == listBB[i].ID)
                         {
+                            //isHint = false;
                             Move(listBB[i]);
                             hinting = true;
-                            isHint = false;
                             return;
                         }
                     }
@@ -617,10 +632,10 @@ public class LogicGame : MonoBehaviour
                         {
                             if (listGOStored[0].ID == listBB[i].ID && listGOStored[0].ID == listBB[j].ID)
                             {
+                                // isHint = false;
                                 Move(listBB[i]);
                                 Move(listBB[j - 1]);
                                 hinting = true;
-                                isHint = false;
 
                                 return;
                             }
@@ -636,10 +651,10 @@ public class LogicGame : MonoBehaviour
                 {
                     if (listGOStored[0].ID == listBB[i].ID && listGOStored[0].ID == listBB[j].ID)
                     {
+                        // isHint = false;
                         Move(listBB[i]);
                         Move(listBB[j - 1]);
                         hinting = true;
-                        isHint = false;
 
                         return;
                     }
@@ -656,11 +671,11 @@ public class LogicGame : MonoBehaviour
                     {
                         if (listBB[i].ID == listBB[j].ID && listBB[j].ID == listBB[k].ID)
                         {
+                            // isHint = false;
                             Move(listBB[i]);
                             Move(listBB[j - 1]);
                             Move(listBB[k - 2]);
                             hinting = true;
-                            isHint = false;
 
                             return;
                         }

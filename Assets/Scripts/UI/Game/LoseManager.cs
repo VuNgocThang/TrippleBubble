@@ -50,8 +50,8 @@ public class LoseManager : MonoBehaviour
     }
     public void ContinueTimeUp()
     {
-        if (DataUseInGame.gameData.gold >= 200)
-        {
+        //if (DataUseInGame.gameData.gold >= 200)
+        //{
             btnContinueTimeUp.interactable = false;
             btnGiveUpTimeUp.interactable = false;
 
@@ -65,18 +65,18 @@ public class LoseManager : MonoBehaviour
                     panelTimeUp.SetActive(false);
                     loseUI.gameObject.SetActive(false);
                 });
-            GameManager.Instance.SubGold(200);
+            //GameManager.Instance.SubGold(200);
             timer.timeLeft += 60f;
             
             timer.OnGUI();
             timer.timeOut = false;
             LogicGame.instance.checkLose = false;
             StartCoroutine(LogicGame.instance.CanClickAgain());
-        }
-        else
-        {
-            Debug.Log("Not Enough Gold");
-        }
+        //}
+        //else
+        //{
+        //    Debug.Log("Not Enough Gold");
+        //}
     }
 
     //Logic OutOfMove
@@ -89,8 +89,8 @@ public class LoseManager : MonoBehaviour
     }
     public void ContinueOutOfMove()
     {
-        if (DataUseInGame.gameData.gold >= 200)
-        {
+        //if (DataUseInGame.gameData.gold >= 200)
+        //{
             btnContinueOutOfMove.interactable = false;
             btnGiveUpOutOfMove.interactable = false;
             AnimationPopup.instance.FadeWhileMoveUp(panelOutOfMoveCG.gameObject, 0.5f);
@@ -104,17 +104,17 @@ public class LoseManager : MonoBehaviour
                     loseUI.gameObject.SetActive(false);
                 });
 
-            GameManager.Instance.SubGold(200);
+            //GameManager.Instance.SubGold(200);
             LogicGame.instance.canClick = false;
             LogicGame.instance.checkLose = false;
             timer.stopTimer = true;
             timer.timeOut = false;
             LogicGame.instance.UndoAll();
-        }
-        else
-        {
-            Debug.Log("Not Enough Gold");
-        }
+        //}
+        //else
+        //{
+        //    Debug.Log("Not Enough Gold");
+        //}
     }
 
     //Logic Persident

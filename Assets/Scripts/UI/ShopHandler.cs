@@ -28,7 +28,7 @@ public class ShopHandler : MonoBehaviour
 
 
     }
-    
+
     void IncreaseItemBig(int numItem, float numTimer, int goldUse)
     {
         int numHint = DataUseInGame.gameData.numHintItem;
@@ -39,6 +39,10 @@ public class ShopHandler : MonoBehaviour
         bool isHeartInfinity = DataUseInGame.gameData.isHeartInfinity;
         float timeHeartInfinity = DataUseInGame.gameData.timeHeartInfinity;
 
+        if (DataUseInGame.gameData.gold < goldUse) return;
+
+        GameManager.Instance.SubGold(goldUse);
+
         numHint += numItem;
         numUndo += numItem;
         numTrippleUndo += numItem;
@@ -46,7 +50,7 @@ public class ShopHandler : MonoBehaviour
         numFreezeTime += numItem;
         isHeartInfinity = true;
         timeHeartInfinity += numTimer;
-        GameManager.Instance.SubGold(goldUse);
+
 
         DataUseInGame.gameData.numHintItem = numHint;
         DataUseInGame.gameData.numUndoItem = numUndo;

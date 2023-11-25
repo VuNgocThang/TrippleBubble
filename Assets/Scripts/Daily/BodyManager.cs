@@ -14,7 +14,7 @@ public class BodyManager : MonoBehaviour
     public List<ButtonManager> buttonsManager;
     [SerializeField] DailyManager dailyManager;
 
-    DateTime dateTime = new DateTime();
+    public DateTime dateTime = new DateTime();
     public void Initialize(int year, int month)
     {
         dateTime = new DateTime(year, month, 1);

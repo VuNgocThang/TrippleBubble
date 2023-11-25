@@ -80,9 +80,10 @@ public class StartCollector : MonoBehaviour
 
             listBtnSelector[a].btnBuy.onClick.AddListener(() =>
             {
+                if (DataUseInGame.gameData.star < listBtnSelector[a].cost) return;
+                GameManager.Instance.SubStar(listBtnSelector[a].cost);
                 listBtnSelector[a].btnBuy.interactable = false;
                 SwitchAdd(listBtnSelector[a].stringName, listBtnSelector[a].value);
-                GameManager.Instance.SubStar(listBtnSelector[a].cost);
                 currentIndex++;
                 listBtnSelector[a].idBought = 1;
                 SaveDataItemsJson(a);
@@ -130,7 +131,7 @@ public class StartCollector : MonoBehaviour
             }
         }
     }
-  
+
     public void LoadDataItems()
     {
         if (PlayerPrefs.GetString("DataStarCollector").Equals(""))

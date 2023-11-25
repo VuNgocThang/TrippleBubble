@@ -3,7 +3,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class LogicGameUI : MonoBehaviour
 {
@@ -155,6 +154,9 @@ public class LogicGameUI : MonoBehaviour
         panelPersidentCG.DOFade(0f, 0.5f)
             .OnComplete(() =>
             {
+                DataUseInGame.gameData.isDaily = false;
+                DataUseInGame.instance.SaveData();
+
                 btnRetry.interactable = true;
                 btnHome.interactable = true;
             });
@@ -202,6 +204,29 @@ public class LogicGameUI : MonoBehaviour
     {
         //GameManager.Instance.AddStar();
         GameManager.Instance.AddStar(winUI.Multi());
+        StartCoroutine(LoadSceneHome());
+
+    }
+
+    public void CloseWinUI()
+    {
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        camerUI.gameObject.SetActive(false);
+        panel.SetActive(false);
+        winUI.gameObject.SetActive(false);
+        SceneManager.LoadScene("SceneHome");
+    }
+
+    IEnumerator CanClickAgain()
+    {
+        yield return new WaitForSeconds(0.2f);
+        timer.stopTimer = false;
+        LogicGame.instance.canClick = true;
+    }
+
+    IEnumerator LoadSceneHome()
+    {
+        yield return new WaitForSeconds(1f);
         AnimationPopup.instance.FadeWhileMoveUp(winUICG.gameObject, 0.5f);
         winUICG.DOFade(0f, 0.5f)
             .OnComplete(() =>
@@ -253,21 +278,5 @@ public class LogicGameUI : MonoBehaviour
                 }
 
             });
-    }
-
-    public void CloseWinUI()
-    {
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        camerUI.gameObject.SetActive(false);
-        panel.SetActive(false);
-        winUI.gameObject.SetActive(false);
-        SceneManager.LoadScene("SceneHome");
-    }
-
-    IEnumerator CanClickAgain()
-    {
-        yield return new WaitForSeconds(0.2f);
-        timer.stopTimer = false;
-        LogicGame.instance.canClick = true;
     }
 }

@@ -1,49 +1,34 @@
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CameraResize : MonoBehaviour
 {
     public CinemachineFreeLook freeLock;
-
     public Camera Cam;
 
-    const float iPhanRatio = 2340f / 1080;
-
-    [SerializeField] float minSize = 540;
-    [SerializeField] float maxSize = 720;
-    [SerializeField] bool Orthographic = true;
-
+    public float baseSize;
+    public float baseScreenRatio;
+    public float rateY;
+    public GameObject a;
+    public CanvasScaler scaler;
     void Start()
     {
-        CheckCamera();
-    }
-
-    void CheckCamera()
-    {
-        if (Orthographic)
+        float currentRatio= Cam.aspect;
+        if (currentRatio <= baseScreenRatio)
         {
-            if (Cam.aspect <= 15f / 9) Cam.orthographicSize = maxSize;
-            else if (Cam.aspect >= iPhanRatio) Cam.orthographicSize = minSize;
-            else Cam.orthographicSize = minSize * (iPhanRatio / Cam.aspect);
+            freeLock.m_Lens.FieldOfView = baseSize * baseScreenRatio / currentRatio;
+            a.transform.localPosition += new Vector3(0, rateY * (baseScreenRatio / currentRatio - 1));
+            scaler.matchWidthOrHeight = 0;
         }
         else
         {
-            if (Cam.aspect < (18 / 37f))
-            {
-                freeLock.m_Lens.FieldOfView = 62f;
-            }
-            else
-            {
-                freeLock.m_Lens.FieldOfView = 56f;
-            }
+            //freeLock.m_Lens.FieldOfView = baseSize / baseScreenRatio * currentRatio;
+            //a.transform.localPosition += new Vector3(0, rateY * (currentRatio / baseScreenRatio - 1));
+            scaler.matchWidthOrHeight = 1;
         }
+        
     }
 
-#if UNITY_EDITOR
-    void OnValidate()
-    {
-        CheckCamera();
-    }
-#endif
 }
 
