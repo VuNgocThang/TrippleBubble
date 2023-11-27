@@ -42,6 +42,7 @@ public class LogicGameUI : MonoBehaviour
     [SerializeField] Camera camerUI;
     [SerializeField] Button btnClaim;
     [SerializeField] CanvasGroup winUICG;
+    [SerializeField] GameObject particleWin;
     public Button btnClaimStar;
 
 
@@ -196,6 +197,7 @@ public class LogicGameUI : MonoBehaviour
         panel.SetActive(true);
 
         winUI.gameObject.SetActive(true);
+        particleWin.SetActive(true);
         AnimationPopup.instance.DoTween_Button(winUICG.gameObject, 0, 200, 0.5f);
         winUICG.DOFade(1f, 0.5f);
     }
@@ -226,7 +228,7 @@ public class LogicGameUI : MonoBehaviour
 
     IEnumerator LoadSceneHome()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(4f);
         AnimationPopup.instance.FadeWhileMoveUp(winUICG.gameObject, 0.5f);
         winUICG.DOFade(0f, 0.5f)
             .OnComplete(() =>

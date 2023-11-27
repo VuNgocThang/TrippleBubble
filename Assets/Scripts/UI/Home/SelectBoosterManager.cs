@@ -36,8 +36,8 @@ public class SelectBoosterManager : MonoBehaviour
                 .OnComplete(() =>
                 {
                     selectBoosterCG.gameObject.SetActive(false);
-                    SceneManager.LoadScene("SceneGame");
                     DOTween.KillAll();
+                    SceneManager.LoadScene("SceneGame");
                 });
         }
         else
