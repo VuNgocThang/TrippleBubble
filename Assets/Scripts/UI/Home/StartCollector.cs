@@ -72,7 +72,7 @@ public class StartCollector : MonoBehaviour
         return -1;
     }
 
-    void UnlockNewBtnSelector()
+    public void UnlockNewBtnSelector()
     {
         for (int i = 0; i < listBtnSelector.Count; i++)
         {
@@ -98,7 +98,7 @@ public class StartCollector : MonoBehaviour
         }
     }
 
-    void UpdateUnlockBtn()
+    public void UpdateUnlockBtn()
     {
         foreach (ButtonSelector buttonSelector in listBtnSelector)
         {
@@ -112,13 +112,20 @@ public class StartCollector : MonoBehaviour
             }
         }
     }
+    public void ResetStarCollector()
+    {
+        for (int i = 1; i < listBtnSelector.Count; i++)
+        {
+            SaveDataItemsJson(0);
+        }
+    }
     public void SaveDataItemsJson(int i)
     {
         unlockReward.listUnlockReward[i].id = listBtnSelector[i].idBought;
         string json = JsonUtility.ToJson(unlockReward, true);
         PlayerPrefs.SetString("DataStarCollector", json);
     }
-    void LoadDataItemsJson()
+    public void LoadDataItemsJson()
     {
         for (int i = 0; i < listBtnSelector.Count; i++)
         {
@@ -128,6 +135,11 @@ public class StartCollector : MonoBehaviour
             {
                 listBtnSelector[a].btnBuy.interactable = false;
                 listBtnSelector[a].lockObject.SetActive(false);
+            }
+            else
+            {
+                listBtnSelector[a].btnBuy.interactable = true;
+                listBtnSelector[a].lockObject.SetActive(true);
             }
         }
     }
@@ -147,7 +159,7 @@ public class StartCollector : MonoBehaviour
         }
     }
 
-    void SwitchAdd(string str, int value)
+    public void SwitchAdd(string str, int value)
     {
         switch (str)
         {

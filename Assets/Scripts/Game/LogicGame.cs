@@ -827,7 +827,7 @@ public class LogicGame : MonoBehaviour
     IEnumerator StopFreeze()
     {
         isFreezeing = true;
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(5555555f);
         timer.isFreeze = false;
         isFreezeing = false;
     }

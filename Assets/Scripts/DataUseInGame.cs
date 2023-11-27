@@ -144,6 +144,7 @@ public class DataUseInGame : MonoBehaviour
         if (gameData.timeStarCollector <= 0)
         {
             gameData.timeStarCollector = 0;
+            //StartCollector.ins.ResetStarCollector();
         }
        
     }

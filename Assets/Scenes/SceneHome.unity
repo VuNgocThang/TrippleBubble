@@ -7096,13 +7096,7 @@ MonoBehaviour:
   listBtnSelector: []
   prefab: {fileID: -7601667895231211854, guid: e6f33f6a2236a8440ad9885af86b6bdf, type: 3}
   unlockReward:
-    listUnlockReward:
-    - id: 0
-    - id: 0
-    - id: 0
-    - id: 0
-    - id: 0
-    - id: 0
+    listUnlockReward: []
   currentIndex: 0
   parent: {fileID: 1533137431}
   star: 0
