@@ -74,6 +74,8 @@ public class BodyManager : MonoBehaviour
             {
                 if (!button.isDone)
                 {
+                    AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
+
                     OnClickState();
                     SetSelected(button, true);
                     UpdateState();

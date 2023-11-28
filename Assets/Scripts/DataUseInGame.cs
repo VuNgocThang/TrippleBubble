@@ -19,6 +19,8 @@ public class GameData
     public float timeHeartInfinity;
     public float timeStarCollector;
 
+    public int currentIndexStarCollector;
+
     public List<int> listIndexDaily;
     public float currentRewardDaily;
     public float maxRewardDaily;
@@ -29,8 +31,6 @@ public class GameData
     public int day;
     public List<DailyData> dailyData;
 
-
-
     public GameData()
     {
         indexLevel = 0;
@@ -39,7 +39,7 @@ public class GameData
             0, 1, 2, 3, 4, 5, 6, 7, 8
         };
         heart = 5;
-        star = 0;
+        star = 00;
         gold = 0;
         numHintItem = 100;
         numShuffleItem = 100;
@@ -48,7 +48,9 @@ public class GameData
         numFreezeTimeItem = 100;
         isHeartInfinity = false;
         timeHeartInfinity = 0;
-        timeStarCollector = 84600f;
+        timeStarCollector = 86400f;
+
+        currentIndexStarCollector = 0;
 
         listIndexDaily = new List<int>()
         {
@@ -65,7 +67,7 @@ public class GameData
     }
 }
 
-[System.Serializable]
+[Serializable]
 public class DailyData
 {
     public int year;
@@ -143,10 +145,16 @@ public class DataUseInGame : MonoBehaviour
 
         if (gameData.timeStarCollector <= 0)
         {
-            gameData.timeStarCollector = 0;
-            //StartCollector.ins.ResetStarCollector();
+            gameData.timeStarCollector = 86400f;
+            gameData.currentIndexStarCollector = 0;
+            if(StartCollector.ins != null)
+            {
+                StartCollector.ins.currentIndex = 0;
+                StartCollector.ins.UpdateUnlockBtn();
+            }
+            Debug.Log("Reset time");
         }
-       
+
     }
     void CheckTimeHeartInfinity()
     {

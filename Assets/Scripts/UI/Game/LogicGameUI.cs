@@ -73,6 +73,7 @@ public class LogicGameUI : MonoBehaviour
 
     void BackHome()
     {
+        AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
         DataUseInGame.gameData.isDaily = false;
         DataUseInGame.instance.SaveData();
 
@@ -81,6 +82,7 @@ public class LogicGameUI : MonoBehaviour
     }
     void OpenPanelPause()
     {
+        AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
         timer.stopTimer = true;
         panelPause.SetActive(true);
         AnimationPopup.instance.DoTween_Button(panelPauseCG.gameObject, 0, 200, 0.5f);
@@ -89,6 +91,7 @@ public class LogicGameUI : MonoBehaviour
 
     void ClosePanelPause()
     {
+        AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
         timer.stopTimer = false;
         AnimationPopup.instance.FadeWhileMoveUp(panelPauseCG.gameObject, 0.5f);
         panelPauseCG.DOFade(0f, 0.5f)
@@ -103,6 +106,7 @@ public class LogicGameUI : MonoBehaviour
     }
     public void OpenPanelPersident()
     {
+        AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
         bgBlackPersident.SetActive(true);
         btnClosePersident.gameObject.SetActive(true);
         LogicGame.instance.canClick = false;
@@ -120,11 +124,11 @@ public class LogicGameUI : MonoBehaviour
     }
     public void ClosePersident()
     {
+        AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
         AnimationPopup.instance.FadeWhileMoveUp(panelPersidentCG.gameObject, 0.5f);
         panelPersidentCG.DOFade(0f, 0.5f)
             .OnComplete(() =>
             {
-                bgBlackPersident.SetActive(false);
                 panelPersident.SetActive(false);
                 StartCoroutine(CanClickAgain());
 
@@ -132,6 +136,7 @@ public class LogicGameUI : MonoBehaviour
     }
     public void Retry()
     {
+        AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
         GameManager.Instance.SubHeart();
         btnRetry.interactable = false;
         btnHome.interactable = false;
@@ -143,11 +148,11 @@ public class LogicGameUI : MonoBehaviour
                 btnHome.interactable = true;
             });
 
-        bgBlackPersident.SetActive(false);
         StartCoroutine(LogicGame.instance.AnimBoomBB("SceneGame"));
     }
     public void BackHomePersident()
     {
+        AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
         GameManager.Instance.SubHeart();
         btnRetry.interactable = false;
         btnHome.interactable = false;
@@ -162,12 +167,12 @@ public class LogicGameUI : MonoBehaviour
                 btnHome.interactable = true;
             });
 
-        bgBlackPersident.SetActive(false);
         StartCoroutine(LogicGame.instance.AnimBoomBB("SceneHome"));
     }
 
     void OpenPanelRemoveAds()
     {
+        AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
         timer.stopTimer = true;
         LogicGame.instance.canClick = false;
         panelRemoveAds.SetActive(true);
@@ -176,6 +181,7 @@ public class LogicGameUI : MonoBehaviour
     }
     void ClosePanelRemoveAds()
     {
+        AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
         AnimationPopup.instance.FadeWhileMoveUp(panelRemoveAdsCG.gameObject, 0.5f);
         panelRemoveAdsCG.DOFade(0f, 0.5f)
             .OnComplete(() =>
@@ -204,6 +210,7 @@ public class LogicGameUI : MonoBehaviour
 
     public void ClaimStar()
     {
+        AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
         //GameManager.Instance.AddStar();
         GameManager.Instance.AddStar(winUI.Multi());
         StartCoroutine(LoadSceneHome());
@@ -212,6 +219,7 @@ public class LogicGameUI : MonoBehaviour
 
     public void CloseWinUI()
     {
+        AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
         camerUI.gameObject.SetActive(false);
         panel.SetActive(false);
@@ -228,7 +236,7 @@ public class LogicGameUI : MonoBehaviour
 
     IEnumerator LoadSceneHome()
     {
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(3f);
         AnimationPopup.instance.FadeWhileMoveUp(winUICG.gameObject, 0.5f);
         winUICG.DOFade(0f, 0.5f)
             .OnComplete(() =>

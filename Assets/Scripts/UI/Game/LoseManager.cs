@@ -50,9 +50,11 @@ public class LoseManager : MonoBehaviour
     }
     public void ContinueTimeUp()
     {
+        AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
+
         //if (DataUseInGame.gameData.gold >= 200)
         //{
-            btnContinueTimeUp.interactable = false;
+        btnContinueTimeUp.interactable = false;
             btnGiveUpTimeUp.interactable = false;
 
             AnimationPopup.instance.FadeWhileMoveUp(panelTimeUpCG.gameObject, 0.5f);
@@ -89,9 +91,11 @@ public class LoseManager : MonoBehaviour
     }
     public void ContinueOutOfMove()
     {
+        AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
+
         //if (DataUseInGame.gameData.gold >= 200)
         //{
-            btnContinueOutOfMove.interactable = false;
+        btnContinueOutOfMove.interactable = false;
             btnGiveUpOutOfMove.interactable = false;
             AnimationPopup.instance.FadeWhileMoveUp(panelOutOfMoveCG.gameObject, 0.5f);
             panelOutOfMoveCG.DOFade(0f, 0.5f)

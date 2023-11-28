@@ -31,6 +31,8 @@ public class ShopHandler : MonoBehaviour
 
     void IncreaseItemBig(int numItem, float numTimer, int goldUse)
     {
+        AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
+
         int numHint = DataUseInGame.gameData.numHintItem;
         int numUndo = DataUseInGame.gameData.numUndoItem;
         int numTrippleUndo = DataUseInGame.gameData.numTrippleUndoItem;

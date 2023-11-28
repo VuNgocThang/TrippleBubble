@@ -39,6 +39,9 @@ public class LogicGame : MonoBehaviour
     public Transform pathCreaterGift;
     int currentTotalBB;
     public GameObject particleTest;
+    [SerializeField] CameraResize cameraResize;
+    [SerializeField] TutorialManager tutorialManager;
+
     private void Awake()
     {
         if (instance == null) instance = this;
@@ -57,9 +60,10 @@ public class LogicGame : MonoBehaviour
             level = Instantiate(listLevelDaily[indexLevel], transform);
 
         }
-
         InitSomething();
         InitBubbles();
+        tutorialManager.ShowTutorial();
+        cameraResize.InitSizeObject(level.gameObject);
         currentTotalBB = listBB.Count;
         canShuffle = true;
 
@@ -322,6 +326,7 @@ public class LogicGame : MonoBehaviour
                     //bubble.particleEat.SetActive(true);
                     bubble.particleEatt.Play();
                     AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.click);
+                    tutorialManager.OnClick(bubble);
                     Move(bubble);
                 }
             }
@@ -535,6 +540,7 @@ public class LogicGame : MonoBehaviour
     List<Vector3> listNewPosShuffle = new List<Vector3>();
     public void Shuffle()
     {
+        AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
         int numShuffle = DataUseInGame.gameData.numShuffleItem;
         if (numShuffle <= 0) return;
         if (isShuffleing) return;
@@ -595,6 +601,7 @@ public class LogicGame : MonoBehaviour
     public bool hinting = false;
     public void Hint()
     {
+        AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
         int numHint = DataUseInGame.gameData.numHintItem;
         if (numHint <= 0) return;
 
@@ -687,6 +694,7 @@ public class LogicGame : MonoBehaviour
     }
     public void Undo()
     {
+        AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
         int numUndo = DataUseInGame.gameData.numUndoItem;
 
         if (numUndo <= 0) return;
@@ -724,6 +732,7 @@ public class LogicGame : MonoBehaviour
     bool isUndoing = false;
     public void UndoTripple()
     {
+        AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
         int numTrippleUndo = DataUseInGame.gameData.numTrippleUndoItem;
 
         if (numTrippleUndo <= 0) return;
@@ -813,6 +822,7 @@ public class LogicGame : MonoBehaviour
     bool isFreezeing = false;
     public void Freeze()
     {
+        AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
         int numFreeze = DataUseInGame.gameData.numFreezeTimeItem;
         if (numFreeze <= 0) return;
         if (isFreezeing) return;

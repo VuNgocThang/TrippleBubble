@@ -68,6 +68,7 @@ public class LogicUITest : MonoBehaviour
 
     void OpenPanelSetting()
     {
+        AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
         panelSetting.SetActive(true);
         AnimationPopup.instance.DoTween_Button(panelSettingCG.gameObject, 0, 200, 0.5f);
         panelSettingCG.DOFade(1f, 0.5f);
@@ -75,6 +76,7 @@ public class LogicUITest : MonoBehaviour
     }
     void ClosePanelSetting()
     {
+        AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
         AnimationPopup.instance.FadeWhileMoveUp(panelSettingCG.gameObject, 0.5f);
         panelSettingCG.DOFade(0f, 0.5f)
             .OnComplete(() =>
@@ -85,15 +87,18 @@ public class LogicUITest : MonoBehaviour
 
     void OpenPanelStarCollector()
     {
+        AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
         panelStarCollector.SetActive(true);
     }
     void ClosePanelStarCollector()
     {
+        AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
         panelStarCollector.SetActive(false);
     }
 
     public void SelectBooster()
     {
+        AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
         selectBooster.gameObject.SetActive(true);
         AnimationPopup.instance.DoTween_Button(selectBooster.selectBoosterCG.gameObject, 0, 200, 0.5f);
         selectBooster.selectBoosterCG.DOFade(1f, 0.5f);
@@ -101,6 +106,7 @@ public class LogicUITest : MonoBehaviour
     }
     void ClosePanelBooster()
     {
+        AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
         AnimationPopup.instance.FadeWhileMoveUp(selectBooster.selectBoosterCG.gameObject, 0.5f);
         selectBooster.selectBoosterCG.DOFade(0f, 0.5f)
             .OnComplete(() =>
@@ -113,6 +119,7 @@ public class LogicUITest : MonoBehaviour
     // 0 select
     void OpenPanelShop()
     {
+        AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
         panelHome.SetActive(false);
         imgHomeSelected.sprite = spriteSelects[1];
         txtHome.gameObject.SetActive(false);
@@ -141,6 +148,7 @@ public class LogicUITest : MonoBehaviour
 
     void OpenPanelHome()
     {
+        AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
         panelShop.SetActive(false);
         imgBottom.SetActive(false);
         imgShopSelected.sprite = spriteSelects[1];
@@ -168,6 +176,7 @@ public class LogicUITest : MonoBehaviour
 
     void OpenDailyPanel()
     {
+        AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
         panelHome.SetActive(false);
         imgBottom.SetActive(false);
         imgHomeSelected.sprite = spriteSelects[1];

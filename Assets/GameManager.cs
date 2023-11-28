@@ -6,7 +6,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-
+    public bool canRotate;
     private void Awake()
     {
         if (Instance != null)
@@ -15,6 +15,14 @@ public class GameManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(this);
+    }
+
+    private void Update()
+    {
+        if (DataUseInGame.gameData.indexLevel > 0)
+        {
+            canRotate = true;
+        }
     }
     public void SubHeart()
     {
@@ -58,7 +66,6 @@ public class GameManager : MonoBehaviour
 
     public void AddGold(int goldAdd)
     {
-        Debug.Log(DataUseInGame.gameData.gold);
         int gold = DataUseInGame.gameData.gold;
         gold += goldAdd;
         DataUseInGame.gameData.gold = gold;

@@ -22,6 +22,8 @@ public class SelectBoosterManager : MonoBehaviour
 
     void StartGame()
     {
+        AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
+
         if (DataUseInGame.gameData.heart > 0 || DataUseInGame.gameData.isHeartInfinity)
         {
             for (int i = 0; i < btnBoosters.Count; i++)
@@ -44,8 +46,6 @@ public class SelectBoosterManager : MonoBehaviour
         {
             Debug.Log("Not Enough Heart");
         }
-
-
     }
 
     public void UnSelectedBtn()

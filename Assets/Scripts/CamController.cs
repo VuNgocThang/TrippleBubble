@@ -12,10 +12,13 @@ public class CamController : MonoBehaviour
     private void Update()
     {
         Vector3 dv = easyController.dV;
-        if (dv != Vector3.zero)
+        if (GameManager.Instance.canRotate)
         {
-            freeLock.m_XAxis.Value += dv.x * yourMultiplierX;
-            freeLock.m_YAxis.Value -= dv.y * yourMultiplierY;
+            if (dv != Vector3.zero)
+            {
+                freeLock.m_XAxis.Value += dv.x * yourMultiplierX;
+                freeLock.m_YAxis.Value -= dv.y * yourMultiplierY;
+            }
         }
     }
 }
