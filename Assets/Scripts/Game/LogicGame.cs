@@ -72,7 +72,8 @@ public class LogicGame : MonoBehaviour
         canShuffle = true;
 
         //số bóng *3 + 30 giây
-        timer.timeLeft = currentTotalBB * 3 + 30f;
+        //timer.timeLeft = currentTotalBB * 3 + 30f;
+        timer.timeLeft = 1111f;
 
         timer.stopTimer = true;
         UseBooster();
@@ -119,16 +120,67 @@ public class LogicGame : MonoBehaviour
     }
     void InitBubbles()
     {
+        //int count = listIndex.Count;
+        //int countAll = level.bubbles.Count;
+        //int max = level.maxEach;
+
+        //List<int> listRandom = new List<int>();
+        //int[] arr = new int[count];
+        //while (countAll > 0)
+        //{
+        //    int i = UnityEngine.Random.Range(0, count);
+        //    int index = listIndex[i];
+
+        //    if (arr[i] < max)
+        //    {
+        //        arr[i] += 3;
+        //        for (int y = 0; y < 3; y++)
+        //        {
+        //            listRandom.Add(index);
+        //            countAll--;
+        //        }
+        //    }
+        //}
+
+
         int count = listIndex.Count;
         int countAll = level.bubbles.Count;
         int max = level.maxEach;
+        for (int i = 0; i < level.bubbles.Count; i++)
+        {
+            if (level.bubbles[i].children.childCount > 0)
+            {
+                Debug.Log("true " + i);
+                level.bubbles[i].hasChildren = true;
+            }
+        }
+        for (int i = 0; i < level.bubbles.Count; i++)
+        {
+            if (level.bubbles[i].hasChildren)
+            {
+                Debug.Log("true 222222 " + i);
+            }
+        }
 
         List<int> listRandom = new List<int>();
         int[] arr = new int[count];
         while (countAll > 0)
         {
-            int i = UnityEngine.Random.Range(0, count);
-            int index = listIndex[i];
+            int i;
+            int index;
+
+            bool hasChildrenCondition = false;
+
+            if (hasChildrenCondition)
+            {
+                i = UnityEngine.Random.Range(0, 8);
+                index = listIndex[i];
+            }
+            else
+            {
+                i = UnityEngine.Random.Range(0, count);
+                index = listIndex[i];
+            }
 
             if (arr[i] < max)
             {

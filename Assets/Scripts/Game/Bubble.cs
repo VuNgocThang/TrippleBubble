@@ -10,8 +10,13 @@ public class Bubble : MonoBehaviour
     public int ID;
     public Vector3 originalPos;
     public Vector3 originalScale;
+
     public bool hasChildren;
     public bool isChild;
+    public bool canMoveHT;
+    public bool IsMoving;
+    public bool IsDone;
+
     public float radius;
     public Transform children;
     public Transform connectPoint;
@@ -19,11 +24,8 @@ public class Bubble : MonoBehaviour
     public Texture2DArray bubblTexture2d;
     public List<GameObject> objs = new List<GameObject>();
     public List<Material> mats = new List<Material>();
-    public bool canMoveHT;
     public MeshCollider meshCollider;
     public Rigidbody rb;
-    public bool IsMoving;
-    public bool IsDone;
     public Tweener tweenerMove;
     public GameObject particleBoom;
     //public GameObject particleEat;
