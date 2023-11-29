@@ -7,16 +7,24 @@ using UnityEngine.UI;
 public class TutorialManager : MonoBehaviour
 {
     public Image handClick;
+    public Image handRotate;
     int currentStepClick = 0;
+    bool isDone;
     public List<Bubble> listBubbles = new List<Bubble>();
-    private void Start()
+    public List<int> listIndex = new List<int>()
     {
-        AnimHand();
+        0,0,0,2,4,4,2,4,2
+    };
+    public CamController controller;
+
+
+    private void Update()
+    {
+        AnimHandRotate();
     }
     public void ShowTutorial()
     {
         InitTutorial();
-        handClick.gameObject.SetActive(true);
         MoveHandClick();
     }
 
@@ -44,7 +52,7 @@ public class TutorialManager : MonoBehaviour
             }
             else
             {
-                HideHandClick();
+                StartCoroutine(HideHandClick());
             }
         }
     }
@@ -57,15 +65,26 @@ public class TutorialManager : MonoBehaviour
         handClick.transform.DOMove(Camera.main.WorldToScreenPoint(targetPos), 0.4f);
     }
 
-    void HideHandClick()
+    IEnumerator HideHandClick()
     {
         handClick.gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.5f);
+        handRotate.gameObject.SetActive(true);
+        GameManager.Instance.canRotate = true;
     }
-    
-       
-   
 
-    void AnimHand()
+    public void AnimHandRotate()
+    {
+
+        if (controller.isRotate && handRotate.gameObject != null && !isDone)
+        {
+            isDone = true;
+            Debug.Log("hihi");
+            handRotate.gameObject.SetActive(false);
+        }
+    }
+
+    public void AnimHand()
     {
         if (handClick.gameObject != null)
         {

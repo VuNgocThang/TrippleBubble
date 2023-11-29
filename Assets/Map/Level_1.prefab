@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5603764557513517345}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 6, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5337508896151050591}
@@ -132,7 +132,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2751347547741323121, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6428927290568833029, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: canMoveHT
@@ -225,7 +225,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2751347547741323121, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6428927290568833029, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: canMoveHT
@@ -322,7 +322,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4583184949514558193, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6428927290568833029, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: canMoveHT
@@ -415,7 +415,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2751347547741323121, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6428927290568833029, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: canMoveHT
@@ -508,7 +508,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2751347547741323121, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6428927290568833029, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: canMoveHT
@@ -601,7 +601,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2751347547741323121, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6428927290568833029, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: canMoveHT
@@ -694,7 +694,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2751347547741323121, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6428927290568833029, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: canMoveHT
@@ -787,7 +787,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2751347547741323121, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6428927290568833029, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: canMoveHT
@@ -880,7 +880,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2751347547741323121, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6428927290568833029, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: canMoveHT

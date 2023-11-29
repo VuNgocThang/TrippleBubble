@@ -41,6 +41,7 @@ public class LogicGame : MonoBehaviour
     public GameObject particleTest;
     [SerializeField] CameraResize cameraResize;
     [SerializeField] TutorialManager tutorialManager;
+    public Transform pathHandRotate;
 
     private void Awake()
     {
@@ -52,17 +53,16 @@ public class LogicGame : MonoBehaviour
         {
             indexLevel = DataUseInGame.gameData.indexLevel;
             level = Instantiate(listLevel[indexLevel], transform);
-
         }
         else
         {
             indexLevel = DataUseInGame.gameData.indexDailyLV;
             level = Instantiate(listLevelDaily[indexLevel], transform);
-
         }
         InitSomething();
         InitBubbles();
-        tutorialManager.ShowTutorial();
+        lineController.CreateLine(listBBShuffle);
+        //tutorialManager.ShowTutorial();
         cameraResize.InitSizeObject(level.gameObject);
         currentTotalBB = listBB.Count;
         canShuffle = true;
@@ -98,7 +98,6 @@ public class LogicGame : MonoBehaviour
             }
         }
 
-
         uiGame.InitAnim();
         Application.targetFrameRate = 60;
         canClick = true;
@@ -117,7 +116,6 @@ public class LogicGame : MonoBehaviour
     }
     void InitBubbles()
     {
-
         int count = listIndex.Count;
         int countAll = level.bubbles.Count;
         int max = level.maxEach;
@@ -155,12 +153,27 @@ public class LogicGame : MonoBehaviour
             listBB.Add(level.bubbles[i]);
         }
 
-        for (int i = 0; i < listRandom.Count; i++)
+        if (DataUseInGame.gameData.indexLevel == 0)
         {
-            listBB[i].CheckHasChild();
-            listBB[i].Init(listRandom[i]);
-            //listBB[i].originalPos = listBB[i].transform.position;
-            listBB[i].originalScale = listBB[i].transform.localScale;
+            for (int i = 0; i < tutorialManager.listIndex.Count; i++)
+            {
+                listBB[i].CheckHasChild();
+                listBB[i].Init(tutorialManager.listIndex[i]);
+                listBB[i].originalScale = listBB[i].transform.localScale;
+            }
+            tutorialManager.ShowTutorial();
+            tutorialManager.handClick.gameObject.SetActive(true);
+            tutorialManager.AnimHand();
+            tutorialManager.AnimHandRotate();
+        }
+        else
+        {
+            for (int i = 0; i < listRandom.Count; i++)
+            {
+                listBB[i].CheckHasChild();
+                listBB[i].Init(listRandom[i]);
+                listBB[i].originalScale = listBB[i].transform.localScale;
+            }
         }
 
         foreach (Bubble bubble in listBB)
@@ -293,13 +306,25 @@ public class LogicGame : MonoBehaviour
     }
     void Update()
     {
-        lineController.CreateLine(listBBShuffle);
-        if (Input.GetKeyDown(KeyCode.K)) auto = true;
-        if (auto && listBB.Count > 0) Move(listBB[0]);
+        //lineController.CreateLine(listBBShuffle);
+
+        //if (Input.GetKeyDown(KeyCode.K)) auto = true;
+        //if (auto && listBB.Count > 0) Move(listBB[0]);
         OnClick();
     }
 
-    bool auto = false;
+    private void FixedUpdate()
+    {
+        //lineController.CreateLine(listBBShuffle);
+
+    }
+
+    public void UpdateLine()
+    {
+        lineController.CreateLine(listBBShuffle);
+    }
+
+    //bool auto = false;
     float timeCount;
     void OnClick()
     {
@@ -326,8 +351,11 @@ public class LogicGame : MonoBehaviour
                     //bubble.particleEat.SetActive(true);
                     bubble.particleEatt.Play();
                     AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.click);
-                    tutorialManager.OnClick(bubble);
                     Move(bubble);
+                    if (indexLevel == 0)
+                    {
+                        tutorialManager.OnClick(bubble);
+                    }
                 }
             }
         }

@@ -36,7 +36,7 @@ public class HomeUI : MonoBehaviour
         AnimationPopup.instance.DoTween_Button(homeUI, 0, -300, 1f);
         AnimationPopup.instance.DoTween_Button(dailyUI, 0, -300, 1f);
 
-        AnimationPopup.instance.AnimScaleZoom(playUI.transform);
+        //AnimationPopup.instance.AnimScaleZoom(playUI.transform);
     }
 
     private void OnGUI()

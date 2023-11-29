@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class TestController : MonoBehaviour
 {
-    //public EasyController easyController;
-    //private void Update()
-    //{
-    //    Vector3 dv = easyController.dV;
-    //    if (dv != Vector3.zero)
-    //    {
-    //        Vector3 v = transform.eulerAngles + new Vector3(-dv.y, dv.x, 0);
-    //        v.x = Mathf.Clamp(v.x, 20,55);
-    //        transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, v, 0.075f);
-    //    }
-    //}
+    public EasyController easyController;
+    public Transform nX;
+    private void Update()
+    {
+        Vector3 dv = easyController.dV;
+        if (dv != Vector3.zero)
+        {
+            nX.localEulerAngles += new Vector3(0, -dv.x, 0) * 30f * Time.deltaTime;
+            float f = Mathf.Clamp(transform.localEulerAngles.x  -dv.y * 30f * Time.deltaTime, 0, 50);
+            transform.localEulerAngles = new Vector3(f, 0, 0);
+            LogicGame.instance.UpdateLine();
+        }
+    }
 }

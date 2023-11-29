@@ -17,6 +17,6 @@ public class Follower : MonoBehaviour
     {
         distacne += speed * Time.deltaTime;
         transform.position = creator.path.GetPointAtDistance(distacne);
-        //transform.rotation = creator.path.GetRotationAtDistance(distacne);
+        //transform.rotation = creator.path.GetRotationAtDistance(distance);
     }
 }

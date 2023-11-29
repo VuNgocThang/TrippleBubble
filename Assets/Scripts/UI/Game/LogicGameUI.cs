@@ -213,6 +213,7 @@ public class LogicGameUI : MonoBehaviour
         AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
         //GameManager.Instance.AddStar();
         GameManager.Instance.AddStar(winUI.Multi());
+        DOTween.KillAll();
         StartCoroutine(LoadSceneHome());
 
     }

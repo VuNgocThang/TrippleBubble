@@ -19,10 +19,10 @@ public class CameraResize : MonoBehaviour
         float currentRatio = Cam.aspect;
         if (currentRatio <= baseScreenRatio)
         {
-            //freeLock.m_Lens.FieldOfView = baseSize * baseScreenRatio / currentRatio;
+            freeLock.m_Lens.FieldOfView = baseSize * baseScreenRatio / currentRatio;
             float xyz = rateY * (baseScreenRatio / currentRatio - 1);
             a.transform.localPosition += new Vector3(0, xyz);
-            obj.transform.localScale -= 3 * new Vector3(xyz, xyz, xyz);
+            //obj.transform.localScale -= 3 * new Vector3(xyz, xyz, xyz);
             scaler.matchWidthOrHeight = 0;
         }
         else

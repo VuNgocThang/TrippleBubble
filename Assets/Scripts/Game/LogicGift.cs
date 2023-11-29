@@ -2,7 +2,6 @@
 using DG.Tweening;
 using System.Collections;
 using PathCreation;
-using UnityEngine.UIElements;
 
 public class LogicGift : MonoBehaviour
 {
@@ -15,7 +14,7 @@ public class LogicGift : MonoBehaviour
     {
         distacne += speed * Time.deltaTime;
         transform.position = creator.path.GetPointAtDistance(distacne);
-
+        LogicGame.instance.UpdateLine();
         if (IsObjectOutOfEyes() && !checkOut)
         {
             checkOut = true;
