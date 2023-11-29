@@ -11,7 +11,6 @@ public class WinUI : MonoBehaviour
     public TextMeshProUGUI txtStar;
     public TextMeshProUGUI txtPoint;
     public TextMeshProUGUI txtPointMulti;
-    public GameObject vfx;
 
     public Transform hand;
     public Vector3 startPos;
@@ -35,11 +34,7 @@ public class WinUI : MonoBehaviour
         txtPointMulti.text = starAdd.ToString();
     }
 
-    private void Update()
-    {
-        vfx.transform.Rotate(new Vector3(0, 0, 1) * 100f * Time.deltaTime);
-    }
-
+  
     private void Start()
     {
         currentScore = DataUseInGame.gameData.star;

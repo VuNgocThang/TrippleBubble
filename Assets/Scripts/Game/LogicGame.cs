@@ -16,11 +16,11 @@ public class LogicGame : MonoBehaviour
     public List<int> listIndex;
     public Timer timer;
     public List<Bubble> listGOStored = new List<Bubble>();
-    [SerializeField] List<Bubble> listBBShuffle;
-    [SerializeField] List<Transform> listPoint = new List<Transform>();
-    [SerializeField] LineController lineController;
-    [SerializeField] List<Bubble> listBubbleUndo = new List<Bubble>();
-    [SerializeField] LayerMask layerMask;
+    public List<Bubble> listBBShuffle;
+    public List<Transform> listPoint = new List<Transform>();
+    public LineController lineController;
+    public List<Bubble> listBubbleUndo = new List<Bubble>();
+    public LayerMask layerMask;
     public List<LevelSetMap> listLevel;
     public List<LevelSetMap> listLevelDaily;
     public int indexLevel;
@@ -39,9 +39,13 @@ public class LogicGame : MonoBehaviour
     public Transform pathCreaterGift;
     int currentTotalBB;
     public GameObject particleTest;
-    [SerializeField] CameraResize cameraResize;
-    [SerializeField] TutorialManager tutorialManager;
+    public CameraResize cameraResize;
+    //[SerializeField] TutorialManager tutorialManager;
     public Transform pathHandRotate;
+    public List<int> listIndexParent = new List<int>()
+    {
+        0,1,2,3,4,5,6,7,8
+    };
 
     private void Awake()
     {
@@ -69,7 +73,6 @@ public class LogicGame : MonoBehaviour
 
         //số bóng *3 + 30 giây
         timer.timeLeft = currentTotalBB * 3 + 30f;
-        //timer.timeLeft = 1111f;
 
         timer.stopTimer = true;
         UseBooster();
@@ -153,28 +156,28 @@ public class LogicGame : MonoBehaviour
             listBB.Add(level.bubbles[i]);
         }
 
-        if (DataUseInGame.gameData.indexLevel == 0)
+        //if (DataUseInGame.gameData.indexLevel == 0)
+        //{
+        //    for (int i = 0; i < tutorialManager.listIndex.Count; i++)
+        //    {
+        //        listBB[i].CheckHasChild();
+        //        listBB[i].Init(tutorialManager.listIndex[i]);
+        //        listBB[i].originalScale = listBB[i].transform.localScale;
+        //    }
+        //    tutorialManager.ShowTutorial();
+        //    tutorialManager.handClick.gameObject.SetActive(true);
+        //    tutorialManager.AnimHand();
+        //    tutorialManager.AnimHandRotate();
+        //}
+        //else
+        //{
+        for (int i = 0; i < listRandom.Count; i++)
         {
-            for (int i = 0; i < tutorialManager.listIndex.Count; i++)
-            {
-                listBB[i].CheckHasChild();
-                listBB[i].Init(tutorialManager.listIndex[i]);
-                listBB[i].originalScale = listBB[i].transform.localScale;
-            }
-            tutorialManager.ShowTutorial();
-            tutorialManager.handClick.gameObject.SetActive(true);
-            tutorialManager.AnimHand();
-            tutorialManager.AnimHandRotate();
+            listBB[i].CheckHasChild();
+            listBB[i].Init(listRandom[i]);
+            listBB[i].originalScale = listBB[i].transform.localScale;
         }
-        else
-        {
-            for (int i = 0; i < listRandom.Count; i++)
-            {
-                listBB[i].CheckHasChild();
-                listBB[i].Init(listRandom[i]);
-                listBB[i].originalScale = listBB[i].transform.localScale;
-            }
-        }
+        //}
 
         foreach (Bubble bubble in listBB)
         {
@@ -352,10 +355,10 @@ public class LogicGame : MonoBehaviour
                     bubble.particleEatt.Play();
                     AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.click);
                     Move(bubble);
-                    if (indexLevel == 0)
-                    {
-                        tutorialManager.OnClick(bubble);
-                    }
+                    //if (indexLevel == 0)
+                    //{
+                    //    tutorialManager.OnClick(bubble);
+                    //}
                 }
             }
         }

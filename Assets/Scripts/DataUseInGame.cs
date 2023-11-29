@@ -54,9 +54,12 @@ public class GameData
 
         listIndexDaily = new List<int>()
         {
-            0, 1, 2, 3, 4, 5, 6, 7, 8,
+            0,1,2,3,4,5,6,7,8,
             9, 10, 11, 12, 13, 14, 15, 16, 17,
-            18, 19, 20, 21, 22, 23, 24, 25, 26
+            18, 19, 20, 21, 22, 23, 24, 25, 26,
+            73,74,75,76,77,78,79,80,81,82,
+            83,84,85,86,87,88,89,90,91,92,
+            93,94,95,96,97,98,99, 100, 101
         };
         currentRewardDaily = 0;
         maxRewardDaily = 28;
@@ -147,7 +150,7 @@ public class DataUseInGame : MonoBehaviour
         {
             gameData.timeStarCollector = 86400f;
             gameData.currentIndexStarCollector = 0;
-            if(StartCollector.ins != null)
+            if (StartCollector.ins != null)
             {
                 StartCollector.ins.currentIndex = 0;
                 StartCollector.ins.UpdateUnlockBtn();

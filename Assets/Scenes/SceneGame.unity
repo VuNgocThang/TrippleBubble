@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.727
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1882617839}
-  m_IndirectSpecularColor: {r: 0.68088037, g: 0.6734899, b: 0.67168754, a: 0.727}
+  m_IndirectSpecularColor: {r: 0.3950971, g: 0.3889507, b: 0.3785277, a: 0.727}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6179,7 +6179,6 @@ MonoBehaviour:
   txtStar: {fileID: 1788997708}
   txtPoint: {fileID: 2102778813}
   txtPointMulti: {fileID: 1336135354}
-  vfx: {fileID: 40728820}
   hand: {fileID: 1905452200}
   startPos: {x: -220, y: -90, z: 0}
   endPos: {x: 220, y: -90, z: 0}
@@ -8962,6 +8961,7 @@ GameObject:
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
   - component: {fileID: 963194230}
+  - component: {fileID: 963194231}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -9102,6 +9102,24 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &963194231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 340c258ecbd9e0a47b33f77ae5f4df68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Cam: {fileID: 963194227}
+  baseSize: 62
+  baseScreenRatio: 0.5625
+  rateY: -0.8
+  a: {fileID: 1859099049}
+  scaler: {fileID: 1596831845}
 --- !u!1 &976345465
 GameObject:
   m_ObjectHideFlags: 0
@@ -11848,7 +11866,6 @@ MonoBehaviour:
   pathCreaterGift: {fileID: 319048781}
   particleTest: {fileID: 7121323277818171762, guid: 5d78af6a789dff841b88776d92f31252, type: 3}
   cameraResize: {fileID: 1941855929}
-  tutorialManager: {fileID: 1688977916}
   pathHandRotate: {fileID: 2121743966}
   useByBtn: 0
   isHint: 0
@@ -15484,7 +15501,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1622456312
 Transform:
   m_ObjectHideFlags: 0
@@ -15963,7 +15980,6 @@ MonoBehaviour:
   handRotate: {fileID: 1167321379}
   listBubbles: []
   listIndex: 000000000000000000000000020000000500000005000000020000000500000002000000
-  controller: {fileID: 1622456313}
 --- !u!1 &1694798213
 GameObject:
   m_ObjectHideFlags: 0
@@ -18902,7 +18918,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 340c258ecbd9e0a47b33f77ae5f4df68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  freeLock: {fileID: 1941855927}
   Cam: {fileID: 963194227}
   baseSize: 62
   baseScreenRatio: 0.5625

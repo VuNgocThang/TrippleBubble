@@ -40,10 +40,7 @@ public class Bubble : MonoBehaviour
         MoveHT();
         transform.localRotation = Quaternion.Euler(new Vector3(0f, transform.localRotation.y, 0f));
     }
-    private void FixedUpdate()
-    {
-        //MoveHT();
-    }
+    
 
     public void Init(int id)
     {
@@ -80,26 +77,12 @@ public class Bubble : MonoBehaviour
                 result = 2;
                 break;
             default:
-                result = 0;
+                result = 3;
                 break;
         }
         return result;
     }
 
-    //public int SetIndexObjs(int i)
-    //{
-    //    switch (i)
-    //    {
-    //        case int n when (n >= 0 && n <= 9):
-    //            return 0;
-    //        case int n when (n >= 10 && n <= 18):
-    //            return 1;
-    //        case int n when (n >= 19 && n <= 27):
-    //            return 2;
-    //        default:
-    //            return -1;
-    //    }
-    //}
     public void Move(Transform parent, float time = -1, Action checkEat = null)
     {
         IsMoving = true;
@@ -132,7 +115,6 @@ public class Bubble : MonoBehaviour
         if (canMoveHT)
         {
             rb.velocity += (LogicGame.instance.targetHT.position - transform.position) * Time.deltaTime;
-            //rb.velocity += (LogicGame.instance.targetHT.position - transform.position) * Time.fixedDeltaTime;
         }
     }
     public void SelectMaterial(int index)

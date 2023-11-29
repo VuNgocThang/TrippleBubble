@@ -15,12 +15,11 @@ public class TutorialManager : MonoBehaviour
     {
         0,0,0,2,4,4,2,4,2
     };
-    public CamController controller;
 
 
     private void Update()
     {
-        AnimHandRotate();
+        //AnimHandRotate();
     }
     public void ShowTutorial()
     {
@@ -75,11 +74,9 @@ public class TutorialManager : MonoBehaviour
 
     public void AnimHandRotate()
     {
-
-        if (controller.isRotate && handRotate.gameObject != null && !isDone)
+        if (handRotate.gameObject != null && !isDone)
         {
             isDone = true;
-            Debug.Log("hihi");
             handRotate.gameObject.SetActive(false);
         }
     }
