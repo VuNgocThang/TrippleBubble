@@ -11866,7 +11866,9 @@ MonoBehaviour:
   pathCreaterGift: {fileID: 319048781}
   particleTest: {fileID: 7121323277818171762, guid: 5d78af6a789dff841b88776d92f31252, type: 3}
   cameraResize: {fileID: 1941855929}
+  tutorialManager: {fileID: 1688977916}
   pathHandRotate: {fileID: 2121743966}
+  listIndexParent: 000000000100000002000000030000000400000005000000060000000700000008000000
   useByBtn: 0
   isHint: 0
   hinting: 0

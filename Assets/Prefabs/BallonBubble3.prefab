@@ -74,9 +74,9 @@ GameObject:
   - component: {fileID: 7305882209126342525}
   - component: {fileID: 5966265362035855576}
   - component: {fileID: 8442166781632422930}
-  - component: {fileID: 6458984091241748381}
   - component: {fileID: 2980800347440122728}
   - component: {fileID: 2575850157028869117}
+  - component: {fileID: 4268270102948436146}
   m_Layer: 3
   m_Name: BallonBubble3
   m_TagString: Untagged
@@ -156,20 +156,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6458984091241748381
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7937705968087991751}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 8718793965196440676, guid: a31a302e7cbbb824094b86e5e934705f, type: 3}
 --- !u!114 &2980800347440122728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,6 +173,9 @@ MonoBehaviour:
   originalScale: {x: 0, y: 0, z: 0}
   hasChildren: 0
   isChild: 0
+  canMoveHT: 1
+  IsMoving: 0
+  IsDone: 0
   radius: 0
   children: {fileID: 1168413564547669646}
   connectPoint: {fileID: 6756476895353440539}
@@ -200,11 +189,8 @@ MonoBehaviour:
   mats:
   - {fileID: 2100000, guid: db8bffecfcca79c45bc436599f9398ca, type: 2}
   - {fileID: 2100000, guid: b0f27d83accd3a448bc58229ff3f200d, type: 2}
-  canMoveHT: 1
-  meshCollider: {fileID: 6458984091241748381}
+  meshCollider: {fileID: 0}
   rb: {fileID: 2575850157028869117}
-  IsMoving: 0
-  IsDone: 0
   particleBoom: {fileID: 366762820427897048}
   particlePP: {fileID: 4695154429690233779}
   particleEatt: {fileID: 5300233403381873436}
@@ -224,6 +210,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!64 &4268270102948436146
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7937705968087991751}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2840984316813056734, guid: 826f1a0f908321142b4528f28458d201, type: 3}
 --- !u!1001 &409592265756981554
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -320,15 +320,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1515030787278154768, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.4
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 1515030787278154768, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.4
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 1515030787278154768, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.4
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 1515030787278154768, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -336,11 +336,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1515030787278154768, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.096
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 1515030787278154768, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.121
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 1515030787278154768, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -373,6 +373,10 @@ PrefabInstance:
     - target: {fileID: 2183587030377625258, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_Name
       value: BallonBubble
+      objectReference: {fileID: 0}
+    - target: {fileID: 2751347547741323121, guid: db5db640529dfc1479225cda35e9574a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db5db640529dfc1479225cda35e9574a, type: 3}
@@ -714,15 +718,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1515030787278154768, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.4
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 1515030787278154768, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.4
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 1515030787278154768, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.4
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 1515030787278154768, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -730,11 +734,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1515030787278154768, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.126
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 1515030787278154768, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.114
+      value: -0.1
       objectReference: {fileID: 0}
     - target: {fileID: 1515030787278154768, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -767,6 +771,10 @@ PrefabInstance:
     - target: {fileID: 2183587030377625258, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_Name
       value: BallonBubble
+      objectReference: {fileID: 0}
+    - target: {fileID: 2751347547741323121, guid: db5db640529dfc1479225cda35e9574a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db5db640529dfc1479225cda35e9574a, type: 3}
@@ -871,15 +879,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1515030787278154768, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.4
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 1515030787278154768, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.4
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 1515030787278154768, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.4
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 1515030787278154768, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -887,7 +895,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1515030787278154768, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.175
+      value: -0.202
       objectReference: {fileID: 0}
     - target: {fileID: 1515030787278154768, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -924,6 +932,10 @@ PrefabInstance:
     - target: {fileID: 2183587030377625258, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_Name
       value: BallonBubble
+      objectReference: {fileID: 0}
+    - target: {fileID: 2751347547741323121, guid: db5db640529dfc1479225cda35e9574a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db5db640529dfc1479225cda35e9574a, type: 3}

@@ -43,9 +43,9 @@ GameObject:
   - component: {fileID: 4366334424368628726}
   - component: {fileID: 808270321324018771}
   - component: {fileID: 3230060437749020825}
-  - component: {fileID: 25061031269239574}
   - component: {fileID: 8117189878818052067}
   - component: {fileID: 8810344055994589046}
+  - component: {fileID: 4621057543188961180}
   m_Layer: 3
   m_Name: BallonBubble2
   m_TagString: Untagged
@@ -125,20 +125,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &25061031269239574
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4022706960997357900}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 8718793965196440676, guid: a31a302e7cbbb824094b86e5e934705f, type: 3}
 --- !u!114 &8117189878818052067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,6 +142,9 @@ MonoBehaviour:
   originalScale: {x: 0, y: 0, z: 0}
   hasChildren: 0
   isChild: 0
+  canMoveHT: 1
+  IsMoving: 0
+  IsDone: 0
   radius: 0
   children: {fileID: 5317883495249576453}
   connectPoint: {fileID: 304046710163903888}
@@ -169,11 +158,8 @@ MonoBehaviour:
   mats:
   - {fileID: 2100000, guid: db8bffecfcca79c45bc436599f9398ca, type: 2}
   - {fileID: 2100000, guid: b0f27d83accd3a448bc58229ff3f200d, type: 2}
-  canMoveHT: 1
-  meshCollider: {fileID: 25061031269239574}
+  meshCollider: {fileID: 0}
   rb: {fileID: 8810344055994589046}
-  IsMoving: 0
-  IsDone: 0
   particleBoom: {fileID: 6695977403886584915}
   particlePP: {fileID: 1788889186394627896}
   particleEatt: {fileID: 1186088399726143383}
@@ -193,6 +179,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!64 &4621057543188961180
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4022706960997357900}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2840984316813056734, guid: 826f1a0f908321142b4528f28458d201, type: 3}
 --- !u!1 &7690551532201000920
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 1515030787278154768}
   - component: {fileID: 2497707702855246773}
   - component: {fileID: 382054615193048959}
-  - component: {fileID: 3010417341318161648}
   - component: {fileID: 6428927290568833029}
   - component: {fileID: 6042299365496451216}
+  - component: {fileID: 5955436617304986771}
   m_Layer: 3
   m_Name: BallonBubble
   m_TagString: Untagged
@@ -93,20 +93,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3010417341318161648
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2183587030377625258}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 8718793965196440676, guid: a31a302e7cbbb824094b86e5e934705f, type: 3}
 --- !u!114 &6428927290568833029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,7 +126,7 @@ MonoBehaviour:
   mats:
   - {fileID: 2100000, guid: db8bffecfcca79c45bc436599f9398ca, type: 2}
   - {fileID: 2100000, guid: b0f27d83accd3a448bc58229ff3f200d, type: 2}
-  meshCollider: {fileID: 3010417341318161648}
+  meshCollider: {fileID: 0}
   rb: {fileID: 6042299365496451216}
   particleBoom: {fileID: 8463052633291107253}
   particlePP: {fileID: 3552574036399960286}
@@ -161,6 +147,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!64 &5955436617304986771
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2183587030377625258}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2840984316813056734, guid: 826f1a0f908321142b4528f28458d201, type: 3}
 --- !u!1 &4411559402996035341
 GameObject:
   m_ObjectHideFlags: 0

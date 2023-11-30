@@ -19,7 +19,8 @@ public class TutorialManager : MonoBehaviour
 
     private void Update()
     {
-        //AnimHandRotate();
+        AnimHandRotate();
+
     }
     public void ShowTutorial()
     {
@@ -60,7 +61,7 @@ public class TutorialManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         Vector3 targetPos = listBubbles[currentStepClick].transform.position;
-
+        Debug.Log("hmm");
         handClick.transform.DOMove(Camera.main.WorldToScreenPoint(targetPos), 0.4f);
     }
 

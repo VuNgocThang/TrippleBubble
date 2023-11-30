@@ -42,7 +42,7 @@ public class Bubble : MonoBehaviour
         MoveHT();
         transform.localRotation = Quaternion.Euler(new Vector3(0f, transform.localRotation.y, 0f));
     }
-    
+
 
     public void Init(int id)
     {
@@ -131,19 +131,19 @@ public class Bubble : MonoBehaviour
     }
     public void CheckHasChild()
     {
-        if (children.childCount > 0)
-        {
-            hasChildren = true;
-        }
+        //if (children.childCount > 0)
+        //{
+        //    hasChildren = true;
+        //}
 
-        if (hasChildren)
+        //if (hasChildren)
+        //{
+        for (int i = 0; i < children.childCount; i++)
         {
-            for (int i = 0; i < children.childCount; i++)
-            {
-                Bubble child = children.GetChild(i).GetComponent<Bubble>();
-                SetStateIfIsChild(child);
-            }
+            Bubble child = children.GetChild(i).GetComponent<Bubble>();
+            SetStateIfIsChild(child);
         }
+        //}
     }
 
     public void SetStateIfIsChild(Bubble bb)

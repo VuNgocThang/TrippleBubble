@@ -15,7 +15,6 @@ public class NewTilesHandler : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log(currentIndex + " currentIndex");
         if (PlayerPrefs.HasKey("CurrentIndexNewTile"))
         {
             currentIndex = PlayerPrefs.GetInt("CurrentIndexNewTile");

@@ -40,7 +40,7 @@ public class LogicGame : MonoBehaviour
     int currentTotalBB;
     public GameObject particleTest;
     public CameraResize cameraResize;
-    //[SerializeField] TutorialManager tutorialManager;
+    [SerializeField] TutorialManager tutorialManager;
     public Transform pathHandRotate;
     public List<int> listIndexParent = new List<int>()
     {
@@ -66,7 +66,7 @@ public class LogicGame : MonoBehaviour
         InitSomething();
         InitBubbles();
         lineController.CreateLine(listBBShuffle);
-        //tutorialManager.ShowTutorial();
+        tutorialManager.ShowTutorial();
         cameraResize.InitSizeObject(level.gameObject);
         currentTotalBB = listBB.Count;
         canShuffle = true;
@@ -120,47 +120,21 @@ public class LogicGame : MonoBehaviour
     }
     void InitBubbles()
     {
-        //int count = listIndex.Count;
-        //int countAll = level.bubbles.Count;
-        //int max = level.maxEach;
-
-        //List<int> listRandom = new List<int>();
-        //int[] arr = new int[count];
-        //while (countAll > 0)
-        //{
-        //    int i = UnityEngine.Random.Range(0, count);
-        //    int index = listIndex[i];
-
-        //    if (arr[i] < max)
-        //    {
-        //        arr[i] += 3;
-        //        for (int y = 0; y < 3; y++)
-        //        {
-        //            listRandom.Add(index);
-        //            countAll--;
-        //        }
-        //    }
-        //}
-
-
         int count = listIndex.Count;
         int countAll = level.bubbles.Count;
         int max = level.maxEach;
+        int countParent = 0;
+        int numCountParent;
+
         for (int i = 0; i < level.bubbles.Count; i++)
         {
             if (level.bubbles[i].children.childCount > 0)
             {
-                Debug.Log("true " + i);
                 level.bubbles[i].hasChildren = true;
+                countParent++;
             }
         }
-        for (int i = 0; i < level.bubbles.Count; i++)
-        {
-            if (level.bubbles[i].hasChildren)
-            {
-                Debug.Log("true 222222 " + i);
-            }
-        }
+        numCountParent = countParent;
 
         List<int> listRandom = new List<int>();
         int[] arr = new int[count];
@@ -169,30 +143,51 @@ public class LogicGame : MonoBehaviour
             int i;
             int index;
 
-            bool hasChildrenCondition = false;
-
-            if (hasChildrenCondition)
+            if (countParent > 0)
             {
                 i = UnityEngine.Random.Range(0, 8);
+                countParent--;
+
                 index = listIndex[i];
+
+                if (arr[i] < max)
+                {
+                    arr[i] += 3;
+                    for (int y = 0; y < 3; y++)
+                    {
+                        listRandom.Add(index);
+                        countAll--;
+                    }
+                }
             }
             else
             {
                 i = UnityEngine.Random.Range(0, count);
                 index = listIndex[i];
-            }
 
-            if (arr[i] < max)
-            {
-                arr[i] += 3;
-                for (int y = 0; y < 3; y++)
+                if (arr[i] < max)
                 {
-                    listRandom.Add(index);
-                    countAll--;
+                    arr[i] += 3;
+                    for (int y = 0; y < 3; y++)
+                    {
+                        listRandom.Add(index);
+                        countAll--;
+                    }
                 }
             }
+
+
         }
 
+
+        List<int> listRandomParent = new List<int>();
+        for (int i = 0; i < numCountParent; i++)
+        {
+            int j = UnityEngine.Random.Range(0, numCountParent);
+            listRandomParent.Add(listRandom[j]);
+            listRandom.RemoveAt(j);
+        }
+        
         List<int> list = new List<int>();
         int r;
         while (listRandom.Count > 0)
@@ -203,33 +198,68 @@ public class LogicGame : MonoBehaviour
         }
         listRandom.AddRange(list);
 
+        List<Bubble> listBBInit = new List<Bubble>();
+
         for (int i = 0; i < level.bubbles.Count; i++)
         {
-            listBB.Add(level.bubbles[i]);
+            listBBInit.Add(level.bubbles[i]);
+        }
+        int countBB = level.bubbles.Count;
+        List<Bubble> tempB = new List<Bubble>();
+        List<Bubble> bubbleParent = new List<Bubble>();
+
+        for (int i = 0; i < countBB; i++)
+        {
+            tempB.Add(listBBInit[i]);
         }
 
-        //if (DataUseInGame.gameData.indexLevel == 0)
-        //{
-        //    for (int i = 0; i < tutorialManager.listIndex.Count; i++)
-        //    {
-        //        listBB[i].CheckHasChild();
-        //        listBB[i].Init(tutorialManager.listIndex[i]);
-        //        listBB[i].originalScale = listBB[i].transform.localScale;
-        //    }
-        //    tutorialManager.ShowTutorial();
-        //    tutorialManager.handClick.gameObject.SetActive(true);
-        //    tutorialManager.AnimHand();
-        //    tutorialManager.AnimHandRotate();
-        //}
-        //else
-        //{
-        for (int i = 0; i < listRandom.Count; i++)
+        for (int i = 0; i < countBB; i++)
         {
-            listBB[i].CheckHasChild();
-            listBB[i].Init(listRandom[i]);
-            listBB[i].originalScale = listBB[i].transform.localScale;
+            if (tempB[i].hasChildren)
+            {
+                //Debug.Log(i + " --- " + tempB[i].name);
+                bubbleParent.Add(tempB[i]);
+                listBBInit.Remove(tempB[i]);
+            }
         }
-        //}
+
+        //Tutorial
+        if (DataUseInGame.gameData.indexLevel == 0)
+        {
+            for (int i = 0; i < tutorialManager.listIndex.Count; i++)
+            {
+                listBBInit[i].Init(tutorialManager.listIndex[i]);
+                listBBInit[i].originalScale = listBBInit[i].transform.localScale;
+
+                listBB.Add(listBBInit[i]);
+            }
+            tutorialManager.ShowTutorial();
+            tutorialManager.handClick.gameObject.SetActive(true);
+            tutorialManager.AnimHand();
+            tutorialManager.AnimHandRotate();
+        }
+        else
+        {
+
+            for (int i = 0; i < listRandomParent.Count; i++)
+            {
+                bubbleParent[i].CheckHasChild();
+                bubbleParent[i].Init(listRandomParent[i]);
+                bubbleParent[i].originalScale = bubbleParent[i].transform.localScale;
+
+                listBB.Add(bubbleParent[i]);
+            }
+
+
+            for (int i = 0; i < listRandom.Count; i++)
+            {
+                listBBInit[i].Init(listRandom[i]);
+                listBBInit[i].originalScale = listBBInit[i].transform.localScale;
+
+                listBB.Add(listBBInit[i]);
+            }
+        }
+
 
         foreach (Bubble bubble in listBB)
         {
@@ -238,6 +268,7 @@ public class LogicGame : MonoBehaviour
                 listBBShuffle.Add(bubble);
             }
         }
+
 
     }
     void UseBooster()
@@ -361,17 +392,7 @@ public class LogicGame : MonoBehaviour
     }
     void Update()
     {
-        //lineController.CreateLine(listBBShuffle);
-
-        //if (Input.GetKeyDown(KeyCode.K)) auto = true;
-        //if (auto && listBB.Count > 0) Move(listBB[0]);
         OnClick();
-    }
-
-    private void FixedUpdate()
-    {
-        //lineController.CreateLine(listBBShuffle);
-
     }
 
     public void UpdateLine()
@@ -379,7 +400,6 @@ public class LogicGame : MonoBehaviour
         lineController.CreateLine(listBBShuffle);
     }
 
-    //bool auto = false;
     float timeCount;
     void OnClick()
     {
@@ -403,14 +423,13 @@ public class LogicGame : MonoBehaviour
                 {
                     Bubble bubble = raycastHit.collider.GetComponent<Bubble>();
                     bubble.originalPos = bubble.transform.position;
-                    //bubble.particleEat.SetActive(true);
                     bubble.particleEatt.Play();
                     AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.click);
                     Move(bubble);
-                    //if (indexLevel == 0)
-                    //{
-                    //    tutorialManager.OnClick(bubble);
-                    //}
+                    if (indexLevel == 0)
+                    {
+                        tutorialManager.OnClick(bubble);
+                    }
                 }
             }
         }
@@ -494,16 +513,12 @@ public class LogicGame : MonoBehaviour
                 listGOStored.Remove(g2);
                 listGOStored.Remove(g3);
 
-                //textTest.text = "123321";
-                //textTest.transform.position = Camera.main.WorldToScreenPoint(g2.transform.position);
+                
                 Instantiate(particleTest);
                 particleTest.transform.position = Camera.main.WorldToScreenPoint(g2.transform.position);
 
                 AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.eat);
 
-                //g1.particleEatt.Play();
-                //g2.particleEatt.Play();
-                //g3.particleEatt.Play();
                 g1.particleBoom.SetActive(true);
                 g2.particleBoom.SetActive(true);
                 g3.particleBoom.SetActive(true);

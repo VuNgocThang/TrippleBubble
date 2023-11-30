@@ -6,7 +6,6 @@ public class CameraResize : MonoBehaviour
 {
     //public CinemachineFreeLook freeLock;
     public Camera Cam;
-
     public float baseSize;
     public float baseScreenRatio;
     public float rateY;
@@ -23,8 +22,8 @@ public class CameraResize : MonoBehaviour
             Cam.fieldOfView = baseSize * baseScreenRatio / currentRatio;
             float xyz = rateY * (baseScreenRatio / currentRatio - 1);
             a.transform.localPosition += new Vector3(0, xyz);
-            //obj.transform.localScale -= 3 * new Vector3(xyz, xyz, xyz);
             scaler.matchWidthOrHeight = 0;
+            Cam.transform.position += new Vector3(0, 0, xyz * 10);
         }
         else
         {
