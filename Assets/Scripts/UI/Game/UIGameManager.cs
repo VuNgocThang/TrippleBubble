@@ -49,22 +49,6 @@ public class UIGameManager : MonoBehaviour
         }
     }
 
-    //private void OnGUI()
-    //{
-    //    int star = DataUseInGame.gameData.star;
-    //    txtStar.text = star.ToString();
-
-    //    int indexLevel;
-    //    if (!DataUseInGame.gameData.isDaily)
-    //    {
-    //        indexLevel = DataUseInGame.gameData.indexLevel + 1;
-    //    }
-    //    else
-    //    {
-    //        indexLevel = DataUseInGame.gameData.indexDailyLV + 1;
-    //    }
-    //    txtLevel.text = indexLevel.ToString();
-    //}
     private void Start()
     {
         int star = DataUseInGame.gameData.star;

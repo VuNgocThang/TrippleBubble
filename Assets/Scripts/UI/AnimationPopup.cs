@@ -35,9 +35,13 @@ public class AnimationPopup : MonoBehaviour
 
     public void DoTween_Button(GameObject Obj, int posX, int posY, float timer)
     {
-        Vector3 pos = Obj.GetComponent<RectTransform>().anchoredPosition;
-        Obj.GetComponent<RectTransform>().anchoredPosition += new Vector2(posX, posY);
-        Obj.GetComponent<RectTransform>().DOAnchorPos(pos, timer);
+        if (Obj != null)
+        {
+            Vector3 pos = Obj.GetComponent<RectTransform>().anchoredPosition;
+            Obj.GetComponent<RectTransform>().anchoredPosition += new Vector2(posX, posY);
+            Obj.GetComponent<RectTransform>().DOAnchorPos(pos, timer);
+        }
+
     }
     public void FadeWhileMoveUp(GameObject obj, float timer)
     {

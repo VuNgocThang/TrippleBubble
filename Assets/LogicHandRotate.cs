@@ -11,8 +11,10 @@ public class LogicHandRotate : MonoBehaviour
 
     private void Update()
     {
-        distance += speed * Time.deltaTime;
-        transform.position = Camera.main.WorldToScreenPoint(creator.path.GetPointAtDistance(distance));
-
+        if (transform != null)
+        {
+            distance += speed * Time.deltaTime;
+            transform.position = Camera.main.WorldToScreenPoint(creator.path.GetPointAtDistance(distance));
+        }
     }
 }

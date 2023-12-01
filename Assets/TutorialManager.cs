@@ -8,20 +8,21 @@ public class TutorialManager : MonoBehaviour
 {
     public Image handClick;
     public Image handRotate;
-    int currentStepClick = 0;
-    bool isDone;
+    public int currentStepClick = 0;
+    public bool isDoneClick;
+    public bool isDone;
     public List<Bubble> listBubbles = new List<Bubble>();
     public List<int> listIndex = new List<int>()
     {
         0,0,0,2,4,4,2,4,2
     };
 
-
-    private void Update()
+    private void Start()
     {
-        AnimHandRotate();
-
+        isDoneClick = false;
+        isDone = false;
     }
+
     public void ShowTutorial()
     {
         InitTutorial();
@@ -53,6 +54,7 @@ public class TutorialManager : MonoBehaviour
             else
             {
                 StartCoroutine(HideHandClick());
+
             }
         }
     }
@@ -61,16 +63,30 @@ public class TutorialManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         Vector3 targetPos = listBubbles[currentStepClick].transform.position;
-        Debug.Log("hmm");
+
+        foreach (Bubble bb in LogicGame.instance.listBB)
+        {
+            bb.click = false;
+            LogicGame.instance.listBB[0].click = true;
+        }
+
         handClick.transform.DOMove(Camera.main.WorldToScreenPoint(targetPos), 0.4f);
     }
 
     IEnumerator HideHandClick()
     {
         handClick.gameObject.SetActive(false);
+        foreach (Bubble bb in LogicGame.instance.listBB)
+        {
+            bb.click = true;
+        }
         yield return new WaitForSeconds(0.5f);
-        handRotate.gameObject.SetActive(true);
-        GameManager.Instance.canRotate = true;
+        if (!isDoneClick)
+        {
+            isDoneClick = true;
+            handRotate.gameObject.SetActive(true);
+            GameManager.Instance.canRotate = true;
+        }
     }
 
     public void AnimHandRotate()

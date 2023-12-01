@@ -45,6 +45,8 @@ public class LogicGameUI : MonoBehaviour
     [SerializeField] GameObject particleWin;
     public Button btnClaimStar;
 
+    [Header("ButtonInGame")]
+    public TutorialButtonInGame tutBtn;
 
     private void Awake()
     {

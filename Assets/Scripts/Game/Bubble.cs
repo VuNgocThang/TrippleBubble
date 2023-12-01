@@ -11,6 +11,7 @@ public class Bubble : MonoBehaviour
     public Vector3 originalPos;
     public Vector3 originalScale;
 
+    public bool click;
     public bool hasChildren;
     public bool isChild;
     public bool canMoveHT;

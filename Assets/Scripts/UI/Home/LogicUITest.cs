@@ -135,11 +135,18 @@ public class LogicUITest : MonoBehaviour
         panelShop.SetActive(true);
         imgBottom.SetActive(true);
         imgShopSelected.sprite = spriteSelects[0];
-        imgShop.DOAnchorPosY(70, 0.3f, true).OnComplete(() =>
-        {
-            imgShop.gameObject.SetActive(true);
-            txtShop.gameObject.SetActive(true);
-        });
+
+
+
+        imgShop.DOAnchorPosY(70, 0.3f, true)
+            .OnStart(() =>
+            {
+                txtShop.gameObject.SetActive(true);
+            })
+            .OnComplete(() =>
+            {
+                imgShop.gameObject.SetActive(true);
+            });
 
         DataUseInGame.gameData.isDaily = false;
         DataUseInGame.instance.SaveData();
@@ -163,11 +170,15 @@ public class LogicUITest : MonoBehaviour
         topObject.SetActive(true);
         panelHome.SetActive(true);
         imgHomeSelected.sprite = spriteSelects[0];
-        imgHome.DOAnchorPosY(87, 0.3f, true).OnComplete(() =>
-        {
-            imgHome.gameObject.SetActive(true);
-            txtHome.gameObject.SetActive(true);
-        });
+        imgHome.DOAnchorPosY(87, 0.3f, true)
+            .OnStart(() =>
+            {
+                txtHome.gameObject.SetActive(true);
+            })
+            .OnComplete(() =>
+            {
+                imgHome.gameObject.SetActive(true);
+            });
 
         DataUseInGame.gameData.isDaily = false;
         DataUseInGame.instance.SaveData();
@@ -191,11 +202,16 @@ public class LogicUITest : MonoBehaviour
 
         panelDaily.SetActive(true);
         imgDailySelected.sprite = spriteSelects[0];
-        imgDaily.DOAnchorPosY(70, 0.3f, true).OnComplete(() =>
-        {
-            imgDaily.gameObject.SetActive(true);
-            txtDaily.gameObject.SetActive(true);
-        });
+        imgDaily.DOAnchorPosY(70, 0.3f, true)
+            .OnStart(() =>
+            {
+                txtDaily.gameObject.SetActive(true);
+
+            })
+            .OnComplete(() =>
+            {
+                imgDaily.gameObject.SetActive(true);
+            });
 
         DataUseInGame.gameData.isDaily = true;
         DataUseInGame.instance.SaveData();

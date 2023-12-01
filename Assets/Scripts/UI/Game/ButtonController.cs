@@ -1,7 +1,6 @@
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ButtonController : MonoBehaviour
@@ -18,6 +17,12 @@ public class ButtonController : MonoBehaviour
     [SerializeField] TextMeshProUGUI txtNumShuffle;
     [SerializeField] TextMeshProUGUI txtNumFreeze;
 
+    [SerializeField] GameObject lockHint;
+    [SerializeField] GameObject lockUndo;
+    [SerializeField] GameObject lockTrippleUndo;
+    [SerializeField] GameObject lockShuffle;
+    [SerializeField] GameObject lockFreeze;
+
     int numHint;
     int numUndo;
     int numTrippleUndo;
@@ -26,12 +31,11 @@ public class ButtonController : MonoBehaviour
 
     void Start()
     {
+        InitButton();
         InitAnim();
         btnHint.onClick.AddListener(LogicGame.instance.Hint);
         btnUndo.onClick.AddListener(LogicGame.instance.Undo);
         btnTrippleUndo.onClick.AddListener(LogicGame.instance.UndoTripple);
-
-        //btnShuffle.onClick.AddListener(LogicGame.instance.Shuffle);
         btnShuffle.onClick.AddListener(() =>
         {
             LogicGame.instance.useByBtn = true;
@@ -40,8 +44,35 @@ public class ButtonController : MonoBehaviour
 
         btnFreeze.onClick.AddListener(LogicGame.instance.Freeze);
     }
+    public void InitButton()
+    {
+        btnHint.interactable = false;
+        btnUndo.interactable = false;
+        btnTrippleUndo.interactable = false;
+        btnShuffle.interactable = false;
+        btnFreeze.interactable = false;
 
-    void InitAnim()
+        if (DataUseInGame.gameData.indexLevel >= 2)
+        {
+            lockUndo.SetActive(false);
+            btnUndo.interactable = true;
+            lockTrippleUndo.SetActive(false);
+            btnTrippleUndo.interactable = true;
+            lockFreeze.SetActive(false);
+            btnFreeze.interactable = true;
+            lockShuffle.SetActive(false);
+            btnShuffle.interactable = true;
+        }
+
+        if (DataUseInGame.gameData.indexLevel >= 1)
+        {
+            lockHint.SetActive(false);
+            btnHint.interactable = true;
+        }
+
+       
+    }
+    public void InitAnim()
     {
         AnimationPopup.instance.DoTween_Button(btnHint.gameObject, 0, -200, 1f);
         AnimationPopup.instance.DoTween_Button(btnUndo.gameObject, 0, -200, 1f);

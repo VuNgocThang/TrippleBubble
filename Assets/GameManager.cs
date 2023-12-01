@@ -19,10 +19,8 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (DataUseInGame.gameData.indexLevel > 0)
-        {
-            canRotate = true;
-        }
+
+       
     }
     public void SubHeart()
     {

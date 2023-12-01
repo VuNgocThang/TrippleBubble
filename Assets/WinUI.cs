@@ -45,12 +45,12 @@ public class WinUI : MonoBehaviour
 
     void Move()
     {
-        hand.DOLocalMove(endPos, 1f)
-            .SetEase(Ease.InOutCubic)
+        hand.DOLocalMove(endPos, 1.5f)
+            .SetEase(Ease.InOutQuad)
             .OnComplete(() =>
             {
-                hand.DOLocalMove(startPos, 1f)
-                .SetEase(Ease.InOutCubic)
+                hand.DOLocalMove(startPos, 1.5f)
+                .SetEase(Ease.InOutQuad)
                 .OnComplete(Move);
             });
     }
@@ -148,22 +148,23 @@ public class WinUI : MonoBehaviour
 
     IEnumerator CountStars()
     {
-        int b = starAdd;
-        int a = (int)(starAdd * 0.02 / 3f);
-        while (b > 0)
-        {
-            if (b <= a)
-            {
-                b = a;
-            }
+        //int b = starAdd;
+        //int a = (int)(starAdd * 0.02 / 3f);
+        //while (b > 0)
+        //{
+        //    if (b <= a)
+        //    {
+        //        b = a;
+        //    }
 
-            currentScore += a;
-            b -= a;
+        //    currentScore += a;
+        //    b -= a;
 
-            txtStar.text = currentScore.ToString();
-            yield return new WaitForSeconds(0.02f);
-        }
+        //    txtStar.text = currentScore.ToString();
+        //    yield return new WaitForSeconds(0.02f);
+        //}
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.5f);
+        txtStar.text = DataUseInGame.gameData.star.ToString();
     }
 }
