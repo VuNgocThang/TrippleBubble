@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 
 public class TutorialButtonInGame : MonoBehaviour
 {
@@ -21,7 +20,7 @@ public class TutorialButtonInGame : MonoBehaviour
     }
     public void TutHintBtn()
     {
-        if (DataUseInGame.gameData.indexLevel == 1)
+        if (DataUseInGame.gameData.indexLevel == 1 && !DataUseInGame.gameData.isDaily && !DataUseInGame.gameData.isTutHintDone)
         {
             Arrange(0);
         }
@@ -29,7 +28,7 @@ public class TutorialButtonInGame : MonoBehaviour
 
     public void TutUndo()
     {
-        if (DataUseInGame.gameData.indexLevel == 2)
+        if (DataUseInGame.gameData.indexLevel == 2 && !DataUseInGame.gameData.isDaily && !DataUseInGame.gameData.isTutOtherDone)
         {
             LogicGame.instance.isInTut = true;
             Arrange(1);
@@ -37,13 +36,18 @@ public class TutorialButtonInGame : MonoBehaviour
         }
     }
 
-    public void TutShuffle()
+    public void TutTrippleUndo()
     {
         var temp = listItems[1];
         temp.transform.SetSiblingIndex(1);
 
-        var temp2 = listItems[2];
-        temp2.transform.SetSiblingIndex(2);
+        Arrange(2);
+    }
+
+    public void TutShuffle()
+    {
+        var temp = listItems[2];
+        temp.transform.SetSiblingIndex(2);
 
         Arrange(3);
     }

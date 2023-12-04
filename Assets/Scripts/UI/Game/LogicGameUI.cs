@@ -1,5 +1,6 @@
 using DG.Tweening;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -236,7 +237,10 @@ public class LogicGameUI : MonoBehaviour
         timer.stopTimer = false;
         LogicGame.instance.canClick = true;
     }
-
+    List<int> listIndexNewTiles = new List<int>()
+    {
+        4,9,14,19,24,29
+    };
     IEnumerator LoadSceneHome()
     {
         yield return new WaitForSeconds(3f);
@@ -247,7 +251,7 @@ public class LogicGameUI : MonoBehaviour
                 winUI.gameObject.SetActive(false);
                 if (!DataUseInGame.gameData.isDaily)
                 {
-                    if (DataUseInGame.gameData.indexLevel == 4 || DataUseInGame.gameData.indexLevel == 9)
+                    if (listIndexNewTiles.Contains(DataUseInGame.gameData.indexLevel))
                     {
                         newTile.SetActive(true);
                         int index = DataUseInGame.gameData.indexLevel;

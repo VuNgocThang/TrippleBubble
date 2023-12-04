@@ -23,6 +23,9 @@ public class ButtonController : MonoBehaviour
     [SerializeField] GameObject lockShuffle;
     [SerializeField] GameObject lockFreeze;
 
+    public GameObject handHint;
+    public Animation animHint;
+
     int numHint;
     int numUndo;
     int numTrippleUndo;
@@ -31,7 +34,6 @@ public class ButtonController : MonoBehaviour
 
     void Start()
     {
-        InitButton();
         InitAnim();
         btnHint.onClick.AddListener(LogicGame.instance.Hint);
         btnUndo.onClick.AddListener(LogicGame.instance.Undo);
@@ -52,7 +54,7 @@ public class ButtonController : MonoBehaviour
         btnShuffle.interactable = false;
         btnFreeze.interactable = false;
 
-        if (DataUseInGame.gameData.indexLevel >= 2)
+        if (DataUseInGame.gameData.indexLevel >= 2 || DataUseInGame.gameData.isDaily)
         {
             lockUndo.SetActive(false);
             btnUndo.interactable = true;
@@ -64,13 +66,13 @@ public class ButtonController : MonoBehaviour
             btnShuffle.interactable = true;
         }
 
-        if (DataUseInGame.gameData.indexLevel >= 1)
+        if (DataUseInGame.gameData.indexLevel >= 1 || DataUseInGame.gameData.isDaily)
         {
             lockHint.SetActive(false);
             btnHint.interactable = true;
         }
 
-       
+
     }
     public void InitAnim()
     {

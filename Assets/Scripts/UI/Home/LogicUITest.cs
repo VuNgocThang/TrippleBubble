@@ -229,4 +229,5 @@ public class LogicUITest : MonoBehaviour
         txtTimerStarCollector.text = hours.ToString("00") + ":" + minutes.ToString("00") + ":" + seconds.ToString("00");
     }
 
+
 }

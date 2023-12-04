@@ -108,6 +108,7 @@ MonoBehaviour:
   ID: 0
   originalPos: {x: 0, y: 0, z: 0}
   originalScale: {x: 0, y: 0, z: 0}
+  click: 0
   hasChildren: 0
   isChild: 0
   canMoveHT: 1

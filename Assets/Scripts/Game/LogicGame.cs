@@ -41,6 +41,7 @@ public class LogicGame : MonoBehaviour
     public GameObject particleTest;
     public CameraResize cameraResize;
     [SerializeField] TutorialManager tutorialManager;
+    public ButtonController buttonController;
     public Transform pathHandRotate;
     public List<int> listIndexParent = new List<int>()
     {
@@ -65,6 +66,7 @@ public class LogicGame : MonoBehaviour
             indexLevel = DataUseInGame.gameData.indexDailyLV;
             level = Instantiate(listLevelDaily[indexLevel], transform);
         }
+        Debug.Log(DataUseInGame.gameData.isDaily);
         InitSomething();
         InitBubbles();
         lineController.CreateLine(listBBShuffle);
@@ -73,23 +75,52 @@ public class LogicGame : MonoBehaviour
         canShuffle = true;
 
         //số bóng *3 + 30 giây
-        //timer.timeLeft = currentTotalBB * 3 + 30f;
-        timer.timeLeft = 1111f;
+        timer.timeLeft = currentTotalBB * 3 + 30f;
 
         timer.stopTimer = true;
         UseBooster();
         StartCoroutine(timer.InitTimerSetting());
-        if (DataUseInGame.gameData.indexLevel == 1 || DataUseInGame.gameData.indexLevel == 2)
+        if (!DataUseInGame.gameData.isTutHintDone && DataUseInGame.gameData.indexLevel == 1
+                       ||
+            !DataUseInGame.gameData.isTutOtherDone && DataUseInGame.gameData.indexLevel == 2
+            )
         {
             timer.stopTimer = true;
         }
 
+        if (!DataUseInGame.gameData.isTutOtherDone)
+        {
+            InitBBForTut();
+        }
+        buttonController.InitButton();
+
+
+    }
+    private void InitBBForTut()
+    {
+        int count = 4;
+        List<int> selectedIDs = new List<int>();
+
         if (DataUseInGame.gameData.indexLevel == 2)
         {
-            int a = UnityEngine.Random.Range(0, listBB.Count);
-            listBB[a].originalPos = listBB[a].transform.position;
-            Move(listBB[a]);
+            while (count > 0)
+            {
+                int a;
+                do
+                {
+                    a = UnityEngine.Random.Range(0, listBB.Count);
+                } while (selectedIDs.Contains(listBB[a].ID));
+
+                selectedIDs.Add(listBB[a].ID);
+                listBB[a].originalPos = listBB[a].transform.position;
+                Move(listBB[a]);
+                count--;
+            }
+
+            selectedIDs.Clear();
         }
+
+
     }
     private void InitSomething()
     {
@@ -116,7 +147,11 @@ public class LogicGame : MonoBehaviour
 
         uiGame.InitAnim();
         Application.targetFrameRate = 60;
-        if (DataUseInGame.gameData.indexLevel == 1 || DataUseInGame.gameData.indexLevel == 2)
+        //if (DataUseInGame.gameData.indexLevel == 1 || DataUseInGame.gameData.indexLevel == 2)
+        if (!DataUseInGame.gameData.isTutHintDone && DataUseInGame.gameData.indexLevel == 1
+            ||
+            !DataUseInGame.gameData.isTutOtherDone && DataUseInGame.gameData.indexLevel == 2
+            )
         {
             canClick = false;
         }
@@ -124,6 +159,7 @@ public class LogicGame : MonoBehaviour
         {
             canClick = true;
         }
+        Debug.Log(DataUseInGame.gameData.isTutHintDone + " isTuTHint");
         if (!PlayerPrefs.HasKey("WinStreak"))
         {
             winStreak = 0;
@@ -677,9 +713,8 @@ public class LogicGame : MonoBehaviour
         if (useByBtn)
         {
             numShuffle--;
-            if (DataUseInGame.gameData.indexLevel == 2 && isInTut)
+            if (DataUseInGame.gameData.indexLevel == 2 && isInTut && !DataUseInGame.gameData.isTutOtherDone)
             {
-                Debug.Log("ưtf");
                 logicUI.tutBtn.TutFreeze();
             }
         }
@@ -745,13 +780,16 @@ public class LogicGame : MonoBehaviour
         if (checkLose || canEat || listGOStored.Count > 6) return;
         if (hinting) return;
 
-        if (DataUseInGame.gameData.indexLevel == 1)
+        if (DataUseInGame.gameData.indexLevel == 1 && !DataUseInGame.gameData.isTutHintDone)
         {
             timer.stopTimer = false;
+            logicUI.tutBtn.ImageHint.SetActive(false);
+            DataUseInGame.gameData.isTutHintDone = true;
+            DataUseInGame.instance.SaveData();
         }
 
         numHint--;
-        logicUI.tutBtn.ImageHint.SetActive(false);
+
 
         canClick = false;
         DataUseInGame.gameData.numHintItem = numHint;
@@ -845,9 +883,9 @@ public class LogicGame : MonoBehaviour
         if (checkLose) return;
         if (canEat) return;
 
-        if (DataUseInGame.gameData.indexLevel == 2)
+        if (DataUseInGame.gameData.indexLevel == 2 && !DataUseInGame.gameData.isTutOtherDone)
         {
-            logicUI.tutBtn.TutShuffle();
+            logicUI.tutBtn.TutTrippleUndo();
         }
 
         numUndo--;
@@ -889,6 +927,10 @@ public class LogicGame : MonoBehaviour
         if (canEat) return;
         if (isUndoing) return;
 
+        if (DataUseInGame.gameData.indexLevel == 2 && !DataUseInGame.gameData.isTutOtherDone)
+        {
+            logicUI.tutBtn.TutShuffle();
+        }
         numTrippleUndo--;
         DataUseInGame.gameData.numTrippleUndoItem = numTrippleUndo;
         DataUseInGame.instance.SaveData();
@@ -968,21 +1010,27 @@ public class LogicGame : MonoBehaviour
         Debug.Log(canClick);
         isUndoing = false;
         timer.stopTimer = false;
+        timer.isFreeze = false;
     }
 
     bool isFreezeing = false;
     public void Freeze()
     {
         canClick = true;
-        logicUI.tutBtn.ImageHint.SetActive(false);
         isInTut = false;
-
         AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
         int numFreeze = DataUseInGame.gameData.numFreezeTimeItem;
         if (numFreeze <= 0) return;
         if (isFreezeing) return;
 
         timer.stopTimer = false;
+
+        if (DataUseInGame.gameData.indexLevel == 2 && !DataUseInGame.gameData.isTutOtherDone)
+        {
+            logicUI.tutBtn.ImageHint.SetActive(false);
+            DataUseInGame.gameData.isTutOtherDone = true;
+            DataUseInGame.instance.SaveData();
+        }
 
         numFreeze--;
         DataUseInGame.gameData.numFreezeTimeItem = numFreeze;
@@ -994,7 +1042,7 @@ public class LogicGame : MonoBehaviour
     IEnumerator StopFreeze()
     {
         isFreezeing = true;
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(20f);
         timer.isFreeze = false;
         isFreezeing = false;
     }
@@ -1006,6 +1054,7 @@ public class LogicGame : MonoBehaviour
             UndoAll();
         }
         timer.stopTimer = false;
+        timer.isFreeze = false;
         canClick = true;
     }
 }

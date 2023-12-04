@@ -31,15 +31,15 @@ public class GameData
     public int day;
     public List<DailyData> dailyData;
 
+    public bool isTutHintDone;
+    public bool isTutOtherDone;
+
     public GameData()
     {
         indexLevel = 0;
         listIndex = new List<int>
         {
             0, 1, 2, 3, 4, 5, 6, 7, 8,
-            9, 10, 11, 12, 13, 14, 15,
-            16, 17, 18, 19, 20, 21, 22, 23,
-            24, 25, 26,
         };
         heart = 5;
         star = 00;
@@ -58,11 +58,14 @@ public class GameData
         listIndexDaily = new List<int>()
         {
             0,1,2,3,4,5,6,7,8,
-            9, 10, 11, 12, 13, 14, 15, 16, 17,
-            18, 19, 20, 21, 22, 23, 24, 25, 26,
-            73,74,75,76,77,78,79,80,81,82,
-            83,84,85,86,87,88,89,90,91,92,
-            93,94,95,96,97,98,99, 100, 101
+
+
+
+            // 9,10, 11, 12, 13, 14, 15, 16, 17,
+            //18, 19, 20, 21, 22, 23, 24, 25, 26,
+            //73,74,75,76,77,78,79,80,81,82,
+            //83,84,85,86,87,88,89,90,91,92,
+            //93,94,95,96,97,98,99, 100, 101
         };
         currentRewardDaily = 0;
         maxRewardDaily = 28;
@@ -70,6 +73,9 @@ public class GameData
         indexDailyLV = -1;
         year = 2023;
         dailyData = new List<DailyData>();
+
+        isTutHintDone = false;
+        isTutOtherDone = false;
     }
 }
 

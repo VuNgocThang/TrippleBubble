@@ -23,7 +23,7 @@ public class CameraResize : MonoBehaviour
             float xyz = rateY * (baseScreenRatio / currentRatio - 1);
             a.transform.localPosition += new Vector3(0, xyz);
             scaler.matchWidthOrHeight = 0;
-            Cam.transform.position += new Vector3(0, 0, xyz * 10);
+            Cam.transform.position += new Vector3(0, 0, xyz * 8);
         }
         else
         {
