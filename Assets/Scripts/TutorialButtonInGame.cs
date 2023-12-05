@@ -5,8 +5,11 @@ using System.Collections.Generic;
 public class TutorialButtonInGame : MonoBehaviour
 {
     public List<GameObject> listItems;
-    public GameObject ImageHint;
+    public List<GameObject> listHands;
+    public List<GameObject> listTexts;
 
+    public GameObject ImageHint;
+   
     private void Start()
     {
         TutHintBtn();
@@ -15,6 +18,8 @@ public class TutorialButtonInGame : MonoBehaviour
     public void Arrange(int index)
     {
         ImageHint.SetActive(true);
+        listHands[index].SetActive(true);
+        listTexts[index].SetActive(true);
         var temp = listItems[index];
         temp.transform.SetSiblingIndex(5);
     }

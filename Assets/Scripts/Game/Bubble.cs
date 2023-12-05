@@ -29,7 +29,6 @@ public class Bubble : MonoBehaviour
     public Rigidbody rb;
     public Tweener tweenerMove;
     public GameObject particleBoom;
-    //public GameObject particleEat;
     public GameObject particlePP;
     public ParticleSystem particleEatt;
     public bool CanMoving => !IsMoving && !IsDone;
@@ -42,6 +41,14 @@ public class Bubble : MonoBehaviour
     {
         MoveHT();
         transform.localRotation = Quaternion.Euler(new Vector3(0f, transform.localRotation.y, 0f));
+        for (int i = 0; i < objs.Count; i++)
+        {
+            if (objs[i].activeSelf)
+            {
+                objs[i].transform.localEulerAngles += new Vector3(0f, 1f * Time.deltaTime * 20f, 0f);
+
+            }
+        }
     }
 
 

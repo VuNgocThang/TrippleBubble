@@ -38,6 +38,7 @@ public class LogicGameUI : MonoBehaviour
     [Header("WinUI")]
     [SerializeField] WinUI winUI;
     [SerializeField] GameObject newTile;
+    public GameObject bgBlackWinUI;
     [SerializeField] GameObject panel;
     [SerializeField] Canvas canvas;
     [SerializeField] Camera camerUI;
@@ -45,6 +46,7 @@ public class LogicGameUI : MonoBehaviour
     [SerializeField] CanvasGroup winUICG;
     [SerializeField] GameObject particleWin;
     public Button btnClaimStar;
+    public Button btnClaimStarNoAds;
 
     [Header("ButtonInGame")]
     public TutorialButtonInGame tutBtn;
@@ -71,6 +73,7 @@ public class LogicGameUI : MonoBehaviour
 
         btnClaim.onClick.AddListener(CloseWinUI);
         btnClaimStar.onClick.AddListener(ClaimStar);
+        btnClaimStarNoAds.onClick.AddListener(ClaimStarNoAds);
 
     }
 
@@ -205,6 +208,7 @@ public class LogicGameUI : MonoBehaviour
         camerUI.gameObject.SetActive(true);
         panel.SetActive(true);
 
+        bgBlackWinUI.SetActive(true);
         winUI.gameObject.SetActive(true);
         particleWin.SetActive(true);
         AnimationPopup.instance.DoTween_Button(winUICG.gameObject, 0, 200, 0.5f);
@@ -213,12 +217,21 @@ public class LogicGameUI : MonoBehaviour
 
     public void ClaimStar()
     {
+        btnClaimStarNoAds.interactable = false;
         AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
-        //GameManager.Instance.AddStar();
         GameManager.Instance.AddStar(winUI.Multi());
         DOTween.KillAll();
         StartCoroutine(LoadSceneHome());
 
+    }
+
+    public void ClaimStarNoAds()
+    {
+        btnClaimStar.interactable = false;
+        AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
+        GameManager.Instance.AddStar(1);
+        DOTween.KillAll();
+        StartCoroutine(LoadSceneHome());
     }
 
     public void CloseWinUI()

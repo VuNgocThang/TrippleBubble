@@ -23,6 +23,7 @@ public class ButtonController : MonoBehaviour
     [SerializeField] GameObject lockShuffle;
     [SerializeField] GameObject lockFreeze;
 
+   
     public GameObject handHint;
     public Animation animHint;
 

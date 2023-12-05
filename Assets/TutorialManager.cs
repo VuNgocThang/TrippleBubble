@@ -8,6 +8,8 @@ public class TutorialManager : MonoBehaviour
 {
     public Image handClick;
     public Image handRotate;
+    public GameObject fingerRotate;
+    public GameObject imgRotate;
     public int currentStepClick = 0;
     public bool isDoneClick;
     public bool isDone;
@@ -85,6 +87,8 @@ public class TutorialManager : MonoBehaviour
         {
             isDoneClick = true;
             handRotate.gameObject.SetActive(true);
+            imgRotate.SetActive(true);
+            fingerRotate.SetActive(true);
             GameManager.Instance.canRotate = true;
         }
     }
@@ -95,6 +99,8 @@ public class TutorialManager : MonoBehaviour
         {
             isDone = true;
             handRotate.gameObject.SetActive(false);
+            imgRotate.SetActive(false);
+            fingerRotate.SetActive(false);
         }
     }
 

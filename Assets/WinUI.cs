@@ -66,15 +66,15 @@ public class WinUI : MonoBehaviour
     {
         int multi;
         float x = Mathf.Abs(hand.anchoredPosition.x);
-        if (x < 22f)
+        if (x < 33f)
         {
             multi = 5;
         }
-        else if (x < 82f)
+        else if (x < 119f)
         {
             multi = 4;
         }
-        else if (x < 147f)
+        else if (x < 212f)
         {
             multi = 3;
         }
