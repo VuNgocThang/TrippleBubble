@@ -66,7 +66,7 @@ public class LogicGame : MonoBehaviour
             indexLevel = DataUseInGame.gameData.indexDailyLV;
             level = Instantiate(listLevelDaily[indexLevel], transform);
         }
-        Debug.Log(DataUseInGame.gameData.isDaily);
+        //Debug.Log(DataUseInGame.gameData.isDaily);
         InitSomething();
         InitBubbles();
         lineController.CreateLine(listBBShuffle);
@@ -159,7 +159,7 @@ public class LogicGame : MonoBehaviour
         {
             canClick = true;
         }
-        Debug.Log(DataUseInGame.gameData.isTutHintDone + " isTuTHint");
+        //Debug.Log(DataUseInGame.gameData.isTutHintDone + " isTuTHint");
         if (!PlayerPrefs.HasKey("WinStreak"))
         {
             winStreak = 0;
@@ -175,7 +175,7 @@ public class LogicGame : MonoBehaviour
 
         if (DataUseInGame.gameData.indexLevel > 0 || DataUseInGame.gameData.isDaily)
         {
-            Debug.Log(DataUseInGame.gameData.isDaily + " 12323123");
+            //Debug.Log(DataUseInGame.gameData.isDaily + " 12323123");
             GameManager.Instance.canRotate = true;
         }
     }
@@ -209,7 +209,7 @@ public class LogicGame : MonoBehaviour
                 i = UnityEngine.Random.Range(0, 8);
                 countParent--;
 
-                index = listIndex[i];
+                index = listIndexParent[i];
 
                 if (arr[i] < max)
                 {
@@ -239,14 +239,24 @@ public class LogicGame : MonoBehaviour
 
 
         }
-
+        //for (int i = 0; i < listRandom.Count; i++)
+        //{
+        //    Debug.Log(listRandom[i]);
+        //}
         List<int> listRandomParent = new List<int>();
+        int c = numCountParent;
         for (int i = 0; i < numCountParent; i++)
         {
-            int j = UnityEngine.Random.Range(0, numCountParent);
+            int j = UnityEngine.Random.Range(0, c);
+            Debug.Log(j);
             listRandomParent.Add(listRandom[j]);
             listRandom.RemoveAt(j);
+            c--;
         }
+        //for (int i = 0; i < listRandomParent.Count; i++)
+        //{
+        //    Debug.Log(listRandomParent[i]);
+        //}
 
         List<int> list = new List<int>();
         int r;
