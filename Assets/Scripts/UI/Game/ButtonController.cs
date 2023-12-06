@@ -99,4 +99,24 @@ public class ButtonController : MonoBehaviour
         txtNumFreeze.text = numFreeze.ToString();
     }
 
+    public void SetStateIfContinue()
+    {
+        btnHint.interactable = false;
+        btnUndo.interactable = false;
+        btnTrippleUndo.interactable = false;
+        btnShuffle.interactable = false;
+        btnFreeze.interactable = false;
+    }
+
+    public void SetStateAfterContinueDone()
+    {
+        btnHint.interactable = true;
+        if(DataUseInGame.gameData.indexLevel > 1 || DataUseInGame.gameData.isDaily)
+        {
+            btnUndo.interactable = true;
+            btnTrippleUndo.interactable = true;
+            btnShuffle.interactable = true;
+            btnFreeze.interactable = true;
+        }
+    }
 }

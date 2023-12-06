@@ -14,7 +14,6 @@ public class LogicGame : MonoBehaviour
     public UIGameManager uiGame;
     public List<Bubble> listBB;
     public List<int> listIndex;
-    public Timer timer;
     public List<Bubble> listGOStored = new List<Bubble>();
     public List<Bubble> listBBShuffle;
     public List<Transform> listPoint = new List<Transform>();
@@ -23,6 +22,7 @@ public class LogicGame : MonoBehaviour
     public LayerMask layerMask;
     public List<LevelSetMap> listLevel;
     public List<LevelSetMap> listLevelDaily;
+    public Timer timer;
     public int indexLevel;
     public LevelSetMap level;
     public PathCreator pathCreater;
@@ -239,24 +239,16 @@ public class LogicGame : MonoBehaviour
 
 
         }
-        //for (int i = 0; i < listRandom.Count; i++)
-        //{
-        //    Debug.Log(listRandom[i]);
-        //}
+
         List<int> listRandomParent = new List<int>();
         int c = numCountParent;
         for (int i = 0; i < numCountParent; i++)
         {
             int j = UnityEngine.Random.Range(0, c);
-            Debug.Log(j);
             listRandomParent.Add(listRandom[j]);
             listRandom.RemoveAt(j);
             c--;
         }
-        //for (int i = 0; i < listRandomParent.Count; i++)
-        //{
-        //    Debug.Log(listRandomParent[i]);
-        //}
 
         List<int> list = new List<int>();
         int r;
@@ -473,36 +465,43 @@ public class LogicGame : MonoBehaviour
     float timeCount;
     void OnClick()
     {
-        if (Input.GetMouseButtonDown(0))
+        //if(Input.GetMouseButtonDown(0)) 
+        if (Input.GetMouseButton(0))
         {
-            timeCount = Time.time;
+            //timeCount = Time.time;
+            if (isDrag)
+            {
+                canClick = false;
+            }
+            else
+            {
+                canClick = true;
+            }
         }
         else
         {
             if (Input.GetMouseButtonUp(0))
             {
-                if (Time.time - timeCount > 0.2f && isDrag) return;
-                if (checkLose) return;
-                if (timer.stopTimer) return;
-                if (!canClick) return;
-                if (listGOStored.Count > 6) return;
-
+                isDrag = false;
+                //if (Time.time - timeCount > 0.2f && isDrag) return;
+                if (checkLose || timer.stopTimer || !canClick || listGOStored.Count > 6) return;
 
                 RaycastHit raycastHit;
                 bool isHit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out raycastHit, 1000f, layerMask);
                 if (isHit)
                 {
+                    Debug.Log(raycastHit.collider.gameObject.name);
                     Bubble bubble = raycastHit.collider.GetComponent<Bubble>();
 
-                    if (!bubble.click && indexLevel == 0) return;
+                    if (!bubble.click && indexLevel == 0 && !DataUseInGame.gameData.isDaily) return;
 
                     bubble.originalPos = bubble.transform.position;
                     bubble.particleEatt.Play();
                     AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.click);
-                    if (indexLevel == 0)
+                    if (indexLevel == 0 && !DataUseInGame.gameData.isDaily)
                     {
+                        Debug.Log("asdm");
                         tutorialManager.OnClick(bubble);
-
                     }
                     Move(bubble);
 
@@ -699,6 +698,9 @@ public class LogicGame : MonoBehaviour
         {
             timer.stopTimer = true;
             checkWin = true;
+            tutorialManager.handRotate.gameObject.SetActive(false);
+            tutorialManager.fingerRotate.SetActive(false);
+            tutorialManager.imgRotate.SetActive(false);
             winStreak++;
             PlayerPrefs.SetInt("WinStreak", winStreak);
             PlayerPrefs.Save();
@@ -895,6 +897,7 @@ public class LogicGame : MonoBehaviour
         if (listBubbleUndo.Count <= 0) return;
         if (checkLose) return;
         if (canEat) return;
+        if (hinting) return;
 
         if (DataUseInGame.gameData.indexLevel == 2 && !DataUseInGame.gameData.isTutOtherDone)
         {
@@ -941,6 +944,7 @@ public class LogicGame : MonoBehaviour
         if (checkLose) return;
         if (canEat) return;
         if (isUndoing) return;
+        if (hinting) return;
 
         if (DataUseInGame.gameData.indexLevel == 2 && !DataUseInGame.gameData.isTutOtherDone)
         {
@@ -995,7 +999,7 @@ public class LogicGame : MonoBehaviour
         if (canEat) return;
         if (isUndoing) return;
 
-        Debug.Log(canClick);
+        buttonController.SetStateIfContinue();
 
         StartCoroutine(UndoAllCoroutine());
     }
@@ -1024,7 +1028,9 @@ public class LogicGame : MonoBehaviour
 
         Shuffle();
         canClick = true;
-        Debug.Log(canClick);
+
+        buttonController.SetStateAfterContinueDone();
+
         isUndoing = false;
         timer.stopTimer = false;
         timer.isFreeze = false;

@@ -10,6 +10,7 @@ public class TutorialManager : MonoBehaviour
     public Image handRotate;
     public GameObject fingerRotate;
     public GameObject imgRotate;
+    public GameObject shader;
     public int currentStepClick = 0;
     public bool isDoneClick;
     public bool isDone;
@@ -71,7 +72,7 @@ public class TutorialManager : MonoBehaviour
             bb.click = false;
             LogicGame.instance.listBB[0].click = true;
         }
-
+        shader.transform.position = targetPos;
         handClick.transform.DOMove(Camera.main.WorldToScreenPoint(targetPos), 0.4f);
     }
 

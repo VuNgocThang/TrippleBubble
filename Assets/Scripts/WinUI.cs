@@ -16,6 +16,7 @@ public class WinUI : MonoBehaviour
     public Vector3 startPos;
     public Vector3 endPos;
     public Button btnStop;
+    public Button btnStopNoAds;
 
     public GameObject pile;
     public List<GameObject> pileOfStars;
@@ -34,13 +35,14 @@ public class WinUI : MonoBehaviour
         txtPointMulti.text = starAdd.ToString();
     }
 
-  
+
     private void Start()
     {
         currentScore = DataUseInGame.gameData.star;
         Move();
         InitPileCoin();
         btnStop.onClick.AddListener(StopMoveHand);
+        btnStopNoAds.onClick.AddListener(RewardPileOfCoin);
     }
 
     void Move()
@@ -108,7 +110,7 @@ public class WinUI : MonoBehaviour
         }
     }
 
-    private void RewardPileOfCoin()
+    public void RewardPileOfCoin()
     {
         Reset();
 

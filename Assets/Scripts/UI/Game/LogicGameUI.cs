@@ -101,8 +101,13 @@ public class LogicGameUI : MonoBehaviour
         timer.stopTimer = false;
         AnimationPopup.instance.FadeWhileMoveUp(panelPauseCG.gameObject, 0.5f);
         panelPauseCG.DOFade(0f, 0.5f)
+            .OnStart(() =>
+            {
+                LogicGame.instance.canClick = false;
+            })
             .OnComplete(() =>
             {
+                LogicGame.instance.canClick = true;
                 panelPause.SetActive(false);
             });
     }
