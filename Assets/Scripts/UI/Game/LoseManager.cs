@@ -153,10 +153,10 @@ public class LoseManager : MonoBehaviour
             {
                 btnRetry.interactable = true;
                 btnHome.interactable = true;
+                StartCoroutine(LogicGame.instance.AnimBoomBB("SceneGame"));
             });
 
         bg.SetActive(false);
-        StartCoroutine(LogicGame.instance.AnimBoomBB("SceneGame"));
     }
     public void BackHome()
     {
@@ -169,9 +169,9 @@ public class LoseManager : MonoBehaviour
             {
                 btnRetry.interactable = true;
                 btnHome.interactable = true;
+                StartCoroutine(LogicGame.instance.AnimBoomBB("SceneHome"));
             });
         bg.SetActive(false);
-        StartCoroutine(LogicGame.instance.AnimBoomBB("SceneHome"));
     }
 
 }

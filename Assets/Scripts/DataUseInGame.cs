@@ -42,13 +42,13 @@ public class GameData
             0, 1, 2, 3, 4, 5, 6, 7, 8,
         };
         heart = 5;
-        star = 00;
+        star = 0;
         gold = 0;
-        numHintItem = 10000;
-        numShuffleItem = 100;
-        numUndoItem = 100;
-        numTrippleUndoItem = 100;
-        numFreezeTimeItem = 100;
+        numHintItem = 99;
+        numShuffleItem = 99;
+        numUndoItem = 99;
+        numTrippleUndoItem = 99;
+        numFreezeTimeItem = 99;
         isHeartInfinity = false;
         timeHeartInfinity = 0;
         timeStarCollector = 86400f;
@@ -58,11 +58,13 @@ public class GameData
         listIndexDaily = new List<int>()
         {
             0,1,2,3,4,5,6,7,8,
-            9,10, 11, 12, 13, 14, 15, 16, 17,
-            18, 19, 20, 21, 22, 23, 24, 25, 26,
-            73,74,75,76,77,78,79,80,81,82,
-            83,84,85,86,87,88,89,90,91,92,
-            93,94,95,96,97,98,99, 100, 101
+            9,10, 11, 12, 13, 14, 15, 16,17,
+            18, 19, 20, 21, 22, 23, 24,25,26,
+             72,73,74,75,76,77,78,79,80,81,
+            82, 83,84,85,86,87,88,89 ,90,
+            91,92, 93,94,95,96,97,98,99,
+            100,101,102,103,104,105, 106,107, 108
+
         };
         currentRewardDaily = 0;
         maxRewardDaily = 28;

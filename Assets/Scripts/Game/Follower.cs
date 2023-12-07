@@ -7,7 +7,7 @@ public class Follower : MonoBehaviour
 {
     public PathCreator creator;
     public float speed = 5f;
-    float distacne;
+    float distance;
 
     private void Start()
     {
@@ -15,8 +15,8 @@ public class Follower : MonoBehaviour
     }
     private void Update()
     {
-        distacne += speed * Time.deltaTime;
-        transform.position = creator.path.GetPointAtDistance(distacne);
+        distance += speed * Time.deltaTime;
+        transform.position = creator.path.GetPointAtDistance(distance);
         //transform.rotation = creator.path.GetRotationAtDistance(distance);
     }
 }

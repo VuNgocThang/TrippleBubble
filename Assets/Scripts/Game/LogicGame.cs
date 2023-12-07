@@ -462,7 +462,7 @@ public class LogicGame : MonoBehaviour
         lineController.CreateLine(listBBShuffle);
     }
 
-    float timeCount;
+    //float timeCount;
     void OnClick()
     {
         //if(Input.GetMouseButtonDown(0)) 
@@ -490,7 +490,6 @@ public class LogicGame : MonoBehaviour
                 bool isHit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out raycastHit, 1000f, layerMask);
                 if (isHit)
                 {
-                    Debug.Log(raycastHit.collider.gameObject.name);
                     Bubble bubble = raycastHit.collider.GetComponent<Bubble>();
 
                     if (!bubble.click && indexLevel == 0 && !DataUseInGame.gameData.isDaily) return;
@@ -542,7 +541,7 @@ public class LogicGame : MonoBehaviour
             }
         }
         listGOStored = tempB;
-
+        CanEat();
         for (int i = 0; i < listGOStored.Count; ++i)
         {
             if (!listGOStored[i].IsDone)
@@ -571,6 +570,18 @@ public class LogicGame : MonoBehaviour
             bubble.hasChildren = false;
         }
     }
+
+    void CanEat()
+    {
+        for (int i = 0; i < listGOStored.Count - 2; ++i)
+        {
+            if (listGOStored[i].CanMoving && listGOStored[i + 1].CanMoving && listGOStored[i + 2].CanMoving
+                && listGOStored[i].ID == listGOStored[i + 1].ID && listGOStored[i + 1].ID == listGOStored[i + 2].ID)
+            {
+                canEat = true;
+            }
+        }
+    }
     void CheckEat()
     {
         Tweener tweener = null;
@@ -579,7 +590,7 @@ public class LogicGame : MonoBehaviour
             if (listGOStored[i].CanMoving && listGOStored[i + 1].CanMoving && listGOStored[i + 2].CanMoving
                 && listGOStored[i].ID == listGOStored[i + 1].ID && listGOStored[i + 1].ID == listGOStored[i + 2].ID)
             {
-                canEat = true;
+                //canEat = true;
                 isHint = false;
 
                 count -= 1;
@@ -913,7 +924,6 @@ public class LogicGame : MonoBehaviour
         int index = listBubbleUndo.Count - 1;
         Bubble bubble = listBubbleUndo[index];
         bubble.ResetStateIfUndo();
-        //bubble.particleEat.SetActive(false);
         bubble.transform.DOMove(bubble.originalPos, 0.3f).
             OnComplete(() =>
             {
@@ -970,7 +980,6 @@ public class LogicGame : MonoBehaviour
             int index = listBubbleUndo.Count - 1;
             Bubble bubble = listBubbleUndo[index];
             bubble.ResetStateIfUndo();
-            //bubble.particleEat.SetActive(false);
             bubble.transform.DOMove(bubble.originalPos, 0.3f)
                 .OnComplete(() =>
                 {
@@ -1011,7 +1020,6 @@ public class LogicGame : MonoBehaviour
             int index = listBubbleUndo.Count - 1;
             Bubble bubble = listBubbleUndo[index];
             bubble.ResetStateIfUndo();
-            //bubble.particleEat.SetActive(false);
             bubble.transform.DOMove(bubble.originalPos, 0.3f)
                 .OnComplete(() =>
                 {

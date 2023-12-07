@@ -15,7 +15,7 @@ TagManager:
   - UI
   - Gift
   - Points
-  - 
+  - Shader
   - 
   - 
   - 
@@ -51,4 +51,7 @@ TagManager:
     locked: 0
   - name: Bubble
     uniqueID: 4125330313
+    locked: 0
+  - name: Shader
+    uniqueID: 2247761799
     locked: 0
