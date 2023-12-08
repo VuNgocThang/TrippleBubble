@@ -26,13 +26,6 @@ public class SelectBoosterManager : MonoBehaviour
 
         if (DataUseInGame.gameData.heart > 0 || DataUseInGame.gameData.isHeartInfinity)
         {
-            for (int i = 0; i < btnBoosters.Count; i++)
-            {
-                if (btnBoosters[i].isSelected)
-                {
-                    btnBoosters[i].SubCount();
-                }
-            }
             AnimationPopup.instance.FadeWhileMoveUp(selectBoosterCG.gameObject, 0.5f);
             selectBoosterCG.DOFade(0f, 0.5f)
                 .OnComplete(() =>

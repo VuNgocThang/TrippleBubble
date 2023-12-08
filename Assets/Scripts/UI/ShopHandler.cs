@@ -38,6 +38,41 @@ public class ShopHandler : MonoBehaviour
         int numTrippleUndo = DataUseInGame.gameData.numTrippleUndoItem;
         int numShuffle = DataUseInGame.gameData.numShuffleItem;
         int numFreezeTime = DataUseInGame.gameData.numFreezeTimeItem;
+
+        int numHintBooster;
+        int numTimerBooster;
+        int numLightningBooster;
+
+        if (PlayerPrefs.HasKey("NumLightning"))
+        {
+            numLightningBooster = PlayerPrefs.GetInt("NumLightning");
+        }
+        else
+        {
+            numLightningBooster = 0;
+        }
+       
+        if (PlayerPrefs.HasKey("NumHint"))
+        {
+            numHintBooster = PlayerPrefs.GetInt("NumHint");
+
+        }
+        else
+        {
+            numHintBooster = 0;
+        }
+       
+        if (PlayerPrefs.HasKey("NumTimer"))
+        {
+            numTimerBooster = PlayerPrefs.GetInt("NumTimer");
+
+        }
+        else
+        {
+            numTimerBooster = 0;
+        }
+       
+
         bool isHeartInfinity = DataUseInGame.gameData.isHeartInfinity;
         float timeHeartInfinity = DataUseInGame.gameData.timeHeartInfinity;
 
@@ -50,9 +85,18 @@ public class ShopHandler : MonoBehaviour
         numTrippleUndo += numItem;
         numShuffle += numItem;
         numFreezeTime += numItem;
+
+        numHintBooster += numItem;
+        numTimerBooster += numItem;
+        numLightningBooster += numItem;
+
+        PlayerPrefs.SetInt("NumHint", numHintBooster);
+        PlayerPrefs.SetInt("NumTimer", numTimerBooster);
+        PlayerPrefs.SetInt("NumLightning", numLightningBooster);
+        PlayerPrefs.Save();
+
         isHeartInfinity = true;
         timeHeartInfinity += numTimer;
-
 
         DataUseInGame.gameData.numHintItem = numHint;
         DataUseInGame.gameData.numUndoItem = numUndo;
@@ -63,5 +107,7 @@ public class ShopHandler : MonoBehaviour
         DataUseInGame.gameData.timeHeartInfinity = timeHeartInfinity;
 
         DataUseInGame.instance.SaveData();
+
+       
     }
 }

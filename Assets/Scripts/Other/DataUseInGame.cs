@@ -19,6 +19,8 @@ public class GameData
     public float timeHeartInfinity;
     public float timeStarCollector;
 
+   
+
     public int currentIndexStarCollector;
 
     public List<int> listIndexDaily;
@@ -52,6 +54,8 @@ public class GameData
         isHeartInfinity = false;
         timeHeartInfinity = 0;
         timeStarCollector = 86400f;
+
+
 
         currentIndexStarCollector = 0;
 

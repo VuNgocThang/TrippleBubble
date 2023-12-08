@@ -30,17 +30,16 @@ public class ButtonBooster : MonoBehaviour
             count = PlayerPrefs.GetInt($"{txt}");
         }
     }
-
-    public void SubCount()
-    {
-        count--;
-        PlayerPrefs.SetInt($"{txt}", count);
-        PlayerPrefs.Save();
-    }
-
     public void SaveStateBooster(string str, int i)
     {
         PlayerPrefs.SetInt(str, i);
         PlayerPrefs.Save();
     }
+
+    private void OnGUI()
+    {
+        int count = PlayerPrefs.GetInt($"{txt}");
+        txtNumBtn.text = count.ToString();
+    }
+
 }

@@ -16,7 +16,13 @@ public class ButtonBoosterManager : MonoBehaviour
         OnClick(buttons[2], buttons[2].selected, buttons[2].isSelected);
 
     }
-
+    private void OnGUI()
+    {
+        for (int i = 0; i < buttons.Count; i++)
+        {
+            buttons[i].InitButton();
+        }
+    }
     void Init()
     {
         for (int i = 0; i < buttons.Count; i++)
@@ -51,14 +57,26 @@ public class ButtonBoosterManager : MonoBehaviour
     {
         buttonBooster.btn.onClick.AddListener(() =>
         {
-            Debug.Log(buttonBooster.btn.name);
-            Debug.Log(buttonBooster.count);
+            if (!selectedObj.activeSelf)
+            {
+                selectedObj.SetActive(true);
+                if (buttonBooster.count > 0)
+                {
+                    buttonBooster.isSelected = true;
+                    buttonBooster.SaveStateBooster($"{buttonBooster.nameBooster}", 1);
+                }
+            }
+            else
+            {
+                selectedObj.SetActive(false);
+                if (buttonBooster.count > 0)
+                {
+                    buttonBooster.isSelected = false;
+                    buttonBooster.SaveStateBooster($"{buttonBooster.nameBooster}", 0);
+                }
+            }
 
-            selectedObj.SetActive(true);
-            buttonBooster.isSelected = true;
-            Debug.Log(buttonBooster.nameBooster);
 
-            buttonBooster.SaveStateBooster($"{buttonBooster.nameBooster}", 1);
         });
     }
 
@@ -89,6 +107,6 @@ public class ButtonBoosterManager : MonoBehaviour
         }
     }
 
-   
+
 
 }

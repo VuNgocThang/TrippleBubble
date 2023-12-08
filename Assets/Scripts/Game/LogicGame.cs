@@ -48,6 +48,7 @@ public class LogicGame : MonoBehaviour
         0,1,2,3,4,5,6,7,8
     };
     public bool isInTut;
+    public bool isUseBooster;
 
     private void Awake()
     {
@@ -55,7 +56,6 @@ public class LogicGame : MonoBehaviour
     }
     void Start()
     {
-
         if (!DataUseInGame.gameData.isDaily)
         {
             indexLevel = DataUseInGame.gameData.indexLevel;
@@ -66,7 +66,6 @@ public class LogicGame : MonoBehaviour
             indexLevel = DataUseInGame.gameData.indexDailyLV;
             level = Instantiate(listLevelDaily[indexLevel], transform);
         }
-        //Debug.Log(DataUseInGame.gameData.isDaily);
         InitSomething();
         InitBubbles();
         lineController.CreateLine(listBBShuffle);
@@ -78,7 +77,7 @@ public class LogicGame : MonoBehaviour
         timer.timeLeft = currentTotalBB * 3 + 30f;
 
         timer.stopTimer = true;
-        UseBooster();
+        //UseBooster();
         StartCoroutine(timer.InitTimerSetting());
         if (!DataUseInGame.gameData.isTutHintDone && DataUseInGame.gameData.indexLevel == 1
                        ||
@@ -147,7 +146,6 @@ public class LogicGame : MonoBehaviour
 
         uiGame.InitAnim();
         Application.targetFrameRate = 60;
-        //if (DataUseInGame.gameData.indexLevel == 1 || DataUseInGame.gameData.indexLevel == 2)
         if (!DataUseInGame.gameData.isTutHintDone && DataUseInGame.gameData.indexLevel == 1
             ||
             !DataUseInGame.gameData.isTutOtherDone && DataUseInGame.gameData.indexLevel == 2
@@ -159,7 +157,6 @@ public class LogicGame : MonoBehaviour
         {
             canClick = true;
         }
-        //Debug.Log(DataUseInGame.gameData.isTutHintDone + " isTuTHint");
         if (!PlayerPrefs.HasKey("WinStreak"))
         {
             winStreak = 0;
@@ -175,7 +172,6 @@ public class LogicGame : MonoBehaviour
 
         if (DataUseInGame.gameData.indexLevel > 0 || DataUseInGame.gameData.isDaily)
         {
-            //Debug.Log(DataUseInGame.gameData.isDaily + " 12323123");
             GameManager.Instance.canRotate = true;
         }
     }
@@ -333,23 +329,34 @@ public class LogicGame : MonoBehaviour
 
 
     }
-    void UseBooster()
+    public void UseBooster()
     {
-        if (PlayerPrefs.GetInt("BoosterHint") == 1)
+        if (PlayerPrefs.GetInt("BoosterHint") == 1 && PlayerPrefs.GetInt("NumHint") > 0)
         {
-            Debug.Log("USE HINT");
+            int count = PlayerPrefs.GetInt("NumHint");
+            count--;
+            PlayerPrefs.SetInt("NumHint", count);
+            PlayerPrefs.Save();
             UseBoosterHint();
         }
 
-        if (PlayerPrefs.GetInt("BoosterTimer") == 1)
+        if (PlayerPrefs.GetInt("BoosterTimer") == 1 && PlayerPrefs.GetInt("NumTimer") > 0)
         {
-            Debug.Log("USE TIMER");
+            int count = PlayerPrefs.GetInt("NumTimer");
+            count--;
+            PlayerPrefs.SetInt("NumTimer", count);
+            PlayerPrefs.Save();
+
             UseBoosterTimer();
         }
 
-        if (PlayerPrefs.GetInt("BoosterLightning") == 1)
+        if (PlayerPrefs.GetInt("BoosterLightning") == 1 && PlayerPrefs.GetInt("NumLightning") > 0)
         {
-            Debug.Log("USE LIGHTNING");
+            int count = PlayerPrefs.GetInt("NumLightning");
+            count--;
+            PlayerPrefs.SetInt("NumLightning", count);
+            PlayerPrefs.Save();
+
             UseBoosterLightning();
         }
     }
@@ -369,9 +376,11 @@ public class LogicGame : MonoBehaviour
                     var g3 = listBBShuffle[indexHint];
 
 
-                    g1.transform.DOScale(new Vector3(1.5f, 1.5f, 1.5f), 1f);
-                    g2.transform.DOScale(new Vector3(1.5f, 1.5f, 1.5f), 1.25f);
-                    g3.transform.DOScale(new Vector3(1.5f, 1.5f, 1.5f), 1.5f);
+                    g1.transform.DOScale(new Vector3(1.8f, 1.8f, 1.8f), 0.5f)
+                        .SetEase(Ease.Flash);
+                    g2.transform.DOScale(new Vector3(1.8f, 1.8f, 1.8f), 0.5f).SetEase(Ease.Flash);
+                    g3.transform.DOScale(new Vector3(1.8f, 1.8f, 1.8f), 0.5f).SetEase(Ease.Flash);
+                   
                     return;
                 }
             }
@@ -403,47 +412,39 @@ public class LogicGame : MonoBehaviour
                     var g2 = listBBShuffle[j];
                     var g3 = listBBShuffle[index];
 
-
-                    g1.transform.DOScale(new Vector3(1f, 1f, 1f), 1f)
-                        .OnStart(() =>
-                        {
-                            g1.particleBoom.SetActive(true);
-                            g1.particlePP.SetActive(true);
-                        })
+                    //1.3f
+                    g1.transform.DOScale(new Vector3(1.3f, 1.3f, 1.3f), 1f)
+                        
                         .OnComplete(() =>
                         {
                             SolveChildOfBB(g1);
-                            g1.gameObject.SetActive(false);
+                            AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.pop);
+                            StartCoroutine(AnimBBBooster(g1));
+                           
                             listBBShuffle.Remove(g1);
                             listBB.Remove(g1);
                         });
 
-                    g2.transform.DOScale(new Vector3(1f, 1f, 1f), 1f)
-                        .OnStart(() =>
-                        {
-                            g2.particleBoom.SetActive(true);
-                            g2.particlePP.SetActive(true);
-                        })
+                    g2.transform.DOScale(new Vector3(1.3f, 1.3f, 1.3f), 1f)
+                        
                         .OnComplete(() =>
                         {
-
                             SolveChildOfBB(g2);
-                            g2.gameObject.SetActive(false);
+                            AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.pop);
+                            StartCoroutine(AnimBBBooster(g2));
+
                             listBBShuffle.Remove(g2);
                             listBB.Remove(g2);
                         });
 
-                    g3.transform.DOScale(new Vector3(1f, 1f, 1f), 1f)
-                        .OnStart(() =>
-                        {
-                            g3.particleBoom.SetActive(true);
-                            g3.particlePP.SetActive(true);
-                        })
+                    g3.transform.DOScale(new Vector3(1.3f, 1.3f, 1.3f), 1f)
+                       
                         .OnComplete(() =>
                         {
-
                             SolveChildOfBB(g3);
-                            g3.gameObject.SetActive(false);
+                            AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.pop);
+                            StartCoroutine(AnimBBBooster(g3));
+
                             listBBShuffle.Remove(g3);
                             listBB.Remove(g3);
                         });
@@ -451,6 +452,18 @@ public class LogicGame : MonoBehaviour
                 }
             }
         }
+    }
+    IEnumerator AnimBBBooster(Bubble bb)
+    {
+        bb.particleBoom.SetActive(true);
+        yield return new WaitForSeconds(0.005f);
+        foreach (var obj in bb.objs)
+        {
+            obj.SetActive(false);
+        }
+        bb.particlePP.SetActive(true);
+        yield return new WaitForSeconds(1.0f);
+        bb.gameObject.SetActive(false);
     }
     void Update()
     {
@@ -465,10 +478,8 @@ public class LogicGame : MonoBehaviour
     //float timeCount;
     void OnClick()
     {
-        //if(Input.GetMouseButtonDown(0)) 
         if (Input.GetMouseButton(0))
         {
-            //timeCount = Time.time;
             if (isDrag)
             {
                 canClick = false;
@@ -483,7 +494,6 @@ public class LogicGame : MonoBehaviour
             if (Input.GetMouseButtonUp(0))
             {
                 isDrag = false;
-                //if (Time.time - timeCount > 0.2f && isDrag) return;
                 if (checkLose || timer.stopTimer || !canClick || listGOStored.Count > 6) return;
 
                 RaycastHit raycastHit;
@@ -499,7 +509,6 @@ public class LogicGame : MonoBehaviour
                     AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.click);
                     if (indexLevel == 0 && !DataUseInGame.gameData.isDaily)
                     {
-                        Debug.Log("asdm");
                         tutorialManager.OnClick(bubble);
                     }
                     Move(bubble);
@@ -733,6 +742,11 @@ public class LogicGame : MonoBehaviour
         int numShuffle = DataUseInGame.gameData.numShuffleItem;
         if (numShuffle <= 0) return;
         if (isShuffleing) return;
+        if (checkWin) return;
+
+        //if (timer.stopTimer) return;
+        if (isUseBooster) return;
+
         if (useByBtn)
         {
             numShuffle--;
@@ -800,8 +814,10 @@ public class LogicGame : MonoBehaviour
         AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
         int numHint = DataUseInGame.gameData.numHintItem;
         if (numHint <= 0) return;
-        if (checkLose || canEat || listGOStored.Count > 6) return;
+        if (checkLose || canEat || listGOStored.Count > 6 ) return;
+        if (isUseBooster) return;
         if (hinting) return;
+        if (checkWin) return;
         isHint = true;
 
         if (DataUseInGame.gameData.indexLevel == 1 && !DataUseInGame.gameData.isTutHintDone)
@@ -909,6 +925,10 @@ public class LogicGame : MonoBehaviour
         if (checkLose) return;
         if (canEat) return;
         if (hinting) return;
+        if (checkWin) return;
+
+        // if (timer.stopTimer) return;
+        if (isUseBooster) return;
 
         if (DataUseInGame.gameData.indexLevel == 2 && !DataUseInGame.gameData.isTutOtherDone)
         {
@@ -955,6 +975,10 @@ public class LogicGame : MonoBehaviour
         if (canEat) return;
         if (isUndoing) return;
         if (hinting) return;
+        if (checkWin) return;
+
+        // if (timer.stopTimer) return;
+        if (isUseBooster) return;
 
         if (DataUseInGame.gameData.indexLevel == 2 && !DataUseInGame.gameData.isTutOtherDone)
         {
@@ -1053,6 +1077,10 @@ public class LogicGame : MonoBehaviour
         int numFreeze = DataUseInGame.gameData.numFreezeTimeItem;
         if (numFreeze <= 0) return;
         if (isFreezeing) return;
+        if (checkWin) return;
+
+        //if (timer.stopTimer) return;
+        if (isUseBooster) return;
 
         timer.stopTimer = false;
 

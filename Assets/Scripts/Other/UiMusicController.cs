@@ -21,10 +21,10 @@ public class UiMusicController : MonoBehaviour
         toggleVibrate.toggle.onValueChanged.AddListener(delegate { ToggleValueChanged(toggleVibrate); });
         SaveSoundAndMusic();
         AudioManager.instance.BackgroundMusic();
-
     }
 
-    void SaveSoundAndMusic()
+
+    public void SaveSoundAndMusic()
     {
         if (PlayerPrefs.GetInt("isSound") == 1)
         {
@@ -70,11 +70,11 @@ public class UiMusicController : MonoBehaviour
         {
             if (changedToggle == toggleMusic)
             {
-                OnMusicOff() ;
+                OnMusicOff();
             }
             else if (changedToggle == toggleSound)
             {
-               OnSoundOff() ;
+                OnSoundOff();
             }
             else if (changedToggle == toggleVibrate)
             {

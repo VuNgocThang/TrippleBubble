@@ -184,9 +184,47 @@ public class StartCollector : MonoBehaviour
                 // do something;
                 break;
             case "hint":
-                // do something;
+                int countHint;
+                if (PlayerPrefs.HasKey("NumHint"))
+                {
+                    countHint = PlayerPrefs.GetInt("NumHint");
+                }
+                else
+                {
+                    countHint = 0;
+                }
+                countHint++;
+                PlayerPrefs.SetInt("NumHint", countHint);
+                PlayerPrefs.Save();
+                break;
+
+            case "timer":
+                int countTimer;
+                if (PlayerPrefs.HasKey("NumTimer"))
+                {
+                    countTimer = PlayerPrefs.GetInt("NumTimer");
+                }
+                else
+                {
+                    countTimer = 0;
+                }
+                countTimer++;
+                PlayerPrefs.SetInt("NumTimer", countTimer);
+                PlayerPrefs.Save();
                 break;
             case "lightning":
+                int countLightning;
+                if (PlayerPrefs.HasKey("NumLightning"))
+                {
+                    countLightning = PlayerPrefs.GetInt("NumLightning");
+                }
+                else
+                {
+                    countLightning = 0;
+                }
+                countLightning++;
+                PlayerPrefs.SetInt("NumLightning", countLightning);
+                PlayerPrefs.Save();
                 //do something;
                 break;
             default:

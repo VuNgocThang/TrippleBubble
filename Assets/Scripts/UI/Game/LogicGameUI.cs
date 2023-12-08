@@ -140,9 +140,9 @@ public class LogicGameUI : MonoBehaviour
         panelPersidentCG.DOFade(0f, 0.5f)
             .OnComplete(() =>
             {
+                bgBlackPersident.SetActive(false);
                 panelPersident.SetActive(false);
                 StartCoroutine(CanClickAgain());
-
             });
     }
     public void Retry()
@@ -234,6 +234,7 @@ public class LogicGameUI : MonoBehaviour
     public void ClaimStarNoAds()
     {
         btnClaimStar.interactable = false;
+        btnClaimStarNoAds.interactable = false;
         AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
         GameManager.Instance.AddStar(1);
         DOTween.KillAll();

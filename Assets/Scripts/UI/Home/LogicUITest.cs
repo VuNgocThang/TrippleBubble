@@ -104,8 +104,9 @@ public class LogicUITest : MonoBehaviour
         selectBooster.selectBoosterCG.DOFade(1f, 0.5f);
 
     }
-    void ClosePanelBooster()
+    public void ClosePanelBooster()
     {
+        selectBooster.UnSelectedBtn();
         AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
         AnimationPopup.instance.FadeWhileMoveUp(selectBooster.selectBoosterCG.gameObject, 0.5f);
         selectBooster.selectBoosterCG.DOFade(0f, 0.5f)

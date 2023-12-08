@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using DG.Tweening;
 
 public class UIGameManager : MonoBehaviour
 {
@@ -13,39 +14,38 @@ public class UIGameManager : MonoBehaviour
 
     public TextMeshProUGUI txtStar;
     public TextMeshProUGUI txtLevel;
-    public TextMeshProUGUI txtChat;
+
+    public RectTransform timerSecond;
+    public TextMeshProUGUI txtUseHint;
+    public CanvasGroup txtUseTimerCG;
+
+    public TextMeshProUGUI txtUseTimer;
+    public TextMeshProUGUI txtUseLightning;
+
 
     public void InitAnim()
     {
-        TextChat();
         AnimationPopup.instance.DoTween_Button(star, 0, 200, 1f);
         AnimationPopup.instance.DoTween_Button(level, 0, 200, 1f);
         AnimationPopup.instance.DoTween_Button(timer, 0, 200, 1f);
         AnimationPopup.instance.DoTween_Button(noAds, 0, 200, 1f);
         AnimationPopup.instance.DoTween_Button(pause, 0, 200, 1f);
 
-        AnimationPopup.instance.MoveAndActiveFalse(txtChat.gameObject, -200, 0, 1f);
-    }
-
-    void TextChat()
-    {
-        if (PlayerPrefs.GetInt("BoosterHint") == 1)
+        if (PlayerPrefs.GetInt("BoosterTimer") == 1 && PlayerPrefs.GetInt("NumTimer") > 0)
         {
-            Debug.Log("USE HINT");
-            txtChat.text = "USE HINT";
-        }
-
-        if (PlayerPrefs.GetInt("BoosterTimer") == 1)
-        {
-            Debug.Log("USE TIMER");
-            txtChat.text = "USE TIMER";
-
-        }
-
-        if (PlayerPrefs.GetInt("BoosterLightning") == 1)
-        {
-            Debug.Log("USE LIGHTNING");
-            txtChat.text = "USE LIGHTNING";
+            Vector3 pos = timerSecond.GetComponent<RectTransform>().anchoredPosition;
+            txtUseTimer.gameObject.SetActive(true);
+            AnimationPopup.instance.DoTween_Button(txtUseTimer.gameObject, 0, 0, 0.5f);
+            txtUseTimerCG.DOFade(1f, 0.95f)
+                .OnComplete(() =>
+                {
+                    txtUseTimer.GetComponent<RectTransform>().DOAnchorPos(pos, 1f);
+                    txtUseTimerCG.DOFade(0f, 0.95f)
+                    .OnComplete(() =>
+                    {
+                        txtUseTimer.gameObject.SetActive(false);
+                    });
+                });
         }
     }
 

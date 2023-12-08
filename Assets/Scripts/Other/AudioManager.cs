@@ -21,8 +21,30 @@ public class AudioManager : MonoBehaviour
         }
         DontDestroyOnLoad(this.gameObject);
 
+    }
+    private void Start()
+    {
+        if (PlayerPrefs.HasKey("isSound"))
+        {
+            PlayerPrefs.GetInt("isSound");
+        }
+        else
+        {
+            PlayerPrefs.SetInt("isSound", 1);
+            PlayerPrefs.Save();
+        }
 
+        if (PlayerPrefs.HasKey("isMusic"))
+        {
+            PlayerPrefs.GetInt("isMusic");
+        }
+        else
+        {
+            PlayerPrefs.SetInt("isMusic", 1);
+            PlayerPrefs.Save();
+        }
         BackgroundMusic();
+
     }
 
     public void UpdateSoundAndMusic(AudioSource audioSource, AudioClip audioClip)
@@ -39,12 +61,11 @@ public class AudioManager : MonoBehaviour
 
         if (isMusic == 0)
         {
-            backGroundMusic.Pause();
+            backGroundMusic.volume = 0;
         }
         else
         {
-            backGroundMusic.Play();
-            backGroundMusic.UnPause();
+            backGroundMusic.volume = 0.25f;
         }
 
     }
