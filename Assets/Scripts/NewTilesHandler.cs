@@ -12,9 +12,11 @@ public class NewTilesHandler : MonoBehaviour
     public List<ListIndexBB> listIndexAllGame = new List<ListIndexBB>();
     public List<Bubble> listNewBB = new List<Bubble>();
     public int currentIndex;
+    public GameObject NLight;
 
     private void Start()
     {
+        NLight.SetActive(true);
         if (PlayerPrefs.HasKey("CurrentIndexNewTile"))
         {
             currentIndex = PlayerPrefs.GetInt("CurrentIndexNewTile");

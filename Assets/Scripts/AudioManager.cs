@@ -20,15 +20,18 @@ public class AudioManager : MonoBehaviour
             instance = this;
         }
         DontDestroyOnLoad(this.gameObject);
+
+
         BackgroundMusic();
     }
-    
+
     public void UpdateSoundAndMusic(AudioSource audioSource, AudioClip audioClip)
     {
         int isSound = PlayerPrefs.GetInt("isSound");
         audioSource.PlayOneShot(audioClip);
 
         audioSource.volume = isSound == 1 ? 1 : 0;
+        if (audioClip == pop && isSound == 1) audioSource.volume = 0.2f;
     }
     public void BackgroundMusic()
     {

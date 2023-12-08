@@ -14485,6 +14485,7 @@ MonoBehaviour:
   - {fileID: 1227723013}
   - {fileID: 1797051983}
   currentIndex: 0
+  NLight: {fileID: 1882617838}
 --- !u!1 &1278316775
 GameObject:
   m_ObjectHideFlags: 0
@@ -18155,7 +18156,6 @@ MonoBehaviour:
   btnClaimStar: {fileID: 1901529941}
   btnClaimStarNoAds: {fileID: 2005580927}
   tutBtn: {fileID: 555442450}
-  Nlight: {fileID: 1882617838}
 --- !u!1 &1599910568
 GameObject:
   m_ObjectHideFlags: 0

@@ -206,11 +206,11 @@ public class LogicGameUI : MonoBehaviour
     {
         loseUI.gameObject.SetActive(true);
     }
-    public GameObject Nlight;
+    //public GameObject Nlight;
     public void OpenWinUI()
     {
         canvas.renderMode = RenderMode.ScreenSpaceCamera;
-        Nlight.SetActive(true);
+        //Nlight.SetActive(true);
         camerUI.gameObject.SetActive(true);
         panel.SetActive(true);
 
@@ -244,7 +244,7 @@ public class LogicGameUI : MonoBehaviour
     {
         AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        Nlight.SetActive(false);
+        //Nlight.SetActive(false);
         camerUI.gameObject.SetActive(false);
         panel.SetActive(false);
         winUI.gameObject.SetActive(false);
