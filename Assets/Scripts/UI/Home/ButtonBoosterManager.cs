@@ -57,6 +57,8 @@ public class ButtonBoosterManager : MonoBehaviour
     {
         buttonBooster.btn.onClick.AddListener(() =>
         {
+            AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
+
             if (!selectedObj.activeSelf)
             {
                 selectedObj.SetActive(true);

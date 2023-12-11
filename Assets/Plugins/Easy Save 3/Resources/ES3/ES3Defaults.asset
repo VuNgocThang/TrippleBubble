@@ -37,6 +37,11 @@ MonoBehaviour:
     - Coffee.UIParticle.Editor
     - PathCreator
     - PathCreatorEditor
+    - spine-csharp
+    - spine-unity
+    - spine-unity-editor
+    - spine-unity-examples
+    - spine-unity-examples-editor
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
   autoUpdateReferences: 1

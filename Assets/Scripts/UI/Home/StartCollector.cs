@@ -79,6 +79,7 @@ public class StartCollector : MonoBehaviour
             {
                 if (DataUseInGame.gameData.star < listBtnSelector[a].cost) return;
 
+                AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
                 GameManager.Instance.SubStar(listBtnSelector[a].cost);
 
                 listBtnSelector[a].btnBuy.interactable = false;

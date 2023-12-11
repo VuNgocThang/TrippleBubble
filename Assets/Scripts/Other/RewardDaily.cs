@@ -9,6 +9,7 @@ public class RewardDaily : MonoBehaviour
     public Button btnSelect;
     public GameObject vfx;
     public bool isCollected;
+    public GameObject popup;
     private void Start()
     {
         btnSelect.onClick.AddListener(OpenReward);
@@ -24,6 +25,7 @@ public class RewardDaily : MonoBehaviour
             Debug.Log("index : " + index);
             isCollected = true;
             vfx.SetActive(false);
+            popup.SetActive(true);
             btnSelect.interactable = false;
             PlayerPrefs.SetInt($"IsCollected{index}", 1);
             PlayerPrefs.Save();
