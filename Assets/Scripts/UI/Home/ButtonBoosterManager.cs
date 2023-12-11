@@ -29,7 +29,7 @@ public class ButtonBoosterManager : MonoBehaviour
         {
             buttons[i].InitButton();
             buttons[i].SaveStateBooster(buttons[i].nameBooster, 0);
-            UpdateNumBooster(buttons[i].count, buttons[i].btnPlus.gameObject, buttons[i].numBtn, buttons[i].txtNumBtn, buttons[i].btn);
+            //UpdateNumBooster(buttons[i].count, buttons[i].btnPlus.gameObject, buttons[i].numBtn, buttons[i].txtNumBtn, buttons[i].btn);
         }
     }
 

@@ -38,8 +38,22 @@ public class ButtonBooster : MonoBehaviour
 
     private void OnGUI()
     {
-        int count = PlayerPrefs.GetInt($"{txt}");
-        txtNumBtn.text = count.ToString();
+        UpdateNumBooster();
+    }
+
+    void UpdateNumBooster()
+    {
+        if (count > 0)
+        {
+            numBtn.gameObject.SetActive(true);
+            btn.interactable = true;
+            txtNumBtn.text = count.ToString();
+        }
+        else
+        {
+            btnPlus.gameObject.SetActive(true);
+            btn.interactable = false;
+        }
     }
 
 }

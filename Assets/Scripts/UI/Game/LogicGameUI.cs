@@ -55,7 +55,7 @@ public class LogicGameUI : MonoBehaviour
     {
         canvas = GetComponent<Canvas>();
     }
-
+ 
     private void Start()
     {
         btnHome.onClick.AddListener(BackHome);
@@ -74,7 +74,6 @@ public class LogicGameUI : MonoBehaviour
         btnClaim.onClick.AddListener(CloseWinUI);
         btnClaimStar.onClick.AddListener(ClaimStar);
         btnClaimStarNoAds.onClick.AddListener(ClaimStarNoAds);
-
     }
 
     void BackHome()
