@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7696604405742185220}
   - component: {fileID: 7241499456708831401}
-  - component: {fileID: -897970255195899603}
   m_Layer: 0
   m_Name: Level_6
   m_TagString: Untagged
@@ -61,20 +60,6 @@ MonoBehaviour:
   - {fileID: 536893858634497571}
   - {fileID: 2397146879163698732}
   maxEach: 3
---- !u!114 &-897970255195899603
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7241499456708831400}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c064180f8f53e6141a04eda93cc90242, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  creator: {fileID: 0}
-  speed: 0.2
 --- !u!1001 &1356286838762489470
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -85,6 +70,10 @@ PrefabInstance:
     - target: {fileID: 200007536232097768, guid: 81260c1a47dedea43b4311f484317d21, type: 3}
       propertyPath: m_Name
       value: BallonBubble7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2980800347440122728, guid: 81260c1a47dedea43b4311f484317d21, type: 3}
+      propertyPath: canMoveHT
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4226057718920539699, guid: 81260c1a47dedea43b4311f484317d21, type: 3}
       propertyPath: m_IsActive
@@ -354,6 +343,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2751347547741323121, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6428927290568833029, guid: db5db640529dfc1479225cda35e9574a, type: 3}
+      propertyPath: canMoveHT
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -688,6 +681,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2751347547741323121, guid: db5db640529dfc1479225cda35e9574a, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6428927290568833029, guid: db5db640529dfc1479225cda35e9574a, type: 3}
+      propertyPath: canMoveHT
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

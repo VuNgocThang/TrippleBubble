@@ -72,16 +72,21 @@ public class LogicGame : MonoBehaviour
         cameraResize.InitSizeObject(level.gameObject);
         currentTotalBB = listBB.Count;
         canShuffle = true;
+        tutorialManager.ShowTutWrappedBB();
 
         //số bóng *3 + 30 giây
         timer.timeLeft = currentTotalBB * 3 + 30f;
 
         timer.stopTimer = true;
-        //UseBooster();
         StartCoroutine(timer.InitTimerSetting());
+
         if (!DataUseInGame.gameData.isTutHintDone && DataUseInGame.gameData.indexLevel == 1
-                       ||
-            !DataUseInGame.gameData.isTutOtherDone && DataUseInGame.gameData.indexLevel == 2
+            ||
+            !DataUseInGame.gameData.isTutUndoDone && DataUseInGame.gameData.indexLevel == 2
+            ||
+            !DataUseInGame.gameData.isTutShuffleDone && DataUseInGame.gameData.indexLevel == 3
+            ||
+            !DataUseInGame.gameData.isTutFreezeDone && DataUseInGame.gameData.indexLevel == 4
             )
         {
             timer.stopTimer = true;
@@ -518,6 +523,12 @@ public class LogicGame : MonoBehaviour
                     {
                         tutorialManager.OnClick(bubble);
                     }
+
+                    if (indexLevel == 5 && !DataUseInGame.gameData.isDaily)
+                    {
+                        tutorialManager.HideHandWrapped();
+                    }
+
                     Move(bubble);
 
                 }
@@ -757,11 +768,14 @@ public class LogicGame : MonoBehaviour
         if (useByBtn)
         {
             numShuffle--;
-            if (DataUseInGame.gameData.indexLevel == 2 && isInTut && !DataUseInGame.gameData.isTutOtherDone)
+            if (DataUseInGame.gameData.indexLevel == 3 && !DataUseInGame.gameData.isTutShuffleDone)
             {
                 logicUI.tutBtn.listHands[3].SetActive(false);
                 logicUI.tutBtn.listTexts[3].SetActive(false);
-                logicUI.tutBtn.TutFreeze();
+                logicUI.tutBtn.ImageHint.SetActive(false);
+                DataUseInGame.gameData.isTutShuffleDone = true;
+                DataUseInGame.instance.SaveData();
+                timer.stopTimer = false;
             }
         }
 
@@ -934,10 +948,9 @@ public class LogicGame : MonoBehaviour
         if (hinting) return;
         if (checkWin) return;
 
-        // if (timer.stopTimer) return;
         if (isUseBooster) return;
 
-        if (DataUseInGame.gameData.indexLevel == 2 && !DataUseInGame.gameData.isTutOtherDone)
+        if (DataUseInGame.gameData.indexLevel == 2 && !DataUseInGame.gameData.isTutUndoDone)
         {
             logicUI.tutBtn.listHands[1].SetActive(false);
             logicUI.tutBtn.listTexts[1].SetActive(false);
@@ -983,15 +996,17 @@ public class LogicGame : MonoBehaviour
         if (isUndoing) return;
         if (hinting) return;
         if (checkWin) return;
-
-        // if (timer.stopTimer) return;
         if (isUseBooster) return;
 
-        if (DataUseInGame.gameData.indexLevel == 2 && !DataUseInGame.gameData.isTutOtherDone)
+        if (DataUseInGame.gameData.indexLevel == 2 && !DataUseInGame.gameData.isTutUndoDone)
         {
+            isInTut = false;
             logicUI.tutBtn.listHands[2].SetActive(false);
             logicUI.tutBtn.listTexts[2].SetActive(false);
-            logicUI.tutBtn.TutShuffle();
+            logicUI.tutBtn.ImageHint.SetActive(false);
+            DataUseInGame.gameData.isTutUndoDone = true;
+            DataUseInGame.instance.SaveData();
+            timer.stopTimer = false;
         }
         numTrippleUndo--;
         DataUseInGame.gameData.numTrippleUndoItem = numTrippleUndo;
@@ -1079,25 +1094,23 @@ public class LogicGame : MonoBehaviour
     public void Freeze()
     {
         canClick = true;
-        isInTut = false;
         AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
         int numFreeze = DataUseInGame.gameData.numFreezeTimeItem;
         if (numFreeze <= 0) return;
         if (isFreezeing) return;
         if (checkWin) return;
 
-        //if (timer.stopTimer) return;
         if (isUseBooster) return;
 
-        timer.stopTimer = false;
-
-        if (DataUseInGame.gameData.indexLevel == 2 && !DataUseInGame.gameData.isTutOtherDone)
+        if (DataUseInGame.gameData.indexLevel == 4 && !DataUseInGame.gameData.isTutFreezeDone)
         {
-            logicUI.tutBtn.ImageHint.SetActive(false);
             logicUI.tutBtn.listHands[4].SetActive(false);
             logicUI.tutBtn.listTexts[4].SetActive(false);
+            logicUI.tutBtn.ImageHint.SetActive(false);
             DataUseInGame.gameData.isTutOtherDone = true;
             DataUseInGame.instance.SaveData();
+            timer.stopTimer = false;
+
         }
 
         numFreeze--;

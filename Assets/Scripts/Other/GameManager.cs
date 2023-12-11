@@ -17,11 +17,6 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
-    private void Update()
-    {
-
-       
-    }
     public void SubHeart()
     {
         int heart = DataUseInGame.gameData.heart;

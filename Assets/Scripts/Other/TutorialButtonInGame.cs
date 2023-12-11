@@ -14,6 +14,8 @@ public class TutorialButtonInGame : MonoBehaviour
     {
         TutHintBtn();
         TutUndo();
+        TutShuffle();
+        TutFreeze();
     }
     public void Arrange(int index)
     {
@@ -33,11 +35,10 @@ public class TutorialButtonInGame : MonoBehaviour
 
     public void TutUndo()
     {
-        if (DataUseInGame.gameData.indexLevel == 2 && !DataUseInGame.gameData.isDaily && !DataUseInGame.gameData.isTutOtherDone)
+        if (DataUseInGame.gameData.indexLevel == 2 && !DataUseInGame.gameData.isDaily && !DataUseInGame.gameData.isTutUndoDone)
         {
             LogicGame.instance.isInTut = true;
             Arrange(1);
-            //Arrange(2);
         }
     }
 
@@ -51,18 +52,19 @@ public class TutorialButtonInGame : MonoBehaviour
 
     public void TutShuffle()
     {
-        var temp = listItems[2];
-        temp.transform.SetSiblingIndex(2);
-
-        Arrange(3);
+        if (DataUseInGame.gameData.indexLevel == 3 && !DataUseInGame.gameData.isDaily && !DataUseInGame.gameData.isTutShuffleDone)
+        {
+            Arrange(3);
+        }
     }
 
     public void TutFreeze()
     {
-        var temp = listItems[3];
-        temp.transform.SetSiblingIndex(3);
-
-        Arrange(4);
+        if (DataUseInGame.gameData.indexLevel == 4 && !DataUseInGame.gameData.isDaily && !DataUseInGame.gameData.isTutFreezeDone)
+        {
+            Arrange(4);
+        }
+        
     }
 
 

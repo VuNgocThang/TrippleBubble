@@ -19,8 +19,6 @@ public class GameData
     public float timeHeartInfinity;
     public float timeStarCollector;
 
-   
-
     public int currentIndexStarCollector;
 
     public List<int> listIndexDaily;
@@ -34,7 +32,12 @@ public class GameData
     public List<DailyData> dailyData;
 
     public bool isTutHintDone;
+    public bool isTutUndoDone;
+    public bool isTutShuffleDone;
+    public bool isTutFreezeDone;
     public bool isTutOtherDone;
+
+    public bool isTutWrappedDone;
 
     public GameData()
     {
@@ -54,8 +57,6 @@ public class GameData
         isHeartInfinity = false;
         timeHeartInfinity = 0;
         timeStarCollector = 86400f;
-
-
 
         currentIndexStarCollector = 0;
 
@@ -77,7 +78,11 @@ public class GameData
         dailyData = new List<DailyData>();
 
         isTutHintDone = false;
-        isTutOtherDone = false;
+        isTutUndoDone = false;
+        isTutShuffleDone = false;
+        isTutFreezeDone = false;
+
+        isTutWrappedDone = false;
     }
 }
 
