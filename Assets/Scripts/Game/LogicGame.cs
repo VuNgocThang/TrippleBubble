@@ -331,12 +331,14 @@ public class LogicGame : MonoBehaviour
     }
     public void UseBooster()
     {
+        Debug.Log(PlayerPrefs.GetInt("BoosterHint") + " -----" + PlayerPrefs.GetInt("NumHint"));
         if (PlayerPrefs.GetInt("BoosterHint") == 1 && PlayerPrefs.GetInt("NumHint") > 0)
         {
             int count = PlayerPrefs.GetInt("NumHint");
             count--;
             PlayerPrefs.SetInt("NumHint", count);
             PlayerPrefs.Save();
+            Debug.Log("can use booster hint!");
             UseBoosterHint();
         }
 
@@ -363,28 +365,33 @@ public class LogicGame : MonoBehaviour
     int indexHint = -1;
     void UseBoosterHint()
     {
-        indexHint = UnityEngine.Random.Range(0, listBBShuffle.Count);
-        for (int i = 0; i < listBBShuffle.Count; i++)
+        bool foundPair = false;
+        do
         {
-            for (int j = i + 1; j < listBBShuffle.Count; j++)
+            indexHint = UnityEngine.Random.Range(0, listBBShuffle.Count);
+            Debug.Log(indexHint + " indexHint");
+            for (int i = 0; i < listBBShuffle.Count; i++)
             {
-                if (listBBShuffle[i].ID == listBBShuffle[indexHint].ID && listBBShuffle[j].ID == listBBShuffle[indexHint].ID
-                    && i != indexHint && j != indexHint)
+                for (int j = i + 1; j < listBBShuffle.Count; j++)
                 {
-                    var g1 = listBBShuffle[i];
-                    var g2 = listBBShuffle[j];
-                    var g3 = listBBShuffle[indexHint];
+                    if (listBBShuffle[i].ID == listBBShuffle[indexHint].ID && listBBShuffle[j].ID == listBBShuffle[indexHint].ID
+                        && i != indexHint && j != indexHint)
+                    {
+                        var g1 = listBBShuffle[i];
+                        var g2 = listBBShuffle[j];
+                        var g3 = listBBShuffle[indexHint];
 
+                        g1.transform.DOScale(new Vector3(1.8f, 1.8f, 1.8f), 0.5f)
+                            .SetEase(Ease.Flash);
+                        g2.transform.DOScale(new Vector3(1.8f, 1.8f, 1.8f), 0.5f).SetEase(Ease.Flash);
+                        g3.transform.DOScale(new Vector3(1.8f, 1.8f, 1.8f), 0.5f).SetEase(Ease.Flash);
 
-                    g1.transform.DOScale(new Vector3(1.8f, 1.8f, 1.8f), 0.5f)
-                        .SetEase(Ease.Flash);
-                    g2.transform.DOScale(new Vector3(1.8f, 1.8f, 1.8f), 0.5f).SetEase(Ease.Flash);
-                    g3.transform.DOScale(new Vector3(1.8f, 1.8f, 1.8f), 0.5f).SetEase(Ease.Flash);
-                   
-                    return;
+                        foundPair = true;
+                        return;
+                    }
                 }
             }
-        }
+        } while (!foundPair);
     }
     void UseBoosterTimer()
     {
@@ -414,19 +421,19 @@ public class LogicGame : MonoBehaviour
 
                     //1.3f
                     g1.transform.DOScale(new Vector3(1.3f, 1.3f, 1.3f), 1f)
-                        
+
                         .OnComplete(() =>
                         {
                             SolveChildOfBB(g1);
                             AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.pop);
                             StartCoroutine(AnimBBBooster(g1));
-                           
+
                             listBBShuffle.Remove(g1);
                             listBB.Remove(g1);
                         });
 
                     g2.transform.DOScale(new Vector3(1.3f, 1.3f, 1.3f), 1f)
-                        
+
                         .OnComplete(() =>
                         {
                             SolveChildOfBB(g2);
@@ -438,7 +445,7 @@ public class LogicGame : MonoBehaviour
                         });
 
                     g3.transform.DOScale(new Vector3(1.3f, 1.3f, 1.3f), 1f)
-                       
+
                         .OnComplete(() =>
                         {
                             SolveChildOfBB(g3);
@@ -814,7 +821,7 @@ public class LogicGame : MonoBehaviour
         AudioManager.instance.UpdateSoundAndMusic(AudioManager.instance.aus, AudioManager.instance.clickMenu);
         int numHint = DataUseInGame.gameData.numHintItem;
         if (numHint <= 0) return;
-        if (checkLose || canEat || listGOStored.Count > 6 ) return;
+        if (checkLose || canEat || listGOStored.Count > 6) return;
         if (isUseBooster) return;
         if (hinting) return;
         if (checkWin) return;
